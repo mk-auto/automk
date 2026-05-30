@@ -640,3 +640,56 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border: 3px s
 .footer-bottom .legal a:hover { color: #fff; }
 @media (max-width: 760px) { .footer-top { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 460px) { .footer-top { grid-template-columns: 1fr; } }
+
+/* ===================== ARTICLES / GUIDER ===================== */
+.article-main { padding: clamp(5rem, 9vw, 8rem) 0 clamp(4rem, 7vw, 6rem); }
+.breadcrumb { font: 500 0.82rem/1.4 "Geist Mono", monospace; letter-spacing: .02em; color: var(--ink-soft, #6b6258); margin-bottom: 2.2rem; display: flex; gap: .55rem; flex-wrap: wrap; }
+.breadcrumb a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; }
+.breadcrumb a:hover { border-color: currentColor; }
+.breadcrumb span[aria-hidden] { opacity: .5; }
+
+.article { max-width: 68ch; margin: 0 auto; }
+.article-head { margin-bottom: clamp(2.2rem, 4vw, 3.2rem); }
+.article-head h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.04; letter-spacing: -0.02em; font-weight: 800; margin: 0 0 1.1rem; }
+.article-lede { font-size: clamp(1.12rem, 2vw, 1.32rem); line-height: 1.5; color: var(--ink-soft, #4a443c); margin: 0 0 1.3rem; }
+.article-meta { font: 500 0.82rem/1 "Geist Mono", monospace; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-soft, #8a8175); }
+
+.article-body { font-size: 1.08rem; line-height: 1.72; color: var(--ink, #231f1b); }
+.article-body h2 { font-size: clamp(1.45rem, 3vw, 1.95rem); line-height: 1.12; letter-spacing: -0.01em; font-weight: 800; margin: 2.8rem 0 1rem; }
+.article-body h3 { font-size: 1.2rem; font-weight: 700; margin: 1.8rem 0 .6rem; }
+.article-body p { margin: 0 0 1.2rem; }
+.article-body a { color: var(--accent, #a8662e); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent, #a8662e) 35%, transparent); transition: border-color .15s ease; }
+.article-body a:hover { border-color: var(--accent, #a8662e); }
+.article-body ul, .article-body ol { margin: 0 0 1.4rem; padding-left: 1.3rem; }
+.article-body li { margin: 0 0 .55rem; }
+.article-body strong { font-weight: 700; }
+.article-body blockquote { margin: 1.8rem 0; padding: .2rem 0 .2rem 1.3rem; border-left: 3px solid var(--accent, #a8662e); font-size: 1.18rem; line-height: 1.5; color: var(--ink-soft, #4a443c); }
+
+.checklist { list-style: none; padding: 0; margin: 1.6rem 0; border-top: 1px solid var(--line, #e7e2da); }
+.checklist li { display: grid; grid-template-columns: 1.6rem 1fr; gap: .7rem; padding: .85rem 0; border-bottom: 1px solid var(--line, #e7e2da); margin: 0; }
+.checklist li::before { content: "✓"; color: var(--accent, #a8662e); font-weight: 800; line-height: 1.7; }
+
+.article-cta { margin: 3rem 0; padding: clamp(1.6rem, 3vw, 2.2rem); background: var(--ink, #231f1b); color: #fff; border-radius: 16px; }
+.article-cta h2 { color: #fff; margin: 0 0 .6rem; font-size: 1.5rem; }
+.article-cta p { color: rgba(255,255,255,.78); margin: 0 0 1.2rem; }
+
+.article-faq { margin-top: 3.2rem; border-top: 1px solid var(--line, #e7e2da); padding-top: 1.4rem; }
+.article-faq h2 { margin-top: 0; }
+.faq-item { border-bottom: 1px solid var(--line, #e7e2da); padding: 1.1rem 0; }
+.faq-item h3 { margin: 0 0 .5rem; font-size: 1.12rem; font-weight: 700; }
+.faq-item p { margin: 0; color: var(--ink-soft, #4a443c); }
+
+.related { max-width: 68ch; margin: 3.2rem auto 0; }
+.related h2 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: .04em; font-family: "Geist Mono", monospace; color: var(--ink-soft, #8a8175); margin: 0 0 1rem; }
+.related-links { display: grid; gap: .7rem; }
+.related-links a { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 1.2rem; border: 1px solid var(--line, #e7e2da); border-radius: 12px; text-decoration: none; color: var(--ink, #231f1b); font-weight: 600; transition: border-color .15s ease, transform .15s ease; }
+.related-links a:hover { border-color: var(--accent, #a8662e); transform: translateY(-2px); }
+
+/* Hub */
+.guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: clamp(1rem, 2vw, 1.6rem); margin-top: clamp(2rem, 4vw, 3rem); }
+.guide-card { display: flex; flex-direction: column; padding: clamp(1.4rem, 2.5vw, 1.9rem); border: 1px solid var(--line, #e7e2da); border-radius: 16px; text-decoration: none; color: var(--ink, #231f1b); transition: border-color .15s ease, transform .15s ease; }
+.guide-card:hover { border-color: var(--accent, #a8662e); transform: translateY(-3px); }
+.guide-card .gc-tag { font: 500 .75rem/1 "Geist Mono", monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--accent, #a8662e); margin-bottom: .9rem; }
+.guide-card h2 { font-size: 1.3rem; line-height: 1.15; font-weight: 800; margin: 0 0 .6rem; }
+.guide-card p { font-size: .98rem; line-height: 1.5; color: var(--ink-soft, #4a443c); margin: 0 0 1.2rem; }
+.guide-card .gc-go { margin-top: auto; font-weight: 600; color: var(--accent, #a8662e); }
