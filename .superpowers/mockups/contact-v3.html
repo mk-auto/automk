@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MK Auto — Finn din bil (G–I)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,400;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --canvas:oklch(0.165 0.012 64);--surface-1:oklch(0.205 0.013 64);--surface-2:oklch(0.245 0.015 62);
+    --ink:oklch(0.962 0.008 85);--ink-soft:oklch(0.795 0.010 84);--ink-mute:oklch(0.615 0.012 80);
+    --hairline:oklch(0.99 0 0/0.12);--hairline-2:oklch(0.99 0 0/0.20);
+    --accent:oklch(0.805 0.128 73);--accent-strong:oklch(0.720 0.140 58);--accent-ink:oklch(0.205 0.05 62);
+    --fd:"Bricolage Grotesque",sans-serif;--fb:"Schibsted Grotesk",sans-serif;--fm:"JetBrains Mono",monospace;
+    --ease:cubic-bezier(0.23,1,0.32,1);
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--canvas);color:var(--ink);font-family:var(--fb);-webkit-font-smoothing:antialiased}
+  .pagebar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    gap:1rem;padding:.8rem 1.4rem;background:oklch(0.13 0.01 64/.85);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--hairline);font-size:.82rem;color:var(--ink-soft)}
+  .pagebar b{color:var(--accent);font-family:var(--fm);letter-spacing:.1em;text-transform:uppercase;font-size:.72rem}
+  .block{padding:clamp(3rem,6vw,5.5rem) clamp(1.4rem,4vw,3rem);border-bottom:1px solid var(--hairline);position:relative;overflow:hidden}
+  .wrap{max-width:1180px;margin:0 auto;position:relative;z-index:2}
+  .tag{display:inline-flex;gap:.6rem;align-items:center;margin-bottom:1.8rem;
+    font-family:var(--fm);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute)}
+  .tag .pick{cursor:pointer;border:1px solid var(--hairline-2);border-radius:999px;padding:.35rem .8rem;color:var(--ink);transition:.25s var(--ease);background:transparent}
+  .tag .pick:hover,.tag .pick.selected{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .eyebrow{font-family:var(--fm);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+  .h2{font-family:var(--fd);font-weight:600;font-size:clamp(2rem,4vw,3.2rem);line-height:1.02;letter-spacing:-.02em}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;padding:.95rem 1.6rem;border-radius:2px;font-weight:600;font-size:.95rem;background:var(--accent);color:var(--accent-ink);transition:.16s var(--ease);border:0;cursor:pointer}
+  .btn:active{transform:scale(.97)}
+  input{font:inherit;color:inherit}
+
+  /* ===== G — LIVE-MATCH CONFIGURATOR ===== */
+  .g{background:radial-gradient(120% 90% at 15% -10%,oklch(0.25 0.03 68/.6),transparent 55%),var(--canvas)}
+  .g .grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:center}
+  .g .bignum{font-family:var(--fd);font-weight:800;font-size:clamp(5rem,15vw,12rem);line-height:.85;color:var(--accent);letter-spacing:-.04em}
+  .g .bigcap{font-family:var(--fd);font-weight:600;font-size:clamp(1.3rem,2.4vw,2rem);margin-top:.4rem;max-width:16ch}
+  .g .sub{color:var(--ink-soft);margin-top:1rem;max-width:38ch}
+  .g .panel{background:var(--surface-1);border:1px solid var(--hairline);border-radius:16px;padding:clamp(1.5rem,3vw,2.2rem)}
+  .g .lab{font-family:var(--fm);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:.7rem}
+  .g .pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.6rem}
+  .g .pill{padding:.55rem 1rem;border:1px solid var(--hairline-2);border-radius:999px;background:oklch(0.99 0 0/.04);color:var(--ink-soft);cursor:pointer;font-size:.9rem;transition:.18s var(--ease)}
+  .g .pill:hover{border-color:var(--accent);color:var(--ink)}
+  .g .pill.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .g .slider-row{display:flex;justify-content:space-between;font-family:var(--fm);font-size:.9rem;margin-bottom:.5rem}
+  .g .slider-row b{color:var(--accent)}
+  .g input[type=range]{width:100%;accent-color:var(--accent);height:4px}
+  .g .cta{margin-top:1.8rem;display:flex;gap:.8rem;align-items:center;flex-wrap:wrap}
+  .g .cta input{flex:1;min-width:160px;padding:.85rem 1rem;border:1px solid var(--hairline);border-radius:8px;background:oklch(0.99 0 0/.04);color:var(--ink)}
+  .g .cta input:focus{outline:none;border-color:var(--accent)}
+
+  /* ===== H — CURSOR SPOTLIGHT ===== */
+  .h{background:#0c0a09;min-height:78vh;display:flex;align-items:center;justify-content:center;text-align:center}
+  .h .beam{position:absolute;top:0;left:0;width:760px;height:760px;margin:-380px 0 0 -380px;z-index:1;pointer-events:none;
+    background:radial-gradient(circle,oklch(0.85 0.12 75/.20) 0%,oklch(0.85 0.12 75/.07) 30%,transparent 62%);
+    transition:transform .12s linear;will-change:transform}
+  .h .grain{position:absolute;inset:0;z-index:1;opacity:.5;background:
+    radial-gradient(120% 90% at 50% 120%,oklch(0.16 0.02 64/.8),transparent 60%)}
+  .h .inner{position:relative;z-index:3;max-width:720px;padding:0 1.4rem}
+  .h .h2{font-size:clamp(2.6rem,7vw,5.5rem);line-height:.95}
+  .h .h2 .accent{color:var(--accent)}
+  .h .lede{color:var(--ink-soft);margin:1.2rem auto 0;max-width:46ch}
+  .h .searchpill{display:flex;gap:.5rem;margin:2.4rem auto 0;max-width:560px;background:oklch(0.99 0 0/.05);
+    border:1px solid var(--hairline-2);border-radius:999px;padding:.5rem .5rem .5rem 1.4rem;align-items:center;backdrop-filter:blur(10px)}
+  .h .searchpill input{flex:1;background:transparent;border:0;color:var(--ink);font-size:1rem}
+  .h .searchpill input:focus{outline:none}
+  .h .hint{font-family:var(--fm);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);margin-top:1.4rem}
+
+  /* ===== I — 3D TILT WISH-CARD ===== */
+  .i{background:radial-gradient(110% 90% at 80% 10%,oklch(0.24 0.03 68/.6),transparent 55%),var(--canvas);
+    display:flex;align-items:center;min-height:74vh}
+  .i .grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:center;width:100%}
+  .i .lede{color:var(--ink-soft);margin-top:1rem;max-width:40ch}
+  .i .scene{perspective:1100px}
+  .i .card3d{position:relative;border-radius:20px;padding:clamp(1.6rem,3vw,2.4rem);
+    background:linear-gradient(150deg,var(--surface-2),var(--surface-1));border:1px solid var(--hairline-2);
+    transform-style:preserve-3d;transition:transform .25s var(--ease);will-change:transform;overflow:hidden}
+  .i .glare{position:absolute;inset:0;border-radius:20px;pointer-events:none;opacity:0;transition:opacity .25s;
+    background:radial-gradient(circle at 50% 0%,oklch(0.95 0.05 80/.25),transparent 45%)}
+  .i .card3d .clab{font-family:var(--fm);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  .i .card3d h3{font-family:var(--fd);font-weight:700;font-size:1.7rem;margin:.5rem 0 1.2rem;transform:translateZ(40px)}
+  .i .field{margin-bottom:1rem;transform:translateZ(25px)}
+  .i .field input{width:100%;padding:.85rem 1rem;border:1px solid var(--hairline-2);border-radius:10px;background:oklch(0.99 0 0/.05);color:var(--ink)}
+  .i .field input:focus{outline:none;border-color:var(--accent)}
+  .i .card3d .btn{width:100%;transform:translateZ(40px)}
+
+  @media(max-width:820px){.g .grid,.i .grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="pagebar">
+    <span><b>MK Auto</b> &nbsp;·&nbsp; «Finn din bil» — innovativt (G–I)</span>
+    <span>Dra slideren · flytt musa · vipp kortet</span>
+  </div>
+
+  <!-- G LIVE-MATCH CONFIGURATOR -->
+  <section class="block g">
+    <div class="wrap">
+      <div class="tag"><span>G — Live-match · tallet teller mens du filtrerer</span>
+        <button class="pick" data-choice="contact-livematch">Velg denne</button></div>
+      <div class="grid">
+        <div>
+          <span class="eyebrow">Fant du ikke det du lette etter?</span>
+          <div class="bignum" id="count">12</div>
+          <div class="bigcap" id="cap">biler matcher akkurat nå</div>
+          <p class="sub">Still inn budsjett og type — tallet oppdateres live. Null treff? Vi finner den for deg uansett.</p>
+        </div>
+        <div class="panel">
+          <div class="lab">Biltype</div>
+          <div class="pills" id="typePills">
+            <button class="pill on" data-w="1">Alle</button>
+            <button class="pill" data-w="0.45">SUV</button>
+            <button class="pill" data-w="0.5">Stasjonsvogn</button>
+            <button class="pill" data-w="0.35">El</button>
+            <button class="pill" data-w="0.3">Hybrid</button>
+          </div>
+          <div class="slider-row"><span>Budsjett</span><span>inntil <b id="budget">350 000 kr</b></span></div>
+          <input type="range" id="budgetRange" min="100000" max="700000" step="10000" value="350000">
+          <div class="cta">
+            <input placeholder="Telefon eller e-post">
+            <button class="btn">Varsle meg om treff →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- H CURSOR SPOTLIGHT -->
+  <section class="block h" id="hSpot" style="overflow:hidden">
+    <div class="beam" id="beam"></div>
+    <div class="grain"></div>
+    <div class="tag" style="position:absolute;top:1.4rem;left:1.4rem;z-index:4"><span>H — Cursor Spotlight · lyset følger musa</span>
+      <button class="pick" data-choice="contact-spotlight">Velg denne</button></div>
+    <div class="inner">
+      <span class="eyebrow">Fant du ikke det du lette etter?</span>
+      <h2 class="h2" style="margin-top:1rem">Vi finner den.<br><span class="accent">Uansett.</span></h2>
+      <p class="lede">Beskriv bilen du jakter på, så lyser vi opp nettverket vårt for å spore den opp.</p>
+      <div class="searchpill"><input placeholder="Jeg ser etter …"><button class="btn">Send →</button></div>
+      <div class="hint">Beveg musa rundt i feltet ✦</div>
+    </div>
+  </section>
+
+  <!-- I 3D TILT WISH-CARD -->
+  <section class="block i" style="border-bottom:0">
+    <div class="wrap">
+      <div class="tag"><span>I — 3D Tilt-kort · vipper mot pekeren</span>
+        <button class="pick" data-choice="contact-tilt">Velg denne</button></div>
+      <div class="grid">
+        <div>
+          <span class="eyebrow">Fant du ikke det du lette etter?</span>
+          <h2 class="h2" style="margin-top:.7rem">Send oss ønskekortet ditt.</h2>
+          <p class="lede">Fyll ut, så tar vi jakten. Vipp kortet litt — bare fordi det er gøy.</p>
+        </div>
+        <div class="scene">
+          <form class="card3d" id="tiltCard" onsubmit="return false">
+            <div class="glare" id="glare"></div>
+            <span class="clab">Ønskekort · MK Auto</span>
+            <h3>Hva drømmer du om?</h3>
+            <div class="field"><input placeholder="Ønsket bil — f.eks. familie-SUV, 4x4"></div>
+            <div class="field"><input placeholder="Budsjett — f.eks. under 350 000"></div>
+            <div class="field"><input placeholder="Telefon eller e-post"></div>
+            <button class="btn">Send ønskekort →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    /* G — live count */
+    (function(){
+      const pills=document.querySelectorAll('#typePills .pill');
+      const range=document.getElementById('budgetRange');
+      const budget=document.getElementById('budget');
+      const countEl=document.getElementById('count');
+      const cap=document.getElementById('cap');
+      let w=1, shown=12, raf;
+      function target(){
+        const b=(+range.value-100000)/600000; // 0..1
+        return Math.max(0, Math.round((4+ b*42) * w));
+      }
+      function animate(){
+        const t=target();
+        cancelAnimationFrame(raf);
+        const stepFn=()=>{ if(shown<t)shown++; else if(shown>t)shown--; countEl.textContent=shown;
+          cap.textContent = t===0 ? 'treff — men vi finner den for deg' : 'biler matcher akkurat nå';
+          if(shown!==t) raf=requestAnimationFrame(stepFn); };
+        stepFn();
+      }
+      pills.forEach(p=>p.addEventListener('click',()=>{pills.forEach(x=>x.classList.remove('on'));p.classList.add('on');w=+p.dataset.w;animate();}));
+      range.addEventListener('input',()=>{budget.textContent=(+range.value).toLocaleString('nb-NO')+' kr';animate();});
+    })();
+
+    /* H — spotlight follows cursor */
+    (function(){
+      const sec=document.getElementById('hSpot'), beam=document.getElementById('beam');
+      sec.addEventListener('pointermove',e=>{
+        const r=sec.getBoundingClientRect();
+        beam.style.transform='translate('+(e.clientX-r.left)+'px,'+(e.clientY-r.top)+'px)';
+      });
+    })();
+
+    /* I — 3D tilt */
+    (function(){
+      const card=document.getElementById('tiltCard'), glare=document.getElementById('glare');
+      const scene=card.parentElement;
+      scene.addEventListener('pointermove',e=>{
+        const r=card.getBoundingClientRect();
+        const px=(e.clientX-r.left)/r.width-0.5, py=(e.clientY-r.top)/r.height-0.5;
+        card.style.transform='rotateY('+(px*12)+'deg) rotateX('+(-py*12)+'deg)';
+        glare.style.opacity='1';
+        glare.style.background='radial-gradient(circle at '+((px+0.5)*100)+'% '+((py+0.5)*100)+'%,oklch(0.95 0.05 80/.28),transparent 45%)';
+      });
+      scene.addEventListener('pointerleave',()=>{card.style.transform='';glare.style.opacity='0';});
+    })();
+  </script>
+</body>
+</html>

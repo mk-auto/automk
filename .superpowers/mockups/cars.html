@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MK Auto — Biler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,400;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --canvas:oklch(0.165 0.012 64);--surface-1:oklch(0.205 0.013 64);--surface-2:oklch(0.245 0.015 62);
+    --ink:oklch(0.962 0.008 85);--ink-soft:oklch(0.795 0.010 84);--ink-mute:oklch(0.615 0.012 80);
+    --hairline:oklch(0.99 0 0/0.12);--hairline-2:oklch(0.99 0 0/0.20);
+    --accent:oklch(0.805 0.128 73);--accent-strong:oklch(0.720 0.140 58);--accent-ink:oklch(0.205 0.05 62);
+    --fd:"Bricolage Grotesque",sans-serif;--fb:"Schibsted Grotesk",sans-serif;--fm:"JetBrains Mono",monospace;
+    --ease:cubic-bezier(0.23,1,0.32,1);
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--canvas);color:var(--ink);font-family:var(--fb);-webkit-font-smoothing:antialiased}
+  .pagebar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    gap:1rem;padding:.8rem 1.4rem;background:oklch(0.13 0.01 64/.85);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--hairline);font-size:.82rem;color:var(--ink-soft)}
+  .pagebar b{color:var(--accent);font-family:var(--fm);letter-spacing:.1em;text-transform:uppercase;font-size:.72rem}
+  .block{padding:clamp(3rem,6vw,5.5rem) clamp(1.4rem,4vw,3rem);border-bottom:1px solid var(--hairline)}
+  .wrap{max-width:1280px;margin:0 auto}
+  .tag{display:inline-flex;gap:.6rem;align-items:center;margin-bottom:2rem;
+    font-family:var(--fm);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute)}
+  .tag .pick{cursor:pointer;border:1px solid var(--hairline-2);border-radius:999px;padding:.35rem .8rem;color:var(--ink);transition:.25s var(--ease);background:transparent}
+  .tag .pick:hover,.tag .pick.selected{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .eyebrow{font-family:var(--fm);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+  .head{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin:.6rem 0 2rem}
+  .h2{font-family:var(--fd);font-weight:600;font-size:clamp(1.9rem,3.4vw,3rem);line-height:1.04;letter-spacing:-.02em}
+  .seeall{font-family:var(--fm);font-size:.8rem;letter-spacing:.05em;color:var(--accent);display:inline-flex;gap:.5rem;align-items:center}
+  .btn{display:inline-flex;align-items:center;gap:.5em;padding:.95rem 1.6rem;border-radius:2px;font-weight:600;font-size:.95rem;background:var(--accent);color:var(--accent-ink);transition:.16s var(--ease)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hairline-2)}
+  .tag-pill{font-family:var(--fm);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .6rem;border-radius:2px;background:var(--accent);color:var(--accent-ink)}
+
+  /* ===== A — SHOWCASE + THUMBNAILS (interactive) ===== */
+  .showcase{display:grid;grid-template-columns:1.7fr .9fr;gap:1.5rem}
+  .stage{position:relative;border-radius:16px;overflow:hidden;background:var(--surface-1);border:1px solid var(--hairline);min-height:440px;display:flex;flex-direction:column;justify-content:flex-end}
+  .stage .img{position:absolute;inset:0;background-size:cover;background-position:center;background-color:var(--surface-2);transition:.5s var(--ease)}
+  .stage .grad{position:absolute;inset:0;background:linear-gradient(0deg,oklch(0.12 0.01 64/.95),transparent 60%)}
+  .stage .info{position:relative;z-index:2;padding:2rem}
+  .stage .info h3{font-family:var(--fd);font-weight:700;font-size:2.4rem;letter-spacing:-.02em}
+  .stage .info .sub{color:var(--ink-soft);margin-top:.2rem}
+  .stage .specs{display:flex;gap:2rem;margin:1.2rem 0;flex-wrap:wrap}
+  .stage .specs .v{font-family:var(--fm);font-weight:600;font-size:1.05rem}
+  .stage .specs .k{font-size:.72rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.05em}
+  .stage .buy{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  .stage .price{font-family:var(--fm);font-weight:600;font-size:1.8rem}
+  .thumbs{display:flex;flex-direction:column;gap:.8rem}
+  .thumb{display:flex;gap:1rem;align-items:center;padding:.7rem;border-radius:12px;border:1px solid var(--hairline);background:var(--surface-1);cursor:pointer;transition:.25s var(--ease)}
+  .thumb:hover{border-color:var(--hairline-2)}
+  .thumb.active{border-color:var(--accent);background:oklch(0.805 0.128 73/.08)}
+  .thumb .ti{width:84px;height:60px;border-radius:8px;background-size:cover;background-position:center;background-color:var(--surface-2);flex:0 0 auto}
+  .thumb .tn{font-family:var(--fd);font-weight:600}
+  .thumb .tp{font-family:var(--fm);font-size:.82rem;color:var(--ink-soft)}
+
+  /* ===== B — EDITORIAL SPLIT CARDS ===== */
+  .edit{display:flex;flex-direction:column;gap:2rem;margin-top:1rem}
+  .ecar{display:grid;grid-template-columns:1.1fr 1fr;gap:0;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;background:var(--surface-1)}
+  .ecar:nth-child(even){grid-template-columns:1fr 1.1fr}
+  .ecar:nth-child(even) .ei{order:2}
+  .ecar .ei{min-height:340px;background-size:cover;background-position:center;background-color:var(--surface-2)}
+  .ecar .ec{padding:clamp(1.6rem,3vw,2.8rem);display:flex;flex-direction:column;justify-content:center}
+  .ecar h3{font-family:var(--fd);font-weight:700;font-size:clamp(1.8rem,3vw,2.8rem);letter-spacing:-.02em}
+  .ecar .sub{color:var(--ink-soft);margin-top:.2rem}
+  .ecar .erow{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0;padding:1.2rem 0;border-block:1px solid var(--hairline)}
+  .ecar .erow .v{font-family:var(--fm);font-weight:600;font-size:1.1rem}
+  .ecar .erow .k{font-size:.72rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.05em;margin-top:.2rem}
+  .ecar .ebuy{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  .ecar .price{font-family:var(--fm);font-weight:600;font-size:1.7rem}
+
+  /* ===== C — PREMIUM GRID ===== */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1rem}
+  .card{background:var(--surface-1);border:1px solid var(--hairline);border-radius:14px;overflow:hidden;transition:.3s var(--ease)}
+  .card:hover{transform:translateY(-6px);border-color:var(--hairline-2)}
+  .card .ci{position:relative;aspect-ratio:16/11;background-color:var(--surface-2);overflow:hidden}
+  .card .ci .imgz{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .5s var(--ease)}
+  .card:hover .ci .imgz{transform:scale(1.07)}
+  .card .ci .top{position:absolute;top:.9rem;left:.9rem;right:.9rem;display:flex;justify-content:space-between;z-index:2}
+  .card .fav{width:34px;height:34px;display:grid;place-items:center;border-radius:999px;background:oklch(0.12 0.01 64/.55);backdrop-filter:blur(6px);color:var(--ink);border:1px solid var(--hairline)}
+  .card .cb{padding:1.3rem}
+  .card h3{font-family:var(--fd);font-weight:600;font-size:1.3rem;letter-spacing:-.01em}
+  .card .sub{font-size:.85rem;color:var(--ink-mute)}
+  .card .cspecs{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin:1rem 0;padding:.9rem 0;border-block:1px solid var(--hairline)}
+  .card .cspecs .v{font-family:var(--fm);font-size:.92rem}
+  .card .cspecs .k{font-size:.68rem;color:var(--ink-mute);margin-top:.1rem}
+  .card .cf{display:flex;align-items:center;justify-content:space-between}
+  .card .price{font-family:var(--fm);font-weight:600;font-size:1.25rem}
+  .card .go{font-family:var(--fm);font-size:.78rem;color:var(--accent)}
+  .cars-foot{display:flex;justify-content:center;margin-top:2.5rem}
+
+  @media(max-width:860px){
+    .showcase{grid-template-columns:1fr}.thumbs{flex-direction:row;overflow-x:auto}
+    .ecar,.ecar:nth-child(even){grid-template-columns:1fr}.ecar:nth-child(even) .ei{order:0}
+    .grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+  <div class="pagebar">
+    <span><b>MK Auto</b> &nbsp;·&nbsp; Biler — 3 retninger</span>
+    <span>Klikk miniatyrene i A · hover i C · velg under hver</span>
+  </div>
+
+  <!-- A SHOWCASE -->
+  <section class="block">
+    <div class="wrap">
+      <div class="tag"><span>A — Showcase + miniatyrer · interaktiv</span>
+        <button class="pick" data-choice="cars-showcase">Velg denne</button></div>
+      <div class="head"><div><span class="eyebrow">Et utvalg fra lageret</span><h2 class="h2">Klare for prøvekjøring.</h2></div>
+        <a class="seeall">Se alle bilene →</a></div>
+      <div class="showcase">
+        <div class="stage">
+          <div class="img" id="stageImg" style="background-image:url('https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1300&q=80')"></div>
+          <div class="grad"></div>
+          <div class="info">
+            <span class="tag-pill">Til salgs</span>
+            <h3 id="stageName" style="margin-top:.8rem">Volvo XC60</h3>
+            <div class="sub" id="stageSub">D4 AWD Inscription</div>
+            <div class="specs">
+              <div><div class="v" id="stageYear">2019</div><div class="k">Årsmodell</div></div>
+              <div><div class="v" id="stageKm">96 400 km</div><div class="k">Kjørt</div></div>
+              <div><div class="v" id="stageFuel">Diesel</div><div class="k">Drivstoff</div></div>
+            </div>
+            <div class="buy"><span class="price" id="stagePrice">389 000 kr</span><a class="btn">Se bilen</a></div>
+          </div>
+        </div>
+        <div class="thumbs" id="thumbs">
+          <div class="thumb active" data-name="Volvo XC60" data-sub="D4 AWD Inscription" data-price="389 000 kr" data-year="2019" data-km="96 400 km" data-fuel="Diesel" data-img="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1300&q=80">
+            <div class="ti" style="background-image:url('https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=300&q=70')"></div><div><div class="tn">Volvo XC60</div><div class="tp">389 000 kr · 2019</div></div></div>
+          <div class="thumb" data-name="Tesla Model 3" data-sub="Long Range AWD" data-price="329 000 kr" data-year="2021" data-km="63 100 km" data-fuel="El" data-img="https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=1300&q=80">
+            <div class="ti" style="background-image:url('https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=300&q=70')"></div><div><div class="tn">Tesla Model 3</div><div class="tp">329 000 kr · 2021</div></div></div>
+          <div class="thumb" data-name="BMW 320i" data-sub="Touring Sport Line" data-price="342 000 kr" data-year="2020" data-km="71 250 km" data-fuel="Bensin" data-img="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1300&q=80">
+            <div class="ti" style="background-image:url('https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=300&q=70')"></div><div><div class="tn">BMW 320i</div><div class="tp">342 000 kr · 2020</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B EDITORIAL -->
+  <section class="block">
+    <div class="wrap">
+      <div class="tag"><span>B — Editorial Split · store, oppslukende kort</span>
+        <button class="pick" data-choice="cars-editorial">Velg denne</button></div>
+      <div class="head"><div><span class="eyebrow">Et utvalg fra lageret</span><h2 class="h2">Hver bil, fortjent oppmerksomhet.</h2></div>
+        <a class="seeall">Se alle bilene →</a></div>
+      <div class="edit">
+        <div class="ecar"><div class="ei" style="background-image:url('https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1100&q=80')"></div>
+          <div class="ec"><span class="tag-pill" style="align-self:flex-start">Til salgs</span>
+            <h3 style="margin-top:.8rem">Volvo XC60</h3><div class="sub">D4 AWD Inscription</div>
+            <div class="erow"><div><div class="v">2019</div><div class="k">Årsmodell</div></div><div><div class="v">96 400</div><div class="k">km</div></div><div><div class="v">Diesel</div><div class="k">Drivstoff</div></div></div>
+            <div class="ebuy"><span class="price">389 000 kr</span><a class="btn">Se bilen</a></div></div></div>
+        <div class="ecar"><div class="ei" style="background-image:url('https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=1100&q=80')"></div>
+          <div class="ec"><span class="tag-pill" style="align-self:flex-start">Til salgs</span>
+            <h3 style="margin-top:.8rem">Tesla Model 3</h3><div class="sub">Long Range AWD</div>
+            <div class="erow"><div><div class="v">2021</div><div class="k">Årsmodell</div></div><div><div class="v">63 100</div><div class="k">km</div></div><div><div class="v">El</div><div class="k">Drivstoff</div></div></div>
+            <div class="ebuy"><span class="price">329 000 kr</span><a class="btn">Se bilen</a></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C PREMIUM GRID -->
+  <section class="block" style="border-bottom:0">
+    <div class="wrap">
+      <div class="tag"><span>C — Premium Grid · polert 3-kort</span>
+        <button class="pick" data-choice="cars-grid">Velg denne</button></div>
+      <div class="head"><div><span class="eyebrow">Et utvalg fra lageret</span><h2 class="h2">Klare for prøvekjøring.</h2></div>
+        <a class="seeall">Se alle bilene →</a></div>
+      <div class="grid">
+        <div class="card"><div class="ci"><div class="imgz" style="background-image:url('https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=800&q=80')"></div>
+          <div class="top"><span class="tag-pill">Til salgs</span><span class="fav">♥</span></div></div>
+          <div class="cb"><h3>Volvo XC60</h3><div class="sub">D4 AWD Inscription</div>
+            <div class="cspecs"><div><div class="v">2019</div><div class="k">År</div></div><div><div class="v">96 400</div><div class="k">km</div></div><div><div class="v">Diesel</div><div class="k">Drivstoff</div></div></div>
+            <div class="cf"><span class="price">389 000 kr</span><span class="go">Se bil →</span></div></div></div>
+        <div class="card"><div class="ci"><div class="imgz" style="background-image:url('https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=800&q=80')"></div>
+          <div class="top"><span class="tag-pill">Til salgs</span><span class="fav">♥</span></div></div>
+          <div class="cb"><h3>Tesla Model 3</h3><div class="sub">Long Range AWD</div>
+            <div class="cspecs"><div><div class="v">2021</div><div class="k">År</div></div><div><div class="v">63 100</div><div class="k">km</div></div><div><div class="v">El</div><div class="k">Drivstoff</div></div></div>
+            <div class="cf"><span class="price">329 000 kr</span><span class="go">Se bil →</span></div></div></div>
+        <div class="card"><div class="ci"><div class="imgz" style="background-image:url('https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=800&q=80')"></div>
+          <div class="top"><span class="tag-pill">Til salgs</span><span class="fav">♥</span></div></div>
+          <div class="cb"><h3>BMW 320i</h3><div class="sub">Touring Sport Line</div>
+            <div class="cspecs"><div><div class="v">2020</div><div class="k">År</div></div><div><div class="v">71 250</div><div class="k">km</div></div><div><div class="v">Bensin</div><div class="k">Drivstoff</div></div></div>
+            <div class="cf"><span class="price">342 000 kr</span><span class="go">Se bil →</span></div></div></div>
+      </div>
+      <div class="cars-foot"><a class="btn ghost">Til hele bilbutikken →</a></div>
+    </div>
+  </section>
+
+  <script>
+    const ids={name:'stageName',sub:'stageSub',price:'stagePrice',year:'stageYear',km:'stageKm',fuel:'stageFuel'};
+    const thumbs=document.querySelectorAll('#thumbs .thumb');
+    thumbs.forEach(t=>t.addEventListener('click',()=>{
+      thumbs.forEach(x=>x.classList.remove('active'));t.classList.add('active');
+      document.getElementById('stageImg').style.backgroundImage="url('"+t.dataset.img+"')";
+      document.getElementById('stageName').textContent=t.dataset.name;
+      document.getElementById('stageSub').textContent=t.dataset.sub;
+      document.getElementById('stagePrice').textContent=t.dataset.price;
+      document.getElementById('stageYear').textContent=t.dataset.year;
+      document.getElementById('stageKm').textContent=t.dataset.km;
+      document.getElementById('stageFuel').textContent=t.dataset.fuel;
+    }));
+  </script>
+</body>
+</html>

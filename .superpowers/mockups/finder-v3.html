@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MK Auto — Vi skaffer bilen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --canvas:oklch(0.165 0.012 64);--surface-1:oklch(0.205 0.013 64);--surface-2:oklch(0.245 0.015 62);
+    --ink:oklch(0.962 0.008 85);--ink-soft:oklch(0.795 0.010 84);--ink-mute:oklch(0.615 0.012 80);
+    --hairline:oklch(0.99 0 0/0.12);--hairline-2:oklch(0.99 0 0/0.22);
+    --accent:oklch(0.805 0.128 73);--accent-strong:oklch(0.720 0.140 58);--accent-ink:oklch(0.205 0.05 62);
+    --fd:"Geist",sans-serif;--fb:"Geist",sans-serif;--fm:"Geist Mono",monospace;
+    --ease:cubic-bezier(0.23,1,0.32,1);
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:#0c0a09;color:var(--ink);font-family:var(--fb);-webkit-font-smoothing:antialiased}
+  .pagebar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    gap:1rem;padding:.8rem 1.4rem;background:oklch(0.13 0.01 64/.85);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--hairline);font-size:.82rem;color:var(--ink-soft)}
+  .pagebar b{color:var(--accent);font-family:var(--fm);letter-spacing:.1em;text-transform:uppercase;font-size:.72rem}
+
+  .block{position:relative;padding:clamp(3rem,6vw,5.5rem) clamp(1.4rem,4vw,3rem);overflow:hidden;isolation:isolate}
+  /* cinematic car background */
+  .bg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center;background-color:#14110e;
+    background-image:url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1900&q=80')}
+  .scrim{position:absolute;inset:0;z-index:-1;background:
+    linear-gradient(180deg,oklch(0.10 0.01 60/.55) 0%,oklch(0.11 0.01 60/.72) 42%,oklch(0.10 0.01 60/.92) 100%),
+    radial-gradient(90% 70% at 80% 0%,oklch(0.85 0.12 75/.10),transparent 55%)}
+
+  .wrap{max-width:1040px;margin:0 auto;position:relative;z-index:2}
+  .tag{display:inline-flex;gap:.6rem;align-items:center;margin-bottom:1.4rem;
+    font-family:var(--fm);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+  .tag .pill{background:oklch(0.12 0.01 64/.5);backdrop-filter:blur(6px);padding:.3rem .7rem;border-radius:999px;border:1px solid var(--hairline)}
+  .tag .pick{cursor:pointer;border:1px solid var(--hairline-2);border-radius:999px;padding:.35rem .8rem;color:var(--ink);transition:.25s var(--ease);background:oklch(0.12 0.01 64/.5);backdrop-filter:blur(6px)}
+  .tag .pick:hover,.tag .pick.selected{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .eyebrow{font-family:var(--fm);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+  .h2{font-family:var(--fd);font-weight:700;font-size:clamp(2.2rem,5vw,4rem);line-height:.98;letter-spacing:-.03em;text-wrap:balance;margin-top:.6rem}
+  .intro{color:var(--ink-soft);margin-top:.9rem;max-width:54ch}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;padding:1rem 1.8rem;border-radius:3px;font-weight:600;font-size:1rem;background:var(--accent);color:var(--accent-ink);transition:.16s var(--ease);border:0;cursor:pointer}
+  .btn:active{transform:scale(.985)}
+  input{font:inherit;color:inherit}
+
+  /* glass panel */
+  .panel{margin-top:1.8rem;border:1px solid var(--hairline-2);border-radius:18px;overflow:hidden;position:relative;
+    background:oklch(0.15 0.012 64/.55);backdrop-filter:blur(18px) saturate(130%)}
+  .panel::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-strong),transparent)}
+
+  .pbody{padding:clamp(1.2rem,2.4vw,1.8rem)}
+  .gridc{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem 1.6rem}
+  .grp{display:flex;flex-direction:column;gap:.55rem}
+  .grp.col2{grid-column:1 / -1}
+  .glabel{font-family:var(--fm);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
+  .glabel .opt{text-transform:none;letter-spacing:0;color:oklch(0.5 0.01 80)}
+  .chips{display:flex;flex-wrap:wrap;gap:.45rem}
+  .chip{padding:.5rem .95rem;border:1px solid var(--hairline-2);border-radius:999px;background:oklch(0.99 0 0/.05);color:var(--ink-soft);cursor:pointer;font-size:.88rem;transition:.16s var(--ease);white-space:nowrap}
+  .chip:hover{border-color:var(--accent);color:var(--ink)}
+  .chip.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+  .txt{width:100%;padding:.8rem .95rem;border:1px solid var(--hairline-2);border-radius:9px;background:oklch(0.99 0 0/.05);color:var(--ink)}
+  .txt::placeholder{color:var(--ink-mute)}
+  .txt:focus{outline:none;border-color:var(--accent);background:oklch(0.99 0 0/.08)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+  .selwrap{position:relative}
+  select{appearance:none;width:100%;padding:.8rem 2.2rem .8rem .95rem;border:1px solid var(--hairline-2);border-radius:9px;background:oklch(0.20 0.012 64/.9);color:var(--ink);cursor:pointer}
+  select:focus{outline:none;border-color:var(--accent)}
+  .selwrap::after{content:"▾";position:absolute;right:.95rem;top:50%;transform:translateY(-50%);color:var(--ink-mute);pointer-events:none}
+  .slider-head{display:flex;justify-content:space-between;font-family:var(--fm);font-size:.88rem}
+  .slider-head b{color:var(--accent)}
+  input[type=range]{width:100%;accent-color:var(--accent);height:4px;margin-top:.45rem}
+
+  .pfoot{padding:clamp(1.2rem,2.4vw,1.8rem);border-top:1px solid var(--hairline);background:oklch(0.99 0 0/.03)}
+  .ftitle{font-family:var(--fd);font-weight:600;font-size:1.05rem;margin-bottom:.85rem}
+  .contact{display:grid;grid-template-columns:1fr 1fr auto;gap:.9rem;align-items:end}
+  .contact .btn{height:100%;white-space:nowrap}
+
+  @media(max-width:760px){.gridc{grid-template-columns:1fr}.contact{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="pagebar">
+    <span><b>MK Auto</b> &nbsp;·&nbsp; «Vi skaffer bilen» — v3 (kinematisk, stram)</span>
+    <span>Uten ikoner · uten oppsummering · cinematic bakgrunn</span>
+  </div>
+
+  <section class="block">
+    <div class="bg"></div><div class="scrim"></div>
+    <div class="wrap">
+      <div class="tag"><span class="pill">Vi skaffer bilen — bestillingsforespørsel</span>
+        <button class="pick" data-choice="finder-v3">Velg denne</button></div>
+      <span class="eyebrow">Fant du ikke bilen på lageret?</span>
+      <h2 class="h2">Da skaffer vi den for deg.</h2>
+      <p class="intro">Fortell oss hva du ser etter, så sporer vi opp eller bestiller inn riktig bil til riktig pris.</p>
+
+      <div class="panel">
+        <div class="pbody">
+          <div class="gridc">
+            <div class="grp col2">
+              <div class="glabel">Merke <span class="opt">— flervalg, eller skriv ditt eget</span></div>
+              <div class="chips" data-group="brand">
+                <button class="chip" data-val="Volvo">Volvo</button>
+                <button class="chip" data-val="BMW">BMW</button>
+                <button class="chip" data-val="Tesla">Tesla</button>
+                <button class="chip" data-val="Audi">Audi</button>
+                <button class="chip" data-val="Mercedes">Mercedes</button>
+                <button class="chip" data-val="Toyota">Toyota</button>
+                <button class="chip" data-val="Volkswagen">VW</button>
+                <button class="chip" data-val="Škoda">Škoda</button>
+              </div>
+              <input class="txt" id="brandOther" placeholder="Annet merke? Skriv det inn — f.eks. Peugeot, Kia, Porsche …">
+            </div>
+
+            <div class="grp col2">
+              <div class="glabel">Modell <span class="opt">(valgfritt)</span></div>
+              <input class="txt" id="model" placeholder="Søk på modell — f.eks. XC60, Model 3, A4 …">
+            </div>
+
+            <div class="grp col2">
+              <div class="glabel">Karosseri <span class="opt">— flervalg</span></div>
+              <div class="chips" data-group="body">
+                <button class="chip" data-val="SUV">SUV</button>
+                <button class="chip" data-val="Stasjonsvogn">Stasjonsvogn</button>
+                <button class="chip" data-val="Sedan">Sedan</button>
+                <button class="chip" data-val="Kombi">Kombi</button>
+                <button class="chip" data-val="Kompakt">Kompakt</button>
+                <button class="chip" data-val="Cabriolet">Cabriolet</button>
+                <button class="chip" data-val="Varebil">Varebil</button>
+              </div>
+            </div>
+
+            <div class="grp">
+              <div class="glabel">Drivstoff <span class="opt">— flervalg</span></div>
+              <div class="chips" data-group="fuel">
+                <button class="chip" data-val="El">El</button>
+                <button class="chip" data-val="Hybrid">Hybrid</button>
+                <button class="chip" data-val="Bensin">Bensin</button>
+                <button class="chip" data-val="Diesel">Diesel</button>
+              </div>
+            </div>
+
+            <div class="grp">
+              <div class="glabel">Girkasse</div>
+              <div class="chips" data-group="gear">
+                <button class="chip" data-val="Automat">Automat</button>
+                <button class="chip" data-val="Manuell">Manuell</button>
+              </div>
+            </div>
+
+            <div class="grp">
+              <div class="glabel">Årsmodell</div>
+              <div class="two">
+                <div class="selwrap"><select aria-label="Fra år">
+                  <option value="">Fra år</option><option>2012</option><option>2014</option><option>2016</option><option>2018</option><option>2020</option><option>2022</option></select></div>
+                <div class="selwrap"><select aria-label="Til år">
+                  <option value="">Til år</option><option>2026</option><option>2024</option><option>2022</option><option>2020</option><option>2018</option></select></div>
+              </div>
+            </div>
+
+            <div class="grp">
+              <div class="glabel">Maks pris</div>
+              <div class="slider-head"><span>inntil</span><span><b id="budgetLabel">350 000 kr</b></span></div>
+              <input type="range" id="budget" min="50000" max="900000" step="10000" value="350000">
+            </div>
+          </div>
+        </div>
+
+        <div class="pfoot">
+          <div class="ftitle">Hvor skal vi sende treffet?</div>
+          <div class="contact">
+            <div class="grp"><div class="glabel">Navn</div><input class="txt" placeholder="Ola Nordmann"></div>
+            <div class="grp"><div class="glabel">E-post eller telefon</div><input class="txt" placeholder="ola@epost.no / 912 34 567"></div>
+            <button class="btn">Send forespørsel →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll('.chip').forEach(chip=>chip.addEventListener('click',()=>chip.classList.toggle('on')));
+    const b=document.getElementById('budget');
+    b.addEventListener('input',e=>{document.getElementById('budgetLabel').textContent=(+e.target.value).toLocaleString('nb-NO')+' kr';});
+  </script>
+</body>
+</html>

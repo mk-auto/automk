@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Kommisjon &amp; formidling · MK Auto</title>
+  <meta name="description" content="Skal du selge bilen? Vi forklarer forskjellen på kommisjonssalg og formidlingssalg i klartekst, og hvordan vi tar oss av hele salget for deg." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23231f1b'/%3E%3Ctext x='16' y='22' font-family='Geist,Arial,sans-serif' font-size='14' font-weight='800' text-anchor='middle' fill='%23a8662e'%3EMK%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#innhold">Hopp til innhold</a>
+
+  <header class="site-header is-scrolled" id="header">
+    <div class="container">
+      <nav class="nav" aria-label="Hovedmeny">
+        <a class="brand" href="index.html#top" translate="no" aria-label="MK Auto – til forsiden"><span class="mk">MK</span><span class="auto">Auto</span><span class="dot">.</span></a>
+        <ul class="nav-links">
+          <li><a href="butikk.html">Biler</a></li>
+          <li><a href="index.html#tjenester">Tjenester</a></li>
+          <li><a href="index.html#finn">Finn din bil</a></li>
+          <li><a class="btn btn--ghost" href="index.html#finn">Kontakt oss</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Åpne meny" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+      </nav>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="butikk.html">Biler</a>
+      <a href="index.html#tjenester">Tjenester</a>
+      <a href="index.html#finn">Finn din bil</a>
+      <a class="btn" href="index.html#finn">Kontakt oss</a>
+    </div>
+  </header>
+
+  <main class="sell" id="innhold">
+    <div class="container">
+      <a class="back-link" href="index.html#tjenester">&larr; Tjenester</a>
+
+      <div class="sell-hero">
+        <h1 class="runin runin--lg runin--center"><b>Skal du selge bilen? Vi gjør hele jobben.</b> Du velger bare hvordan &mdash; så ser du med en gang hva det betyr.</h1>
+        <div class="toggle-wrap">
+          <div class="toggle" id="toggle" role="tablist" aria-label="Velg salgsform">
+            <span class="knob" aria-hidden="true"></span>
+            <button role="tab" aria-selected="true" data-mode="kom">Kommisjon</button>
+            <button role="tab" aria-selected="false" data-mode="form">Formidling</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="diagram" id="rail">
+          <div class="connector" aria-hidden="true"></div>
+          <div class="node active" id="nodeMk">
+            <div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 13l2-5a2 2 0 0 1 1.9-1.3h10.2A2 2 0 0 1 19 8l2 5"/><path d="M3 13h18v4a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H6v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><circle cx="7" cy="15" r="1"/><circle cx="17" cy="15" r="1"/></svg></div>
+            <div class="nm">MK Auto</div><div class="role">selger</div>
+          </div>
+          <div class="node" id="nodeYou">
+            <div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/></svg></div>
+            <div class="nm">Deg</div><div class="role">eier</div>
+          </div>
+          <span class="ansvar-chip" id="chip">Ansvaret</span>
+        </div>
+
+        <div class="state kom" data-state="kom">
+          <h2><b>Kommisjonssalg.</b> Vi selger i vårt navn.</h2>
+          <p class="desc">Vi selger bilen <b>i vårt navn</b>, men for din regning. Da tar <b>vi</b> på oss reklamasjonsansvaret etter salget &mdash; ekstra trygghet for kjøperen, og en bil som er lettere å selge.</p>
+          <div class="facts"><span class="fact"><b>Selges i:</b> vårt navn</span><span class="fact"><b>Ansvar:</b> hos oss</span><span class="fact"><b>Regning:</b> din</span></div>
+        </div>
+        <div class="state form" data-state="form" hidden>
+          <h2><b>Formidlingssalg.</b> Du selger, vi hjelper.</h2>
+          <p class="desc">Vi er mellommann og gjør hele jobben, men salget skjer <b>i ditt navn</b> og for din regning. Da står <b>du</b> selv ansvarlig for eventuelle reklamasjoner etter salget.</p>
+          <div class="facts"><span class="fact"><b>Selges i:</b> ditt navn</span><span class="fact"><b>Ansvar:</b> hos deg</span><span class="fact"><b>Regning:</b> din</span></div>
+        </div>
+      </div>
+
+      <section class="journey" aria-labelledby="journey-title">
+        <div class="jhead">
+          <h2 class="runin runin--center" id="journey-title"><b>Slik gjør vi det.</b> Samme trygge prosess fra første prat til oppgjør &mdash; uansett hva du velger.</h2>
+        </div>
+        <div class="timeline" id="timeline">
+          <div class="spine" aria-hidden="true"><span class="grow" id="grow"></span></div>
+          <div class="milestone"><span class="node-num">01</span><div class="mcard"><h3>Vi blir enige om en avtale</h3><p>Vi går gjennom bilen sammen og blir enige om kommisjon eller formidling.</p></div></div>
+          <div class="milestone"><span class="node-num">02</span><div class="mcard"><h3>Vi klargjør og fotograferer</h3><p>Bilen gjøres klar, og vi tar gode bilder som viser den fra sin beste side.</p></div></div>
+          <div class="milestone"><span class="node-num">03</span><div class="mcard"><h3>Vi lager annonsen</h3><p>En ærlig og tydelig annonse, lagt ut der kjøperne faktisk er.</p></div></div>
+          <div class="milestone"><span class="node-num">04</span><div class="mcard"><h3>Vi tar oss av kontakten</h3><p>Vi svarer på spørsmål, holder visninger og blir med på prøvekjøring.</p></div></div>
+          <div class="milestone"><span class="node-num">05</span><div class="mcard"><h3>Vi ordner papirene</h3><p>Kontrakt, betaling og eierskifte &mdash; alt går riktig for seg.</p></div></div>
+          <div class="milestone"><span class="node-num">06</span><div class="mcard"><h3>Du får oppgjør</h3><p>Når bilen er solgt, får du oppgjøret ditt. Enkelt og trygt.</p></div></div>
+        </div>
+      </section>
+
+      <div class="dealer-card">
+        <div>
+          <h3>Klar for å selge?</h3>
+          <p>Ta kontakt, så finner vi avtalen som passer deg og bilen din.</p>
+        </div>
+        <a class="btn" href="index.html#finn">Ta kontakt</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="brand" href="index.html#top" translate="no"><span class="mk">MK</span><span class="auto">Auto</span><span class="dot">.</span></a>
+          <p>Bruktbiler gjort ordentlig, fra folk som kjører dem selv. Besøk oss på Økern i Oslo.</p>
+        </div>
+        <div class="footer-col"><h4>Tjenester</h4><ul>
+          <li><a href="index.html#tjenester">Kjøp</a></li><li><a href="index.html#tjenester">Selg</a></li><li><a href="kommisjon-formidling.html">Kommisjon &amp; formidling</a></li><li><a href="index.html#tjenester">Innbytte</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Besøk oss</h4><ul>
+          <li>Økernveien 00, 0580 Oslo</li><li>Man–fre 09–17</li><li>Lør 10–14</li>
+        </ul></div>
+        <div class="footer-col"><h4>Kontakt</h4><ul>
+          <li><a href="tel:+4720000000">+47 20 00 00 00</a></li><li><a href="mailto:post@mkauto.no">post@mkauto.no</a></li><li><a href="index.html#finn">Finn din bil</a></li>
+        </ul></div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> MK Auto AS · Org.nr 000 000 000</span>
+        <span class="legal"><a href="#">Personvern</a><a href="#">Vilkår</a><a href="#">Salgsbetingelser</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="kommisjon.js"></script>
+</body>
+</html>

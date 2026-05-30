@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MK Auto — Vi skaffer bilen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,400;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --canvas:oklch(0.165 0.012 64);--surface-1:oklch(0.205 0.013 64);--surface-2:oklch(0.245 0.015 62);
+    --ink:oklch(0.962 0.008 85);--ink-soft:oklch(0.795 0.010 84);--ink-mute:oklch(0.615 0.012 80);
+    --hairline:oklch(0.99 0 0/0.12);--hairline-2:oklch(0.99 0 0/0.20);
+    --accent:oklch(0.805 0.128 73);--accent-strong:oklch(0.720 0.140 58);--accent-ink:oklch(0.205 0.05 62);
+    --fd:"Bricolage Grotesque",sans-serif;--fb:"Schibsted Grotesk",sans-serif;--fm:"JetBrains Mono",monospace;
+    --ease:cubic-bezier(0.23,1,0.32,1);
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--canvas);color:var(--ink);font-family:var(--fb);-webkit-font-smoothing:antialiased}
+  .pagebar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    gap:1rem;padding:.8rem 1.4rem;background:oklch(0.13 0.01 64/.85);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--hairline);font-size:.82rem;color:var(--ink-soft)}
+  .pagebar b{color:var(--accent);font-family:var(--fm);letter-spacing:.1em;text-transform:uppercase;font-size:.72rem}
+  .block{padding:clamp(3rem,6vw,5.5rem) clamp(1.4rem,4vw,3rem);position:relative;overflow:hidden}
+  .block::before{content:"";position:absolute;inset:0;z-index:0;background:
+    radial-gradient(70% 60% at 88% -5%,oklch(0.26 0.04 70/.55),transparent 55%),
+    radial-gradient(60% 70% at 6% 110%,oklch(0.22 0.03 62/.5),transparent 60%)}
+  .wrap{max-width:1080px;margin:0 auto;position:relative;z-index:2}
+  .tag{display:inline-flex;gap:.6rem;align-items:center;margin-bottom:1.6rem;
+    font-family:var(--fm);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute)}
+  .tag .pick{cursor:pointer;border:1px solid var(--hairline-2);border-radius:999px;padding:.35rem .8rem;color:var(--ink);transition:.25s var(--ease);background:transparent}
+  .tag .pick:hover,.tag .pick.selected{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .eyebrow{font-family:var(--fm);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+  .h2{font-family:var(--fd);font-weight:600;font-size:clamp(2.1rem,4.4vw,3.6rem);line-height:1;letter-spacing:-.025em;text-wrap:balance}
+  .intro{color:var(--ink-soft);margin-top:1.1rem;max-width:58ch}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;padding:1.1rem 1.9rem;border-radius:3px;font-weight:600;font-size:1rem;background:var(--accent);color:var(--accent-ink);transition:.16s var(--ease);border:0;cursor:pointer}
+  .btn:active{transform:scale(.985)}
+  input{font:inherit;color:inherit}
+
+  /* PANEL */
+  .panel{margin-top:2.4rem;border:1px solid var(--hairline-2);border-radius:22px;overflow:hidden;
+    background:linear-gradient(165deg,var(--surface-2),var(--surface-1));position:relative}
+  .panel::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-strong),transparent)}
+  /* faint watermark car */
+  .panel .wm{position:absolute;right:-4%;bottom:-12%;width:min(48%,520px);color:var(--ink);opacity:.04;z-index:0;pointer-events:none}
+
+  /* live summary header */
+  .psum{position:relative;z-index:2;padding:clamp(1.5rem,3vw,2.4rem);border-bottom:1px solid var(--hairline)}
+  .psum .lab{font-family:var(--fm);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute)}
+  .psum .line{font-family:var(--fd);font-weight:600;font-size:clamp(1.4rem,3vw,2.3rem);line-height:1.25;letter-spacing:-.01em;margin-top:.6rem}
+  .psum .line .ph{color:var(--ink-mute);font-weight:400}
+  .psum .line .v{color:var(--accent)}
+
+  .pbody{position:relative;z-index:2;padding:clamp(1.3rem,2.6vw,2.2rem)}
+  .gridc{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem 2rem}
+  .grp{display:flex;flex-direction:column;gap:.8rem}
+  .grp.col2{grid-column:1 / -1}
+  .glabel{display:flex;align-items:center;gap:.55rem;font-family:var(--fm);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
+  .glabel .ic{width:16px;height:16px;color:var(--accent)}
+  .glabel .opt{text-transform:none;letter-spacing:0;color:oklch(0.5 0.01 80)}
+  .chips{display:flex;flex-wrap:wrap;gap:.5rem}
+  .chip{padding:.55rem 1rem;border:1px solid var(--hairline-2);border-radius:999px;background:oklch(0.99 0 0/.04);color:var(--ink-soft);cursor:pointer;font-size:.9rem;transition:.16s var(--ease);white-space:nowrap}
+  .chip:hover{border-color:var(--accent);color:var(--ink)}
+  .chip.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+  .txt{width:100%;padding:.85rem 1rem;border:1px solid var(--hairline-2);border-radius:10px;background:oklch(0.99 0 0/.04);color:var(--ink)}
+  .txt::placeholder{color:var(--ink-mute)}
+  .txt:focus{outline:none;border-color:var(--accent);background:oklch(0.99 0 0/.06)}
+  .brandrow{display:flex;gap:.6rem;align-items:center;margin-top:.2rem;flex-wrap:wrap}
+  .brandrow .txt{flex:1;min-width:220px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .selwrap{position:relative}
+  select{appearance:none;width:100%;padding:.85rem 2.2rem .85rem 1rem;border:1px solid var(--hairline-2);border-radius:10px;background:oklch(0.99 0 0/.04);color:var(--ink);cursor:pointer}
+  select:focus{outline:none;border-color:var(--accent)}
+  .selwrap::after{content:"▾";position:absolute;right:1rem;top:50%;transform:translateY(-50%);color:var(--ink-mute);pointer-events:none}
+  .slider-head{display:flex;justify-content:space-between;font-family:var(--fm);font-size:.9rem;margin-bottom:.2rem}
+  .slider-head b{color:var(--accent)}
+  input[type=range]{width:100%;accent-color:var(--accent);height:4px;margin-top:.4rem}
+
+  /* contact + cta */
+  .pfoot{position:relative;z-index:2;padding:clamp(1.3rem,2.6vw,2.2rem);border-top:1px solid var(--hairline);
+    background:oklch(0.99 0 0/.02)}
+  .pfoot .ftitle{font-family:var(--fd);font-weight:600;font-size:1.15rem;margin-bottom:1rem}
+  .contact{display:grid;grid-template-columns:1fr 1fr auto;gap:1rem;align-items:end}
+  .contact .btn{height:100%;white-space:nowrap}
+  .micro{display:flex;gap:1.4rem;flex-wrap:wrap;margin-top:1.1rem;font-size:.82rem;color:var(--ink-mute)}
+  .micro span{display:inline-flex;gap:.45rem;align-items:center}
+  .micro .ic{color:var(--accent)}
+
+  @media(max-width:760px){.gridc{grid-template-columns:1fr}.contact{grid-template-columns:1fr}.two{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+  <div class="pagebar">
+    <span><b>MK Auto</b> &nbsp;·&nbsp; «Vi skaffer bilen» — finner v2 (uten boks)</span>
+    <span>Skriv eget merke · navn + kontakt · live oppsummering</span>
+  </div>
+
+  <section class="block" style="border-bottom:0">
+    <div class="wrap">
+      <div class="tag"><span>Vi skaffer bilen — bestillingsforespørsel</span>
+        <button class="pick" data-choice="finder-v2">Velg denne</button></div>
+      <span class="eyebrow">Fant du ikke bilen på lageret?</span>
+      <h2 class="h2" style="margin-top:.7rem">Da skaffer vi den for deg.</h2>
+      <p class="intro">Fortell oss hva du ser etter — så bruker vi nettverket vårt av forhandlere og kontakter for å spore opp eller bestille inn riktig bil til riktig pris. Vet du nøyaktig hvilken? Flott. Er du åpen? Det går like fint.</p>
+
+      <div class="panel">
+        <svg class="wm" viewBox="0 0 900 300" fill="currentColor" aria-hidden="true"><path d="M30 196c-10 0-16-7-15-17l2-14c1-8 7-13 16-15l64-12c22-30 52-56 92-69 28-9 120-11 168-7 40 3 76 22 112 52l92 10c40 5 70 16 84 34 8 11 9 28 7 44-1 9-9 15-19 15h-30a52 52 0 00-104 0H236a52 52 0 00-104 0H30z"/><circle cx="184" cy="196" r="40" fill="oklch(0.205 0.013 64)"/><circle cx="556" cy="196" r="40" fill="oklch(0.205 0.013 64)"/></svg>
+
+        <!-- live summary -->
+        <div class="psum">
+          <div class="lab">Forespørselen din</div>
+          <div class="line" id="sumLine"><span class="ph">Velg under — så samler vi det opp her ↓</span></div>
+        </div>
+
+        <!-- controls -->
+        <div class="pbody">
+          <div class="gridc">
+            <div class="grp col2">
+              <div class="glabel"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 13l2-5a3 3 0 013-2h8a3 3 0 013 2l2 5M5 17h14"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/></svg> Merke <span class="opt">— flervalg, eller skriv ditt eget</span></div>
+              <div class="chips" data-group="brand" data-multi="1">
+                <button class="chip" data-val="Volvo">Volvo</button>
+                <button class="chip" data-val="BMW">BMW</button>
+                <button class="chip" data-val="Tesla">Tesla</button>
+                <button class="chip" data-val="Audi">Audi</button>
+                <button class="chip" data-val="Mercedes">Mercedes</button>
+                <button class="chip" data-val="Toyota">Toyota</button>
+                <button class="chip" data-val="Volkswagen">VW</button>
+                <button class="chip" data-val="Škoda">Škoda</button>
+              </div>
+              <div class="brandrow">
+                <input class="txt" id="brandOther" placeholder="Annet merke? Skriv det inn — f.eks. Peugeot, Kia, Porsche …">
+              </div>
+            </div>
+
+            <div class="grp col2">
+              <div class="glabel"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg> Modell <span class="opt">(valgfritt)</span></div>
+              <input class="txt" id="model" placeholder="Søk på modell — f.eks. XC60, Model 3, A4 …">
+            </div>
+
+            <div class="grp col2">
+              <div class="glabel"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="7" width="18" height="11" rx="2"/><path d="M3 12h18"/></svg> Karosseri <span class="opt">— flervalg</span></div>
+              <div class="chips" data-group="body" data-multi="1">
+                <button class="chip" data-val="SUV">SUV</button>
+                <button class="chip" data-val="Stasjonsvogn">Stasjonsvogn</button>
+                <button class="chip" data-val="Sedan">Sedan</button>
+                <button class="chip" data-val="Kombi">Kombi</button>
+                <button class="chip" data-val="Kompakt">Kompakt</button>
+                <button class="chip" data-val="Cabriolet">Cabriolet</button>
+                <button class="chip" data-val="Varebil">Varebil</button>
+              </div>
+            </div>
+
+            <div class="grp">
+              <div class="glabel"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg> Drivstoff <span class="opt">— flervalg</span></div>
+              <div class="chips" data-group="fuel" data-multi="1">
+                <button class="chip" data-val="El">El</button>
+                <button class="chip" data-val="Hybrid">Hybrid</button>
+                <button class="chip" data-val="Bensin">Bensin</button>
+                <button class="chip" data-val="Diesel">Diesel</button>
+              </div>
+            </div>
+
+            <div class="grp">
+              <div class="glabel"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> Girkasse</div>
+              <div class="chips" data-group="gear" data-multi="1">
+                <button class="chip" data-val="Automat">Automat</button>
+                <button class="chip" data-val="Manuell">Manuell</button>
+              </div>
+            </div>
+
+            <div class="grp">
+              <div class="glabel"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg> Årsmodell</div>
+              <div class="two">
+                <div class="selwrap"><select id="yearFrom" aria-label="Fra år">
+                  <option value="">Fra år</option><option value="2012">2012</option><option value="2014">2014</option>
+                  <option value="2016">2016</option><option value="2018">2018</option><option value="2020">2020</option><option value="2022">2022</option></select></div>
+                <div class="selwrap"><select id="yearTo" aria-label="Til år">
+                  <option value="">Til år</option><option value="2026">2026</option><option value="2024">2024</option>
+                  <option value="2022">2022</option><option value="2020">2020</option><option value="2018">2018</option></select></div>
+              </div>
+            </div>
+
+            <div class="grp">
+              <div class="glabel"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.5C14 8.6 13 8 12 8c-1.5 0-3 1-3 2.4 0 2.8 6 1.6 6 4.3 0 1.4-1.5 2.3-3 2.3-1 0-2-.6-2.5-1.5M12 6.5v11"/></svg> Maks pris</div>
+              <div class="slider-head"><span>inntil</span><span><b id="budgetLabel">350 000 kr</b></span></div>
+              <input type="range" id="budget" min="50000" max="900000" step="10000" value="350000">
+            </div>
+          </div>
+        </div>
+
+        <!-- contact + cta -->
+        <div class="pfoot">
+          <div class="ftitle">Hvor skal vi sende treffet?</div>
+          <div class="contact">
+            <div class="grp"><div class="glabel">Navn</div><input class="txt" placeholder="Ola Nordmann"></div>
+            <div class="grp"><div class="glabel">E-post eller telefon</div><input class="txt" placeholder="ola@epost.no / 912 34 567"></div>
+            <button class="btn">Send forespørsel →</button>
+          </div>
+          <div class="micro">
+            <span><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg> Gratis og uforpliktende</span>
+            <span><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> Svar vanligvis samme dag</span>
+            <span><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C8.7 2 6 4.7 6 8c0 4.5 6 10 6 10s6-5.5 6-10c0-3.3-2.7-6-6-6z"/><circle cx="12" cy="8" r="2"/></svg> Hentes på Økern eller leveres</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const state={brand:new Set(),brandOther:'',model:'',body:new Set(),fuel:new Set(),gear:new Set(),yearFrom:'',yearTo:'',budget:350000};
+    const sumLine=document.getElementById('sumLine');
+
+    function build(){
+      const parts=[];
+      const brands=[...state.brand]; if(state.brandOther.trim())brands.push(state.brandOther.trim());
+      if(brands.length) parts.push(brands.join(' / '));
+      if(state.model.trim()) parts.push('“'+state.model.trim()+'”');
+      if(state.body.size) parts.push([...state.body].join(' / '));
+      if(state.fuel.size) parts.push([...state.fuel].join(' / '));
+      if(state.gear.size) parts.push([...state.gear].join(' / '));
+      if(state.yearFrom||state.yearTo) parts.push((state.yearFrom||'…')+'–'+(state.yearTo||'…'));
+      parts.push('inntil '+state.budget.toLocaleString('nb-NO')+' kr');
+
+      while(sumLine.firstChild) sumLine.removeChild(sumLine.firstChild);
+      if(parts.length===1 && !brands.length && !state.model.trim() && !state.body.size && !state.fuel.size && !state.gear.size && !state.yearFrom && !state.yearTo){
+        const ph=document.createElement('span'); ph.className='ph';
+        ph.textContent='En bil til inntil '+state.budget.toLocaleString('nb-NO')+' kr — fortell oss mer ↓';
+        sumLine.appendChild(ph); return;
+      }
+      const lead=document.createElement('span'); lead.className='ph'; lead.textContent='En '; sumLine.appendChild(lead);
+      parts.forEach((p,i)=>{
+        const v=document.createElement('span'); v.className='v'; v.textContent=p; sumLine.appendChild(v);
+        if(i<parts.length-1){const sep=document.createElement('span'); sep.className='ph'; sep.textContent='  ·  '; sumLine.appendChild(sep);}
+      });
+    }
+
+    document.querySelectorAll('.chips').forEach(group=>{
+      const name=group.dataset.group;
+      group.querySelectorAll('.chip').forEach(chip=>{
+        chip.addEventListener('click',()=>{
+          chip.classList.toggle('on');
+          if(chip.classList.contains('on'))state[name].add(chip.dataset.val);else state[name].delete(chip.dataset.val);
+          build();
+        });
+      });
+    });
+    document.getElementById('brandOther').addEventListener('input',e=>{state.brandOther=e.target.value;build();});
+    document.getElementById('model').addEventListener('input',e=>{state.model=e.target.value;build();});
+    document.getElementById('yearFrom').addEventListener('change',e=>{state.yearFrom=e.target.value;build();});
+    document.getElementById('yearTo').addEventListener('change',e=>{state.yearTo=e.target.value;build();});
+    document.getElementById('budget').addEventListener('input',e=>{state.budget=+e.target.value;document.getElementById('budgetLabel').textContent=state.budget.toLocaleString('nb-NO')+' kr';build();});
+    build();
+  </script>
+</body>
+</html>

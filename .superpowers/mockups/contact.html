@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MK Auto — Finn din bil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,400;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --canvas:oklch(0.165 0.012 64);--surface-1:oklch(0.205 0.013 64);--surface-2:oklch(0.245 0.015 62);
+    --ink:oklch(0.962 0.008 85);--ink-soft:oklch(0.795 0.010 84);--ink-mute:oklch(0.615 0.012 80);
+    --hairline:oklch(0.99 0 0/0.12);--hairline-2:oklch(0.99 0 0/0.20);
+    --accent:oklch(0.805 0.128 73);--accent-strong:oklch(0.720 0.140 58);--accent-ink:oklch(0.205 0.05 62);
+    --cream:oklch(0.958 0.013 84);--cream-2:oklch(0.928 0.015 82);--ink-dark:oklch(0.225 0.013 62);
+    --ink-dark-soft:oklch(0.405 0.013 68);--ink-dark-mute:oklch(0.545 0.012 72);--hairline-dark:oklch(0.22 0.01 62/.16);
+    --fd:"Bricolage Grotesque",sans-serif;--fb:"Schibsted Grotesk",sans-serif;--fm:"JetBrains Mono",monospace;
+    --ease:cubic-bezier(0.23,1,0.32,1);
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--canvas);color:var(--ink);font-family:var(--fb);-webkit-font-smoothing:antialiased}
+  .pagebar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    gap:1rem;padding:.8rem 1.4rem;background:oklch(0.13 0.01 64/.85);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--hairline);font-size:.82rem;color:var(--ink-soft)}
+  .pagebar b{color:var(--accent);font-family:var(--fm);letter-spacing:.1em;text-transform:uppercase;font-size:.72rem}
+  .block{padding:clamp(3rem,6vw,5.5rem) clamp(1.4rem,4vw,3rem);border-bottom:1px solid var(--hairline);position:relative;overflow:hidden}
+  .wrap{max-width:1280px;margin:0 auto;position:relative;z-index:2}
+  .tag{display:inline-flex;gap:.6rem;align-items:center;margin-bottom:2rem;
+    font-family:var(--fm);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute)}
+  .tag .pick{cursor:pointer;border:1px solid var(--hairline-2);border-radius:999px;padding:.35rem .8rem;color:var(--ink);transition:.25s var(--ease);background:transparent}
+  .tag .pick:hover,.tag .pick.selected{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .eyebrow{font-family:var(--fm);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+  .h2{font-family:var(--fd);font-weight:600;font-size:clamp(2rem,4vw,3.4rem);line-height:1.02;letter-spacing:-.02em}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;padding:.95rem 1.6rem;border-radius:2px;font-weight:600;font-size:.95rem;background:var(--accent);color:var(--accent-ink);transition:.16s var(--ease);border:0;cursor:pointer}
+  .btn:active{transform:scale(.97)}
+  input,textarea{font:inherit;color:inherit}
+
+  /* ===== A — CREAM SPLIT (contrast band) ===== */
+  .a{background:var(--cream);color:var(--ink-dark)}
+  .a .eyebrow{color:var(--accent-strong)}
+  .a .h2{color:var(--ink-dark)}
+  .a .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,5vw,4.5rem);align-items:start}
+  .a .lede{color:var(--ink-dark-soft);margin-top:1.2rem;max-width:46ch;font-size:1.08rem}
+  .a .points{list-style:none;padding:0;margin-top:2rem;display:grid;gap:1rem}
+  .a .points li{display:flex;gap:.8rem;color:var(--ink-dark-soft)}
+  .a .points .ic{color:var(--accent-strong)}
+  .a .form{background:#fff;border:1px solid var(--hairline-dark);border-radius:12px;padding:clamp(1.5rem,3vw,2.2rem)}
+  .a .field{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+  .a .row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .a label{font-size:.8rem;font-weight:600;color:var(--ink-dark)}
+  .a input,.a textarea{padding:.8rem .9rem;border:1px solid var(--hairline-dark);border-radius:4px;background:var(--cream);color:var(--ink-dark)}
+  .a textarea{min-height:6rem;resize:vertical}
+  .a input:focus,.a textarea:focus{outline:none;border-color:var(--accent-strong);background:#fff}
+  .a .btn{width:100%;margin-top:.4rem}
+
+  /* ===== B — CONVERSATIONAL INTENT ===== */
+  .b{background:radial-gradient(120% 90% at 50% -10%,oklch(0.24 0.03 68/.7),transparent 55%),var(--canvas);text-align:center}
+  .b .wrap{max-width:880px}
+  .b .h2{font-size:clamp(2.2rem,5vw,4rem)}
+  .b .lede{color:var(--ink-soft);margin:1.2rem auto 0;max-width:52ch}
+  .b .chatbox{margin-top:2.6rem;border:1px solid var(--hairline-2);border-radius:18px;background:oklch(0.99 0 0/.04);
+    backdrop-filter:blur(12px);padding:1.4rem;text-align:left}
+  .b .prompt{display:flex;align-items:baseline;gap:.6rem;font-family:var(--fd);font-size:clamp(1.2rem,2vw,1.7rem);font-weight:500}
+  .b .prompt .lead{color:var(--ink-mute)}
+  .b .prompt input{flex:1;background:transparent;border:0;border-bottom:2px solid var(--accent);
+    font-family:var(--fd);font-weight:600;font-size:inherit;padding:.2rem 0;color:var(--ink)}
+  .b .prompt input:focus{outline:none}
+  .b .meta{display:flex;gap:.8rem;margin-top:1.4rem;flex-wrap:wrap;align-items:center}
+  .b .meta input{flex:1;min-width:160px;padding:.8rem 1rem;border:1px solid var(--hairline);border-radius:8px;background:oklch(0.99 0 0/.04);color:var(--ink)}
+  .b .meta input:focus{outline:none;border-color:var(--accent)}
+  .b .meta .btn{flex:0 0 auto}
+  .b .ex{margin-top:1rem;font-family:var(--fm);font-size:.74rem;color:var(--ink-mute);letter-spacing:.04em}
+
+  /* ===== C — GLASS CTA OVER IMAGE ===== */
+  .c{color:var(--ink)}
+  .c .bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-color:#14110e;
+    background-image:url('https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=1900&q=80')}
+  .c .scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,oklch(0.12 0.01 64/.78),oklch(0.12 0.01 64/.9))}
+  .c .wrap{max-width:980px;text-align:center}
+  .c .lede{color:var(--ink-soft);margin:1.2rem auto 0;max-width:52ch}
+  .c .glass{margin-top:2.4rem;border:1px solid var(--hairline-2);border-radius:18px;background:oklch(0.15 0.01 64/.55);
+    backdrop-filter:blur(16px);padding:clamp(1.6rem,3vw,2.4rem);text-align:left}
+  .c .row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+  .c .field{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+  .c label{font-size:.8rem;font-weight:600}
+  .c input,.c textarea{padding:.85rem 1rem;border:1px solid var(--hairline-2);border-radius:8px;background:oklch(0.99 0 0/.05);color:var(--ink)}
+  .c textarea{min-height:5.5rem;resize:vertical}
+  .c input:focus,.c textarea:focus{outline:none;border-color:var(--accent)}
+  .c .btn{width:100%;margin-top:.3rem}
+
+  @media(max-width:820px){.a .grid{grid-template-columns:1fr}.c .row,.a .row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="pagebar">
+    <span><b>MK Auto</b> &nbsp;·&nbsp; «Finn din bil» — 3 retninger</span>
+    <span>Velg under hver</span>
+  </div>
+
+  <!-- A CREAM SPLIT -->
+  <section class="block a">
+    <div class="wrap">
+      <div class="tag" style="color:var(--ink-dark-mute)"><span>A — Cream Split · kontrastbånd + skjema</span>
+        <button class="pick" data-choice="contact-cream">Velg denne</button></div>
+      <div class="grid">
+        <div>
+          <span class="eyebrow">Fant du ikke det du lette etter?</span>
+          <h2 class="h2" style="margin-top:.7rem">Fortell oss hva du drømmer om, så finner vi den.</h2>
+          <p class="lede">Lageret er bare en del av bildet. Beskriv bilen du jakter på, så bruker vi nettverket vårt for å spore den opp til riktig pris.</p>
+          <ul class="points">
+            <li><span class="ic">✉</span> Svar samme dag, hverdager.</li>
+            <li><span class="ic">★</span> Uforpliktende og helt gratis.</li>
+            <li><span class="ic">◎</span> Hentes hos oss på Økern, eller leveres.</li>
+          </ul>
+        </div>
+        <form class="form" onsubmit="return false">
+          <div class="field"><label>Navn</label><input placeholder="Ola Nordmann"></div>
+          <div class="row"><div class="field"><label>E-post</label><input placeholder="ola@epost.no"></div>
+            <div class="field"><label>Telefon</label><input placeholder="912 34 567"></div></div>
+          <div class="field"><label>Hva ser du etter?</label><textarea placeholder="Stasjonsvogn, firehjulstrekk, automat, under 300 000 kr."></textarea></div>
+          <button class="btn">Send melding →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- B CONVERSATIONAL -->
+  <section class="block b">
+    <div class="wrap">
+      <div class="tag"><span>B — Conversational Intent · ekko av hero-søket</span>
+        <button class="pick" data-choice="contact-chat">Velg denne</button></div>
+      <span class="eyebrow">Fant du ikke det du lette etter?</span>
+      <h2 class="h2" style="margin-top:.8rem">Si fra. Vi finner den.</h2>
+      <p class="lede">Vi leter videre i nettverket vårt til vi har riktig bil til deg.</p>
+      <div class="chatbox">
+        <div class="prompt"><span class="lead">Jeg ser etter</span>
+          <input placeholder="en stasjonsvogn med firehjulstrekk, under 300 000 …"></div>
+        <div class="meta">
+          <input placeholder="Navn">
+          <input placeholder="Telefon eller e-post">
+          <button class="btn">Send →</button>
+        </div>
+      </div>
+      <div class="ex">F.eks. «Tesla Model Y, lav km» · «familiebil med hengerfeste» · «el-bil under 250k»</div>
+    </div>
+  </section>
+
+  <!-- C GLASS OVER IMAGE -->
+  <section class="block c" style="border-bottom:0">
+    <div class="bg"></div><div class="scrim"></div>
+    <div class="wrap">
+      <div class="tag"><span>C — Glass CTA · skjemakort over foto</span>
+        <button class="pick" data-choice="contact-glass">Velg denne</button></div>
+      <span class="eyebrow">Fant du ikke det du lette etter?</span>
+      <h2 class="h2" style="margin-top:.8rem">Din neste bil er kanskje ett søk unna.</h2>
+      <p class="lede">Beskriv drømmebilen — vi bruker nettverket vårt og tar kontakt, vanligvis samme dag.</p>
+      <form class="glass" onsubmit="return false">
+        <div class="row"><div class="field"><label>Navn</label><input placeholder="Ola Nordmann"></div>
+          <div class="field"><label>Telefon / e-post</label><input placeholder="912 34 567"></div></div>
+        <div class="field"><label>Hva ser du etter?</label><textarea placeholder="Stasjonsvogn, automat, firehjulstrekk, under 300 000 kr."></textarea></div>
+        <button class="btn">Send melding →</button>
+      </form>
+    </div>
+  </section>
+</body>
+</html>

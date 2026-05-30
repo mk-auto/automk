@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MK Auto — Finn bilen din</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,400;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --canvas:oklch(0.165 0.012 64);--surface-1:oklch(0.205 0.013 64);--surface-2:oklch(0.245 0.015 62);
+    --ink:oklch(0.962 0.008 85);--ink-soft:oklch(0.795 0.010 84);--ink-mute:oklch(0.615 0.012 80);
+    --hairline:oklch(0.99 0 0/0.12);--hairline-2:oklch(0.99 0 0/0.20);
+    --accent:oklch(0.805 0.128 73);--accent-strong:oklch(0.720 0.140 58);--accent-ink:oklch(0.205 0.05 62);
+    --fd:"Bricolage Grotesque",sans-serif;--fb:"Schibsted Grotesk",sans-serif;--fm:"JetBrains Mono",monospace;
+    --ease:cubic-bezier(0.23,1,0.32,1);
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--canvas);color:var(--ink);font-family:var(--fb);-webkit-font-smoothing:antialiased}
+  .pagebar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    gap:1rem;padding:.8rem 1.4rem;background:oklch(0.13 0.01 64/.85);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--hairline);font-size:.82rem;color:var(--ink-soft)}
+  .pagebar b{color:var(--accent);font-family:var(--fm);letter-spacing:.1em;text-transform:uppercase;font-size:.72rem}
+  .block{padding:clamp(3rem,6vw,5.5rem) clamp(1.4rem,4vw,3rem);position:relative;overflow:hidden}
+  .block::before{content:"";position:absolute;inset:0;z-index:0;background:radial-gradient(90% 70% at 85% -10%,oklch(0.25 0.03 68/.5),transparent 55%)}
+  .wrap{max-width:1240px;margin:0 auto;position:relative;z-index:2}
+  .tag{display:inline-flex;gap:.6rem;align-items:center;margin-bottom:1.6rem;
+    font-family:var(--fm);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute)}
+  .tag .pick{cursor:pointer;border:1px solid var(--hairline-2);border-radius:999px;padding:.35rem .8rem;color:var(--ink);transition:.25s var(--ease);background:transparent}
+  .tag .pick:hover,.tag .pick.selected{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .eyebrow{font-family:var(--fm);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+  .h2{font-family:var(--fd);font-weight:600;font-size:clamp(2rem,4vw,3.4rem);line-height:1.02;letter-spacing:-.02em}
+  .intro{color:var(--ink-soft);margin-top:1rem;max-width:60ch}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;padding:1rem 1.6rem;border-radius:3px;font-weight:600;font-size:.98rem;background:var(--accent);color:var(--accent-ink);transition:.16s var(--ease);border:0;cursor:pointer}
+  .btn:active{transform:scale(.98)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hairline-2)}
+  input{font:inherit;color:inherit}
+
+  .finder{display:grid;grid-template-columns:1.55fr .95fr;gap:1.5rem;margin-top:2.4rem}
+
+  /* control panel */
+  .controls{background:var(--surface-1);border:1px solid var(--hairline);border-radius:18px;overflow:hidden}
+  .grp{padding:1.4rem clamp(1.3rem,2.2vw,2rem);border-bottom:1px solid var(--hairline)}
+  .grp:last-child{border-bottom:0}
+  .grp .glabel{display:flex;align-items:center;justify-content:space-between;font-family:var(--fm);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:.9rem}
+  .grp .glabel .hint{text-transform:none;letter-spacing:0;color:oklch(0.5 0.01 80)}
+  .chips{display:flex;flex-wrap:wrap;gap:.5rem}
+  .chip{padding:.55rem 1rem;border:1px solid var(--hairline-2);border-radius:999px;background:oklch(0.99 0 0/.04);color:var(--ink-soft);cursor:pointer;font-size:.9rem;transition:.16s var(--ease);white-space:nowrap}
+  .chip:hover{border-color:var(--accent);color:var(--ink)}
+  .chip.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+  .txt{width:100%;padding:.85rem 1rem;border:1px solid var(--hairline-2);border-radius:10px;background:oklch(0.99 0 0/.04);color:var(--ink)}
+  .txt:focus{outline:none;border-color:var(--accent)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .selwrap{position:relative}
+  select{appearance:none;width:100%;padding:.85rem 2.2rem .85rem 1rem;border:1px solid var(--hairline-2);border-radius:10px;background:oklch(0.99 0 0/.04);color:var(--ink);cursor:pointer}
+  select:focus{outline:none;border-color:var(--accent)}
+  .selwrap::after{content:"▾";position:absolute;right:1rem;top:50%;transform:translateY(-50%);color:var(--ink-mute);pointer-events:none}
+  .slider-head{display:flex;justify-content:space-between;font-family:var(--fm);font-size:.9rem;margin-bottom:.6rem}
+  .slider-head b{color:var(--accent)}
+  input[type=range]{width:100%;accent-color:var(--accent);height:4px}
+
+  /* result card */
+  .result{position:sticky;top:5rem;align-self:start;background:linear-gradient(160deg,var(--surface-2),var(--surface-1));
+    border:1px solid var(--hairline-2);border-radius:18px;padding:clamp(1.6rem,2.6vw,2.2rem);display:flex;flex-direction:column}
+  .result .rlab{font-family:var(--fm);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
+  .result .num{font-family:var(--fd);font-weight:800;font-size:clamp(4.5rem,9vw,7rem);line-height:.85;color:var(--accent);letter-spacing:-.04em;margin:.4rem 0}
+  .result .ncap{font-family:var(--fd);font-weight:600;font-size:1.15rem;color:var(--ink)}
+  .summary{font-size:.86rem;color:var(--ink-soft);line-height:1.6;margin:1.2rem 0;padding:1rem 0;border-block:1px solid var(--hairline);min-height:3.4rem}
+  .summary .none{color:var(--ink-mute)}
+  .result .browse{margin-bottom:1rem}
+  .result .divider{font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);text-align:center;margin:.4rem 0 1rem;position:relative}
+  .result .ask h4{font-family:var(--fd);font-weight:600;font-size:1.05rem;margin-bottom:.2rem}
+  .result .ask p{font-size:.84rem;color:var(--ink-mute);margin-bottom:.9rem}
+  .result .ask input{margin-bottom:.7rem}
+  .result .btn{width:100%}
+
+  @media(max-width:900px){.finder{grid-template-columns:1fr}.result{position:static}}
+  @media(max-width:520px){.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="pagebar">
+    <span><b>MK Auto</b> &nbsp;·&nbsp; Finn bilen din — full søke-seksjon</span>
+    <span>Velg merke/modell/år/pris ELLER karosseri, drivstoff, gir · tallet teller live</span>
+  </div>
+
+  <section class="block" style="border-bottom:0">
+    <div class="wrap">
+      <div class="tag"><span>Finn bilen din · komplett finner</span>
+        <button class="pick" data-choice="finder-full">Velg denne</button></div>
+      <span class="eyebrow">Fant du ikke det du lette etter?</span>
+      <h2 class="h2" style="margin-top:.7rem">Finn bilen din — på din måte.</h2>
+      <p class="intro">Vet du nøyaktig hva du vil ha? Velg merke, modell, årsmodell og pris. Er du mer åpen? Filtrer på karosseri, drivstoff og girkasse. Tallet til høyre oppdateres mens du velger — og finner vi den ikke på lager, sporer vi den opp for deg.</p>
+
+      <div class="finder">
+        <!-- CONTROLS -->
+        <div class="controls">
+          <div class="grp">
+            <div class="glabel"><span>Merke</span><span class="hint">flervalg</span></div>
+            <div class="chips" data-group="brand" data-multi="1">
+              <button class="chip on" data-val="Alle" data-all="1">Alle merker</button>
+              <button class="chip" data-val="Volvo">Volvo</button>
+              <button class="chip" data-val="BMW">BMW</button>
+              <button class="chip" data-val="Tesla">Tesla</button>
+              <button class="chip" data-val="Audi">Audi</button>
+              <button class="chip" data-val="Mercedes">Mercedes</button>
+              <button class="chip" data-val="Toyota">Toyota</button>
+              <button class="chip" data-val="Volkswagen">VW</button>
+              <button class="chip" data-val="Skoda">Škoda</button>
+            </div>
+          </div>
+
+          <div class="grp">
+            <div class="glabel"><span>Modell <span class="hint">(valgfritt)</span></span></div>
+            <input class="txt" id="model" placeholder="Søk på modell — f.eks. XC60, Model 3, A4 …">
+          </div>
+
+          <div class="grp">
+            <div class="glabel"><span>Karosseri</span><span class="hint">flervalg</span></div>
+            <div class="chips" data-group="body" data-multi="1">
+              <button class="chip" data-val="SUV">SUV</button>
+              <button class="chip" data-val="Stasjonsvogn">Stasjonsvogn</button>
+              <button class="chip" data-val="Sedan">Sedan</button>
+              <button class="chip" data-val="Kombi">Kombi</button>
+              <button class="chip" data-val="Kompakt">Kompakt</button>
+              <button class="chip" data-val="Cabriolet">Cabriolet</button>
+              <button class="chip" data-val="Varebil">Varebil</button>
+            </div>
+          </div>
+
+          <div class="grp">
+            <div class="glabel"><span>Drivstoff</span><span class="hint">flervalg</span></div>
+            <div class="chips" data-group="fuel" data-multi="1">
+              <button class="chip" data-val="El">El</button>
+              <button class="chip" data-val="Hybrid">Hybrid</button>
+              <button class="chip" data-val="Bensin">Bensin</button>
+              <button class="chip" data-val="Diesel">Diesel</button>
+            </div>
+          </div>
+
+          <div class="grp">
+            <div class="glabel"><span>Girkasse</span></div>
+            <div class="chips" data-group="gear" data-multi="1">
+              <button class="chip" data-val="Automat">Automat</button>
+              <button class="chip" data-val="Manuell">Manuell</button>
+            </div>
+          </div>
+
+          <div class="grp">
+            <div class="glabel"><span>Årsmodell</span></div>
+            <div class="two">
+              <div class="selwrap"><select id="yearFrom" aria-label="Fra år">
+                <option value="2012">Fra 2012</option><option value="2014">Fra 2014</option>
+                <option value="2016">Fra 2016</option><option value="2018" selected>Fra 2018</option>
+                <option value="2020">Fra 2020</option><option value="2022">Fra 2022</option></select></div>
+              <div class="selwrap"><select id="yearTo" aria-label="Til år">
+                <option value="2026" selected>Til 2026</option><option value="2024">Til 2024</option>
+                <option value="2022">Til 2022</option><option value="2020">Til 2020</option>
+                <option value="2018">Til 2018</option></select></div>
+            </div>
+          </div>
+
+          <div class="grp">
+            <div class="slider-head"><span>Maks pris</span><span>inntil <b id="budgetLabel">350 000 kr</b></span></div>
+            <input type="range" id="budget" min="100000" max="800000" step="10000" value="350000">
+          </div>
+        </div>
+
+        <!-- RESULT -->
+        <aside class="result">
+          <span class="rlab">Treff på lageret</span>
+          <div class="num" id="count">24</div>
+          <div class="ncap" id="ncap">biler matcher valget ditt</div>
+          <div class="summary" id="summary"><span class="none">Velg over, så viser vi treffet her.</span></div>
+          <a class="btn browse" id="browseBtn">Vis 24 biler →</a>
+          <div class="divider">— eller —</div>
+          <div class="ask">
+            <h4>Finner du den ikke?</h4>
+            <p>Legg igjen nummeret, så sporer vi opp riktig bil til deg — gratis og uforpliktende.</p>
+            <input class="txt" placeholder="Navn">
+            <input class="txt" placeholder="Telefon eller e-post">
+            <button class="btn ghost">Få hjelp til å finne den →</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const BASE=234;
+    const state={brand:new Set(['Alle']),body:new Set(),fuel:new Set(),gear:new Set(),model:'',
+      yearFrom:2018,yearTo:2026,budget:350000};
+
+    const countEl=document.getElementById('count');
+    const ncap=document.getElementById('ncap');
+    const summary=document.getElementById('summary');
+    const browseBtn=document.getElementById('browseBtn');
+    let shown=24,raf;
+
+    function compute(){
+      let f=1;
+      // brand
+      if(!state.brand.has('Alle')&&state.brand.size>0) f*=Math.min(1,0.16*state.brand.size+0.04);
+      // body (multi widens)
+      if(state.body.size>0) f*=Math.min(1,0.34*state.body.size);
+      // fuel
+      if(state.fuel.size>0) f*=Math.min(1,0.42*state.fuel.size);
+      // gear
+      if(state.gear.size===1) f*=(state.gear.has('Automat')?0.72:0.34);
+      // model text
+      if(state.model.trim().length>1) f*=0.22;
+      // price
+      f*=Math.max(0.06,(state.budget-100000)/700000*0.95+0.05);
+      // year window
+      const span=Math.max(0,state.yearTo-state.yearFrom);
+      f*=Math.min(1,0.12+span*0.11);
+      return Math.max(0,Math.round(BASE*f));
+    }
+    function animateTo(t){
+      cancelAnimationFrame(raf);
+      const stepFn=()=>{const d=t-shown;shown+= Math.sign(d)*Math.max(1,Math.round(Math.abs(d)/6));
+        if((d>0&&shown>t)||(d<0&&shown<t))shown=t;countEl.textContent=shown;
+        if(shown!==t)raf=requestAnimationFrame(stepFn);};
+      stepFn();
+    }
+    function setSummary(){
+      const parts=[];
+      if(!state.brand.has('Alle')&&state.brand.size) parts.push([...state.brand].join('/'));
+      if(state.model.trim()) parts.push('“'+state.model.trim()+'”');
+      if(state.body.size) parts.push([...state.body].join('/'));
+      if(state.fuel.size) parts.push([...state.fuel].join('/'));
+      if(state.gear.size) parts.push([...state.gear].join('/'));
+      parts.push(state.yearFrom+'–'+state.yearTo);
+      parts.push('≤ '+state.budget.toLocaleString('nb-NO')+' kr');
+      summary.textContent = parts.join('  ·  ');
+    }
+    function refresh(){
+      const t=compute();
+      animateTo(t);
+      ncap.textContent = t===0 ? 'treff — men vi sporer den opp for deg' : (t===1?'bil matcher valget ditt':'biler matcher valget ditt');
+      browseBtn.textContent = t===0 ? 'Be oss finne den →' : ('Vis '+t+' '+(t===1?'bil':'biler')+' →');
+      setSummary();
+    }
+
+    document.querySelectorAll('.chips').forEach(group=>{
+      const name=group.dataset.group;
+      group.querySelectorAll('.chip').forEach(chip=>{
+        chip.addEventListener('click',()=>{
+          const val=chip.dataset.val, isAll=chip.dataset.all;
+          if(isAll){ group.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+            chip.classList.add('on'); state[name]=new Set(['Alle']); refresh(); return; }
+          // toggle
+          chip.classList.toggle('on');
+          if(chip.classList.contains('on')) state[name].add(val); else state[name].delete(val);
+          // brand: turn off 'Alle' when a real brand chosen
+          if(name==='brand'){ const allChip=group.querySelector('[data-all]');
+            state[name].delete('Alle'); allChip.classList.remove('on');
+            if(state[name].size===0){state[name].add('Alle');allChip.classList.add('on');}
+          }
+          refresh();
+        });
+      });
+    });
+    document.getElementById('model').addEventListener('input',e=>{state.model=e.target.value;refresh();});
+    document.getElementById('yearFrom').addEventListener('change',e=>{state.yearFrom=+e.target.value;refresh();});
+    document.getElementById('yearTo').addEventListener('change',e=>{state.yearTo=+e.target.value;refresh();});
+    const b=document.getElementById('budget');
+    b.addEventListener('input',e=>{state.budget=+e.target.value;document.getElementById('budgetLabel').textContent=state.budget.toLocaleString('nb-NO')+' kr';refresh();});
+
+    refresh();
+  </script>
+</body>
+</html>

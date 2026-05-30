@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Section-intro konsepter II · MK Auto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#ffffff; --paper-2:#f4f4f6; --ink:#1a1612; --ink-2:#5d564c; --ink-3:#8c8478;
+    --copper:#a8662e; --copper-2:#8f5526; --copper-ink:#5e3818; --copper-wash:#f6ece2;
+    --line:rgba(26,22,18,.12); --line-2:rgba(26,22,18,.07);
+    --sans:"Geist",sans-serif; --mono:"Geist Mono",monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.5}
+  .wrap{max-width:1080px;margin:0 auto;padding:clamp(2rem,5vw,4rem) clamp(1.2rem,4vw,2.4rem)}
+  .pagehead{border-bottom:1px solid var(--line);padding-bottom:1.6rem;margin-bottom:3rem}
+  .pagehead h1{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:760;letter-spacing:-.03em}
+  .pagehead p{color:var(--ink-2);margin-top:.5rem;max-width:64ch}
+  .pagehead b{color:var(--copper-2)}
+
+  .concept{padding:clamp(2rem,4vw,3.4rem) 0;border-bottom:1px dashed var(--line)}
+  .clabel{display:flex;align-items:baseline;gap:.8rem;margin-bottom:1.8rem;flex-wrap:wrap}
+  .clabel .tag{font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--ink);padding:.3rem .6rem;border-radius:6px}
+  .clabel .nm{font-weight:660;font-size:1.02rem}
+  .clabel .desc{color:var(--ink-3);font-size:.9rem}
+  .stagebox{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:clamp(1.8rem,4vw,3rem);box-shadow:0 30px 60px -40px rgba(60,44,28,.4)}
+
+  /* G — editorial drop cap run-in */
+  .g p{font-size:clamp(1.2rem,2.3vw,1.6rem);line-height:1.55;color:var(--ink-3);max-width:56ch;font-weight:430}
+  .g p b{color:var(--ink);font-weight:700}
+  .g .cap{float:left;font-family:var(--mono);font-weight:600;font-size:3.6em;line-height:.72;color:var(--copper);margin:.04em .14em -.02em 0}
+
+  /* H — highlighter marker run-in */
+  .h p{font-size:clamp(1.3rem,2.6vw,1.85rem);line-height:1.45;letter-spacing:-.02em;color:var(--ink-2);max-width:50ch;font-weight:460}
+  .h mark{background:color-mix(in srgb,var(--copper) 20%, transparent);color:var(--copper-ink);box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:.06em .2em;border-radius:4px;font-weight:600}
+
+  /* I — stacked sentence fragments, size contrast */
+  .i .big{display:block;font-size:clamp(1.9rem,4.4vw,3.2rem);font-weight:780;letter-spacing:-.04em;line-height:1}
+  .i .small{display:block;font-size:clamp(1.1rem,2vw,1.5rem);color:var(--ink-2);margin-top:.5rem;font-weight:430}
+  .i .small b{color:var(--copper);font-weight:620}
+
+  /* J — run-in + inline mono keywords */
+  .j p{font-size:clamp(1.3rem,2.6vw,1.85rem);line-height:1.45;letter-spacing:-.02em;color:var(--ink-3);font-weight:440;max-width:52ch}
+  .j p b{color:var(--ink);font-weight:720}
+  .j .kws{display:inline;white-space:normal}
+  .j .kw{font-family:var(--mono);font-size:.62em;letter-spacing:.04em;text-transform:uppercase;color:var(--copper-2);font-weight:600}
+  .j .sep{color:var(--copper);font-size:.62em;margin:0 .35em;opacity:.6}
+
+  /* K — conversational question -> answer, inline emphasis */
+  .k p{font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.32;letter-spacing:-.025em;color:var(--ink-2);max-width:34ch;font-weight:440}
+  .k p b{color:var(--ink);font-weight:760}
+  .k p em{font-style:normal;color:var(--copper);font-weight:620}
+
+  /* L — statement ending in inline arrow-link */
+  .l p{font-size:clamp(1.3rem,2.6vw,1.85rem);line-height:1.45;letter-spacing:-.02em;color:var(--ink-3);font-weight:440;max-width:52ch}
+  .l p b{color:var(--ink);font-weight:720}
+  .l a{color:var(--copper-2);font-weight:600;border-bottom:1.5px solid var(--copper);padding-bottom:1px;white-space:nowrap;text-decoration:none}
+  .l a:hover{background:var(--copper-wash)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="pagehead">
+    <h1>Section-intro konsepter &mdash; runde 2</h1>
+    <p>Seks nye, alle i <b>D-familien</b>: tekstdrevet, ingen merkelapp, alt i én blokk &mdash; men med ulik typografisk vri.</p>
+  </div>
+
+  <!-- G -->
+  <section class="concept g">
+    <div class="clabel"><span class="tag">G</span><span class="nm">Initial (drop cap)</span><span class="desc">redaksjonell forbokstav drar deg inn</span></div>
+    <div class="stagebox">
+      <p><span class="cap">V</span>i selger bilen for deg &mdash; <b>du velger om vi gjør det i vårt navn eller ditt.</b> Resten, fra annonse til oppgjør, tar vi oss av.</p>
+    </div>
+  </section>
+
+  <!-- H -->
+  <section class="concept h">
+    <div class="clabel"><span class="tag">H</span><span class="nm">Markørstrek</span><span class="desc">nøkkelordet får et kobbermerke midt i teksten</span></div>
+    <div class="stagebox">
+      <p>Fire måter å gjøre bilbytte enkelt på: <mark>kjøp, salg, kommisjon og innbytte</mark> &mdash; alt hos folk som kjører bilene selv.</p>
+    </div>
+  </section>
+
+  <!-- I -->
+  <section class="concept i">
+    <div class="clabel"><span class="tag">I</span><span class="nm">Brutt setning</span><span class="desc">to fragmenter, stor + liten, som talespråk</span></div>
+    <div class="stagebox">
+      <p><span class="big">Vi tar oss av alt.</span><span class="small">Du velger bare <b>hvordan</b> &mdash; kommisjon eller formidling.</span></p>
+    </div>
+  </section>
+
+  <!-- J -->
+  <section class="concept j">
+    <div class="clabel"><span class="tag">J</span><span class="nm">Ingress + nøkkelord</span><span class="desc">fet start, så tjenestene som mono-ord i flyten</span></div>
+    <div class="stagebox">
+      <p><b>Alt du trenger på ett sted.</b> <span class="kws"><span class="kw">Kjøp</span><span class="sep">/</span><span class="kw">Salg</span><span class="sep">/</span><span class="kw">Kommisjon</span><span class="sep">/</span><span class="kw">Innbytte</span></span> &mdash; gjort ordentlig, fra første prat til nøklene er dine.</p>
+    </div>
+  </section>
+
+  <!-- K -->
+  <section class="concept k">
+    <div class="clabel"><span class="tag">K</span><span class="nm">Spørsmål &rarr; svar</span><span class="desc">samtalepreg, nøkkelfrasen i kobber</span></div>
+    <div class="stagebox">
+      <p><b>Skal du selge bilen?</b> Vi gjør hele jobben &mdash; <em>i ditt navn eller vårt.</em></p>
+    </div>
+  </section>
+
+  <!-- L -->
+  <section class="concept l">
+    <div class="clabel"><span class="tag">L</span><span class="nm">Påstand + lenke i flyten</span><span class="desc">ingressen ender i en innebygd CTA</span></div>
+    <div class="stagebox">
+      <p><b>Fire måter å gjøre bilbytte enkelt på.</b> Vi kjøper, selger, tar i kommisjon og bytter inn. <a href="#">Se hvordan &rarr;</a></p>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

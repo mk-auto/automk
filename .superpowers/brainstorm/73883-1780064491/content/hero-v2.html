@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MK Auto — Hero D–F</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,400;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --canvas:oklch(0.165 0.012 64);--surface-1:oklch(0.205 0.013 64);--surface-2:oklch(0.245 0.015 62);
+    --ink:oklch(0.962 0.008 85);--ink-soft:oklch(0.795 0.010 84);--ink-mute:oklch(0.615 0.012 80);
+    --hairline:oklch(0.99 0 0/0.12);--hairline-2:oklch(0.99 0 0/0.20);
+    --accent:oklch(0.805 0.128 73);--accent-strong:oklch(0.720 0.140 58);--accent-ink:oklch(0.205 0.05 62);
+    --cream:oklch(0.958 0.013 84);--ink-dark:oklch(0.225 0.013 62);
+    --fd:"Bricolage Grotesque",sans-serif;--fb:"Schibsted Grotesk",sans-serif;--fm:"JetBrains Mono",monospace;
+    --ease:cubic-bezier(0.23,1,0.32,1);
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:#0f0d0b;color:var(--ink);font-family:var(--fb);-webkit-font-smoothing:antialiased}
+  .pagebar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    gap:1rem;padding:.8rem 1.4rem;background:oklch(0.13 0.01 64/.85);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--hairline);font-size:.82rem;color:var(--ink-soft)}
+  .pagebar b{color:var(--accent);font-family:var(--fm);letter-spacing:.1em;text-transform:uppercase;font-size:.72rem}
+  .concept{position:relative;min-height:92vh;overflow:hidden;isolation:isolate;border-bottom:1px solid var(--hairline)}
+  .tag{position:absolute;top:1.1rem;left:1.4rem;z-index:9;display:flex;gap:.6rem;align-items:center;
+    font-family:var(--fm);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+  .tag .pill{background:oklch(0.13 0.01 64/.55);backdrop-filter:blur(6px);padding:.3rem .7rem;border-radius:999px;border:1px solid var(--hairline)}
+  .tag .pick{cursor:pointer;border:1px solid var(--hairline-2);border-radius:999px;padding:.35rem .8rem;
+    color:var(--ink);transition:.25s var(--ease);background:oklch(0.13 0.01 64/.55);backdrop-filter:blur(6px)}
+  .tag .pick:hover,.tag .pick.selected{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 clamp(1.4rem,4vw,3rem)}
+  .eyebrow{font-family:var(--fm);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+  .btn{display:inline-flex;align-items:center;gap:.5em;padding:.95rem 1.6rem;border-radius:2px;font-weight:600;
+    font-size:.95rem;background:var(--accent);color:var(--accent-ink);transition:.16s var(--ease)}
+  .btn:active{transform:scale(.97)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hairline-2)}
+
+  /* ===== D — FULL-BLEED CINEMATIC PHOTO ===== */
+  .d{display:flex;align-items:flex-end}
+  .d .bg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center;
+    background-color:#14110e;
+    background-image:url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1900&q=80")}
+  .d .scrim{position:absolute;inset:0;z-index:-1;background:
+    linear-gradient(90deg,#0c0a09 4%,oklch(0.10 0.01 60/.55) 38%,transparent 70%),
+    linear-gradient(0deg,#0c0a09 2%,transparent 42%)}
+  .d .wrap{width:100%;padding-bottom:clamp(3rem,8vh,6rem);padding-top:6rem}
+  .d h1{font-family:var(--fd);font-weight:700;font-size:clamp(2.8rem,7vw,6.6rem);line-height:.94;
+    letter-spacing:-.028em;max-width:16ch;text-wrap:balance;margin-top:1.2rem}
+  .d .lede{max-width:40ch;margin-top:1.4rem;color:var(--ink-soft);font-size:clamp(1.05rem,1.3vw,1.3rem)}
+  .d .acts{display:flex;gap:.8rem;margin-top:2rem}
+  .d .glass{margin-top:2.6rem;display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--hairline);
+    border-radius:10px;background:oklch(0.99 0 0/.05);backdrop-filter:blur(14px);overflow:hidden;max-width:760px}
+  .d .glass .cell{padding:1.1rem 1.5rem;border-right:1px solid var(--hairline);flex:1}
+  .d .glass .cell:last-child{border-right:0}
+  .d .glass .n{font-family:var(--fm);font-size:1.4rem;font-weight:600}
+  .d .glass .l{font-size:.78rem;color:var(--ink-mute);margin-top:.2rem}
+
+  /* ===== E — SWISS GRID / EDITORIAL NUMBERS ===== */
+  .e{background:var(--canvas);display:flex;align-items:center}
+  .e .grid{max-width:1280px;margin:0 auto;width:100%;padding:6rem clamp(1.4rem,4vw,3rem) 2rem;
+    display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:minmax(0,auto);gap:0;
+    border-top:1px solid var(--hairline)}
+  .e .cell{border-bottom:1px solid var(--hairline);border-right:1px solid var(--hairline);padding:1.6rem 1.4rem}
+  .e .cell.l{border-left:1px solid var(--hairline)}
+  .e .c-head{grid-column:1/9;grid-row:1/3;padding:2.4rem;display:flex;flex-direction:column;justify-content:center}
+  .e h1{font-family:var(--fd);font-weight:700;font-size:clamp(2.6rem,6.5vw,6rem);line-height:.92;letter-spacing:-.03em}
+  .e h1 .accent{color:var(--accent)}
+  .e .c-head .lede{margin-top:1.3rem;max-width:46ch;color:var(--ink-soft)}
+  .e .c-head .acts{display:flex;gap:.8rem;margin-top:1.8rem}
+  .e .c-photo{grid-column:9/13;grid-row:1/3;background-size:cover;background-position:center;
+    background-color:var(--surface-2);
+    background-image:linear-gradient(180deg,transparent,oklch(0.16 0.01 64/.3)),url("https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=900&q=80")}
+  .e .stat{grid-row:3/4}
+  .e .stat .n{font-family:var(--fm);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:600;letter-spacing:-.02em}
+  .e .stat .l{font-size:.78rem;color:var(--ink-mute);letter-spacing:.05em;margin-top:.4rem;text-transform:uppercase;font-family:var(--fm)}
+  .e .s1{grid-column:1/4}.e .s2{grid-column:4/7}.e .s3{grid-column:7/10}.e .s4{grid-column:10/13}
+
+  /* ===== F — MAGAZINE COVER ===== */
+  .f{display:flex;flex-direction:column}
+  .f .bg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center 30%;
+    background-color:#1a1714;
+    background-image:url("https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=1900&q=80")}
+  .f .scrim{position:absolute;inset:0;z-index:-1;background:
+    radial-gradient(120% 80% at 50% 0%,oklch(0.10 0.01 60/.75),transparent 50%),
+    linear-gradient(0deg,#0c0a09 6%,transparent 38%),linear-gradient(90deg,oklch(0.1 0.01 60/.4),transparent 30%,transparent 70%,oklch(0.1 0.01 60/.4))}
+  .f .masthead{max-width:1280px;margin:0 auto;width:100%;padding:5rem clamp(1.4rem,4vw,3rem) 0;
+    display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--hairline-2);padding-bottom:1rem}
+  .f .masthead h1{font-family:var(--fd);font-weight:800;font-size:clamp(3rem,13vw,11rem);line-height:.82;letter-spacing:-.04em}
+  .f .masthead .issue{font-family:var(--fm);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);text-align:right;line-height:1.7}
+  .f .body{flex:1;max-width:1280px;margin:0 auto;width:100%;padding:2rem clamp(1.4rem,4vw,3rem) 3.5rem;
+    display:flex;justify-content:space-between;align-items:flex-end;gap:2rem}
+  .f .coverlines{display:flex;flex-direction:column;gap:1.1rem;max-width:30ch}
+  .f .coverlines .cl{display:flex;gap:.8rem;align-items:baseline}
+  .f .coverlines .cl .k{font-family:var(--fm);color:var(--accent);font-size:.8rem;flex:0 0 auto}
+  .f .coverlines .cl .t{font-family:var(--fd);font-weight:600;font-size:clamp(1.1rem,1.8vw,1.6rem);line-height:1.1}
+  .f .closing{text-align:right;max-width:34ch}
+  .f .closing .tagline{font-family:var(--fd);font-weight:200;font-size:clamp(1.4rem,2.4vw,2.2rem);line-height:1.05;margin-bottom:1.2rem}
+  .f .closing .acts{display:flex;gap:.8rem;justify-content:flex-end}
+
+  @media(max-width:900px){
+    .e .c-head{grid-column:1/13;grid-row:auto}.e .c-photo{grid-column:1/13;grid-row:auto;min-height:30vh}
+    .e .s1,.e .s2{grid-column:1/7}.e .s3,.e .s4{grid-column:7/13}
+    .f .masthead{flex-direction:column;align-items:flex-start;gap:.5rem}
+    .f .body{flex-direction:column;align-items:flex-start}.f .closing{text-align:left}.f .closing .acts{justify-content:flex-start}
+    .d .glass .cell{flex:1 1 50%;border-bottom:1px solid var(--hairline)}
+  }
+</style>
+</head>
+<body>
+  <div class="pagebar">
+    <span><b>MK Auto</b> &nbsp;·&nbsp; Hero — 3 nye retninger (D–F)</span>
+    <span>Scroll ↓ &nbsp; klikk «Velg denne» eller si i terminalen</span>
+  </div>
+
+  <!-- ===== D ===== -->
+  <section class="concept d">
+    <div class="bg"></div><div class="scrim"></div>
+    <div class="tag"><span class="pill">D — Full-bleed Cinematic · foto</span>
+      <button class="pick" data-choice="hero-D">Velg denne</button></div>
+    <div class="wrap">
+      <span class="eyebrow">MK Auto · Oslo</span>
+      <h1>Bilen du har sett etter, står her.</h1>
+      <p class="lede">Hver bil er kontrollert, dokumentert og klar for prøvekjøring. Du tar valget — vi tar ansvaret.</p>
+      <div class="acts"><a class="btn">Se bilene</a><a class="btn ghost">Bestill prøvekjøring</a></div>
+      <div class="glass">
+        <div class="cell"><div class="n">18 år</div><div class="l">i bransjen</div></div>
+        <div class="cell"><div class="n">600+</div><div class="l">fornøyde kjøpere</div></div>
+        <div class="cell"><div class="n">100 %</div><div class="l">historikk på hver bil</div></div>
+        <div class="cell"><div class="n">5 dager</div><div class="l">åpen angrerett</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== E ===== -->
+  <section class="concept e">
+    <div class="tag"><span class="pill">E — Swiss Grid · tall &amp; struktur</span>
+      <button class="pick" data-choice="hero-E">Velg denne</button></div>
+    <div class="grid">
+      <div class="cell c-head l">
+        <span class="eyebrow">MK Auto · Oslo · est. 2008</span>
+        <h1>Bruktbil,<br>uten <span class="accent">gjetting.</span></h1>
+        <p class="lede">Tall, ikke løfter. Vi legger historikk, tilstand og pris åpent på bordet — så du kan kjøpe trygt.</p>
+        <div class="acts"><a class="btn">Se utvalget</a><a class="btn ghost">Verdivurder bilen din</a></div>
+      </div>
+      <div class="cell c-photo"></div>
+      <div class="cell stat s1"><div class="n">18</div><div class="l">år i Oslo</div></div>
+      <div class="cell stat s2"><div class="n">600+</div><div class="l">solgte biler</div></div>
+      <div class="cell stat s3"><div class="n">100%</div><div class="l">full historikk</div></div>
+      <div class="cell stat s4"><div class="n">4,9★</div><div class="l">snitt på Google</div></div>
+    </div>
+  </section>
+
+  <!-- ===== F ===== -->
+  <section class="concept f">
+    <div class="bg"></div><div class="scrim"></div>
+    <div class="tag"><span class="pill">F — Magazine Cover · editorial</span>
+      <button class="pick" data-choice="hero-F">Velg denne</button></div>
+    <div class="masthead">
+      <h1>MK&nbsp;AUTO</h1>
+      <div class="issue">Oslo · Bruktbil<br>No. 01 — 2026<br><span style="color:var(--accent)">kvalitet, ikke flaks</span></div>
+    </div>
+    <div class="body">
+      <div class="coverlines">
+        <div class="cl"><span class="k">01</span><span class="t">Slik kjøper du bruktbil helt trygt</span></div>
+        <div class="cl"><span class="k">02</span><span class="t">5 biler under 300&nbsp;000 akkurat nå</span></div>
+        <div class="cl"><span class="k">03</span><span class="t">Selg bilen din — oppgjør på dagen</span></div>
+      </div>
+      <div class="closing">
+        <p class="tagline">Din neste bil fortjener en ordentlig historie.</p>
+        <div class="acts"><a class="btn">Se bilene</a><a class="btn ghost">Snakk med oss</a></div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

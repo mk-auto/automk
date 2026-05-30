@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kommisjon — Konsept A · VERSUS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@300..700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#faf8f5;--paper-2:#f2ede6;--paper-3:#ebe4da;--card:#fff;
+    --ink:#1a1612;--ink-2:#5d564c;--ink-3:#8c8478;
+    --copper:#a8662e;--copper-2:#8f5526;--copper-ink:#5e3818;--copper-wash:#f6ece2;
+    --line:rgba(26,22,18,.12);--line-2:rgba(26,22,18,.07);
+    --sans:"Geist",system-ui,sans-serif;--mono:"Geist Mono",monospace;
+    --ease:cubic-bezier(0.16,1,0.3,1);--maxw:1200px;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(1.1rem,4vw,2.5rem)}
+  .mono{font-family:var(--mono)}
+  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--copper-2)}
+
+  /* bar */
+  .bar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--line-2)}
+  .bar .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-weight:800;letter-spacing:-.04em;font-size:1.25rem}
+  .brand i{color:var(--copper);font-style:normal}
+  .bar .back{font-size:.85rem;color:var(--ink-2)}
+
+  /* hero */
+  .hero{padding:clamp(3rem,7vw,6rem) 0 clamp(1.5rem,3vw,2.5rem)}
+  .hero .eyebrow{display:block;margin-bottom:1.1rem;opacity:0;animation:rise .7s var(--ease) forwards}
+  .hero h1{font-size:clamp(2.6rem,8.5vw,6.4rem);font-weight:840;line-height:.9;letter-spacing:-.045em;max-width:16ch;opacity:0;animation:rise .8s var(--ease) .08s forwards}
+  .hero h1 em{font-style:normal;color:var(--copper)}
+  .hero p{margin-top:1.4rem;max-width:52ch;color:var(--ink-2);font-size:clamp(1.02rem,1.5vw,1.2rem);opacity:0;animation:rise .8s var(--ease) .16s forwards}
+
+  /* VERSUS diptych */
+  .versus{position:relative;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:26px;overflow:hidden;margin-top:clamp(2rem,4vw,3.2rem);box-shadow:0 40px 80px -40px rgba(60,44,28,.4)}
+  .side{padding:clamp(1.8rem,3.4vw,3rem);min-height:430px;display:flex;flex-direction:column;position:relative;opacity:0;animation:rise .9s var(--ease) .24s forwards}
+  .side.kom{background:var(--ink);color:var(--paper)}
+  .side.kom .lbl,.side.form .lbl{font-family:var(--mono);font-size:.74rem;letter-spacing:.2em;text-transform:uppercase}
+  .side.kom .lbl{color:#d9a36a}
+  .side.form{background:var(--card);animation-delay:.32s}
+  .side.form .lbl{color:var(--copper-2)}
+  .side .num{font-family:var(--mono);font-size:.8rem;opacity:.55;position:absolute;top:clamp(1.8rem,3.4vw,3rem);right:clamp(1.8rem,3.4vw,3rem)}
+  .side h2{font-size:clamp(1.9rem,3.2vw,2.7rem);font-weight:780;letter-spacing:-.03em;margin:.7rem 0 .9rem;line-height:1}
+  .side .desc{font-size:1.02rem;line-height:1.65;max-width:34ch}
+  .side.kom .desc{color:rgba(255,255,255,.82)}
+  .side.form .desc{color:var(--ink-2)}
+  .side .desc b{font-weight:680}
+  .side.kom .desc b{color:#fff}
+  .side.form .desc b{color:var(--ink)}
+  .ansvar{margin-top:auto;padding-top:1.6rem}
+  .ansvar .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;opacity:.6}
+  .ansvar .v{font-size:clamp(1.5rem,2.6vw,2.1rem);font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-top:.3rem}
+  .side.kom .ansvar .v em{font-style:normal;color:#e8b988}
+  .side.form .ansvar .v em{font-style:normal;color:var(--copper)}
+  /* center ELLER badge */
+  .eller{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;width:74px;height:74px;border-radius:50%;background:var(--copper);color:#fff;display:grid;place-items:center;font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;font-weight:600;box-shadow:0 10px 30px -8px rgba(168,102,46,.7);border:4px solid var(--paper)}
+
+  /* difference strip */
+  .diff{margin-top:1.4rem;display:flex;gap:1rem;align-items:flex-start;background:var(--copper-wash);border:1px solid color-mix(in srgb,var(--copper) 26%,transparent);border-radius:16px;padding:1.15rem 1.35rem;color:var(--copper-ink);line-height:1.6}
+  .diff .dot{flex:none;width:9px;height:9px;border-radius:50%;background:var(--copper);margin-top:.5rem}
+
+  /* process band */
+  .proc{padding:clamp(3.5rem,7vw,6rem) 0 clamp(4rem,8vw,7rem)}
+  .proc h3{font-size:clamp(1.6rem,3vw,2.3rem);font-weight:780;letter-spacing:-.03em}
+  .proc .sub{color:var(--ink-2);margin-top:.5rem}
+  .track{margin-top:2.2rem;display:grid;grid-template-columns:repeat(6,1fr);gap:0;position:relative}
+  .track::before{content:"";position:absolute;top:18px;left:6%;right:6%;height:2px;background:repeating-linear-gradient(90deg,var(--line) 0 8px,transparent 8px 16px)}
+  .stepc{padding:0 .7rem;position:relative}
+  .stepc .ball{width:38px;height:38px;border-radius:50%;background:var(--card);border:2px solid var(--copper);color:var(--copper-2);font-family:var(--mono);font-weight:600;font-size:.85rem;display:grid;place-items:center;position:relative;z-index:2;transition:transform .3s var(--ease),background .3s var(--ease),color .3s var(--ease)}
+  .stepc:hover .ball{transform:translateY(-4px);background:var(--copper);color:#fff}
+  .stepc h4{font-size:1rem;font-weight:660;margin:1rem 0 .35rem;letter-spacing:-.01em}
+  .stepc p{font-size:.88rem;color:var(--ink-2);line-height:1.55}
+
+  /* CTA */
+  .cta{background:var(--ink);color:var(--paper);border-radius:24px;padding:clamp(2.2rem,5vw,3.6rem);display:flex;flex-wrap:wrap;gap:1.4rem;align-items:center;justify-content:space-between}
+  .cta h3{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:780;letter-spacing:-.03em}
+  .cta p{color:rgba(255,255,255,.72);margin-top:.4rem}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--copper);color:#fff;font-weight:600;padding:.95rem 1.7rem;border-radius:999px;transition:transform .2s var(--ease),background .2s var(--ease)}
+  .btn:hover{transform:translateY(-2px);background:#b9743a}
+  .btn:active{transform:scale(.97)}
+
+  @keyframes rise{to{opacity:1;transform:none}}
+  .hero .eyebrow,.hero h1,.hero p,.side{transform:translateY(20px)}
+
+  @media(max-width:780px){
+    .versus{grid-template-columns:1fr}
+    .eller{left:50%;top:auto;bottom:auto;transform:translate(-50%,-50%)}
+    .side .num{position:static;margin-bottom:.4rem}
+    .track{grid-template-columns:1fr;gap:1.3rem}
+    .track::before{display:none}
+    .stepc{display:flex;gap:1rem;padding:0}
+    .stepc h4{margin-top:.1rem}
+  }
+</style>
+</head>
+<body>
+  <div class="bar"><div class="wrap"><span class="brand">MK<i>Auto.</i></span><a class="back" href="/list">&larr; Alle mockups</a></div></div>
+
+  <header class="hero"><div class="wrap">
+    <span class="eyebrow">Selge bilen din — Konsept A</span>
+    <h1>To måter. <em>Ett</em> mål: solgt.</h1>
+    <p>Du slipper styret. Vi tar oss av annonse, visninger og papirer. Forskjellen ligger i ett ord — <b>ansvar</b>.</p>
+  </div></header>
+
+  <section class="wrap" aria-label="Kommisjon versus formidling">
+    <div class="versus">
+      <div class="side kom">
+        <span class="num">01</span>
+        <span class="lbl">Vi tar ansvaret</span>
+        <h2>Kommisjonssalg</h2>
+        <p class="desc">Vi selger bilen <b>i vårt navn</b>, men for din regning. Da er det vi som tar på oss reklamasjonsansvaret etter salget.</p>
+        <div class="ansvar"><div class="k">Reklamasjonsansvar</div><div class="v">Ligger hos <em>oss</em></div></div>
+      </div>
+      <div class="side form">
+        <span class="num">02</span>
+        <span class="lbl">Du selger, vi hjelper</span>
+        <h2>Formidlingssalg</h2>
+        <p class="desc">Vi er mellommann og gjør hele jobben, men salget skjer <b>i ditt navn</b> og for din regning.</p>
+        <div class="ansvar"><div class="k">Reklamasjonsansvar</div><div class="v">Ligger hos <em>deg</em></div></div>
+      </div>
+      <span class="eller" aria-hidden="true">ELLER</span>
+    </div>
+
+    <div class="diff"><span class="dot"></span><div><b>Hovedforskjellen:</b> Ved kommisjon selger vi i vårt navn og tar reklamasjonsansvaret. Ved formidling selger du i ditt navn og har ansvaret selv. Hva som passer best, blir vi enige om før vi setter i gang.</div></div>
+  </section>
+
+  <section class="proc"><div class="wrap">
+    <h3>Slik gjør vi det</h3>
+    <p class="sub">Seks enkle steg, fra prat til oppgjør.</p>
+    <div class="track">
+      <div class="stepc"><div class="ball">01</div><div><h4>Vi blir enige</h4><p>Vi går gjennom bilen og velger kommisjon eller formidling.</p></div></div>
+      <div class="stepc"><div class="ball">02</div><div><h4>Klargjøring</h4><p>Vi gjør bilen klar og tar gode bilder.</p></div></div>
+      <div class="stepc"><div class="ball">03</div><div><h4>Annonse</h4><p>Ærlig annonse, lagt ut der kjøperne er.</p></div></div>
+      <div class="stepc"><div class="ball">04</div><div><h4>Visninger</h4><p>Vi tar prat, visninger og prøvekjøring.</p></div></div>
+      <div class="stepc"><div class="ball">05</div><div><h4>Papirene</h4><p>Kontrakt, betaling og eierskifte.</p></div></div>
+      <div class="stepc"><div class="ball">06</div><div><h4>Oppgjør</h4><p>Bilen er solgt — du får oppgjøret ditt.</p></div></div>
+    </div>
+  </div></section>
+
+  <section class="wrap" style="padding-bottom:clamp(4rem,8vw,7rem)">
+    <div class="cta">
+      <div><h3>Klar for å selge?</h3><p>Ta kontakt, så finner vi avtalen som passer deg og bilen din.</p></div>
+      <a class="btn" href="#">Ta kontakt &rarr;</a>
+    </div>
+  </section>
+</body>
+</html>

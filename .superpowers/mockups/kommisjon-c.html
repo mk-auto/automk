@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kommisjon — Konsept C · Reisen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@300..600&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#faf8f5;--paper-2:#f2ede6;--paper-3:#ebe4da;--card:#fff;
+    --ink:#1a1612;--ink-2:#5d564c;--ink-3:#8c8478;
+    --copper:#a8662e;--copper-2:#8f5526;--copper-ink:#5e3818;--copper-wash:#f6ece2;
+    --line:rgba(26,22,18,.12);--line-2:rgba(26,22,18,.07);
+    --sans:"Geist",system-ui,sans-serif;--mono:"Geist Mono",monospace;--serif:"Fraunces",Georgia,serif;
+    --ease:cubic-bezier(0.16,1,0.3,1);--maxw:1080px;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(1.1rem,4vw,2.5rem)}
+  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--copper-2)}
+
+  .bar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--line-2)}
+  .bar .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-weight:800;letter-spacing:-.04em;font-size:1.25rem}.brand i{color:var(--copper);font-style:normal}
+  .bar .back{font-size:.85rem;color:var(--ink-2)}
+
+  /* hero */
+  .hero{padding:clamp(3.5rem,8vw,6.5rem) 0 clamp(2rem,4vw,3rem);max-width:760px}
+  .hero .eyebrow{display:block;margin-bottom:1.2rem}
+  .hero h1{font-family:var(--serif);font-weight:560;font-size:clamp(2.6rem,6.5vw,5rem);line-height:1.02;letter-spacing:-.02em}
+  .hero h1 em{font-style:italic;color:var(--copper-2)}
+  .hero p{margin-top:1.3rem;color:var(--ink-2);font-size:clamp(1.05rem,1.6vw,1.25rem);max-width:54ch}
+
+  /* comparison diptych */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:clamp(1rem,2vw,1.5rem)}
+  @media(max-width:720px){.compare{grid-template-columns:1fr}}
+  .ccard{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(1.6rem,3vw,2.3rem);position:relative;overflow:hidden}
+  .ccard::after{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--copper),transparent)}
+  .ccard .ic{width:48px;height:48px;border-radius:14px;background:var(--copper-wash);color:var(--copper-2);display:grid;place-items:center;margin-bottom:1.1rem}
+  .ccard .ic svg{width:24px;height:24px}
+  .ccard .tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+  .ccard h2{font-family:var(--serif);font-weight:560;font-size:1.7rem;letter-spacing:-.01em;margin:.25rem 0 .7rem}
+  .ccard p{color:var(--ink-2);font-size:.98rem;line-height:1.7}
+  .ccard p b{color:var(--ink);font-weight:600}
+  .ccard .who{margin-top:1.2rem;padding-top:1.1rem;border-top:1px solid var(--line-2);display:flex;align-items:baseline;gap:.6rem}
+  .ccard .who .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+  .ccard .who .v{font-family:var(--serif);font-style:italic;font-size:1.25rem;color:var(--copper-2)}
+
+  .pull{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.7rem);line-height:1.45;color:var(--ink);max-width:48ch;margin:clamp(2.4rem,5vw,3.6rem) auto;text-align:center;font-weight:480}
+  .pull b{color:var(--copper-2);font-weight:600;font-style:italic}
+
+  /* journey */
+  .journey{padding:clamp(2rem,4vw,3rem) 0 clamp(4rem,8vw,7rem)}
+  .journey .head{text-align:center;margin-bottom:clamp(2rem,4vw,3.4rem)}
+  .journey .head h3{font-family:var(--serif);font-weight:560;font-size:clamp(1.8rem,3.4vw,2.6rem);letter-spacing:-.01em}
+  .journey .head p{color:var(--ink-2);margin-top:.5rem}
+
+  .timeline{position:relative;max-width:760px;margin-inline:auto}
+  .timeline .spine{position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--line);transform:translateX(-50%)}
+  .timeline .spine .grow{position:absolute;top:0;left:0;width:100%;background:var(--copper);height:var(--grow,0%);transition:height .2s linear}
+  .milestone{position:relative;display:grid;grid-template-columns:1fr 56px 1fr;align-items:center;margin-bottom:clamp(1.4rem,3vw,2.4rem)}
+  .milestone .node{grid-column:2;justify-self:center;width:46px;height:46px;border-radius:50%;background:var(--card);border:2px solid var(--line);color:var(--ink-3);font-family:var(--mono);font-weight:600;font-size:.82rem;display:grid;place-items:center;z-index:2;transition:border-color .4s var(--ease),color .4s var(--ease),transform .4s var(--ease)}
+  .milestone.lit .node{border-color:var(--copper);color:var(--copper-2);transform:scale(1.08)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.2rem 1.4rem;box-shadow:0 14px 30px -22px rgba(60,44,28,.5);opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+  .milestone.lit .card{opacity:1;transform:none}
+  .milestone:nth-child(odd) .card{grid-column:1;text-align:right}
+  .milestone:nth-child(even) .card{grid-column:3}
+  .card h4{font-size:1.08rem;font-weight:660;letter-spacing:-.01em}
+  .card p{color:var(--ink-2);font-size:.92rem;margin-top:.25rem}
+  @media(max-width:680px){
+    .timeline .spine{left:22px}
+    .milestone{grid-template-columns:44px 1fr;gap:1rem;margin-bottom:1.2rem}
+    .milestone .node{grid-column:1}
+    .milestone:nth-child(odd) .card,.milestone:nth-child(even) .card{grid-column:2;text-align:left}
+  }
+
+  .cta{background:var(--ink);color:var(--paper);border-radius:24px;padding:clamp(2.2rem,5vw,3.4rem);display:flex;flex-wrap:wrap;gap:1.3rem;align-items:center;justify-content:space-between;margin-top:1rem}
+  .cta h3{font-family:var(--serif);font-weight:540;font-size:clamp(1.6rem,3vw,2.2rem)}
+  .cta p{color:rgba(255,255,255,.72);margin-top:.4rem}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--copper);color:#fff;font-weight:600;padding:.95rem 1.7rem;border-radius:999px;transition:transform .2s var(--ease),background .2s var(--ease)}
+  .btn:hover{transform:translateY(-2px);background:#b9743a}.btn:active{transform:scale(.97)}
+</style>
+</head>
+<body>
+  <div class="bar"><div class="wrap"><span class="brand">MK<i>Auto.</i></span><a class="back" href="/list">&larr; Alle mockups</a></div></div>
+
+  <header class="hero wrap" style="max-width:760px">
+    <span class="eyebrow">Selge bilen din — Konsept C</span>
+    <h1>La oss ta <em>reisen</em> fra annonse til oppgjør.</h1>
+    <p>To trygge måter å selge på, og en prosess der vi gjør jobben. Forskjellen handler om én ting: hvem som står ansvarlig.</p>
+  </header>
+
+  <section class="wrap" aria-label="Kommisjon og formidling">
+    <div class="compare">
+      <article class="ccard">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9.2 12l1.9 1.9L15 10"/></svg></div>
+        <span class="tag">Vi tar ansvaret</span>
+        <h2>Kommisjonssalg</h2>
+        <p>Vi selger bilen <b>i vårt navn</b>, men for din regning. Da tar vi på oss reklamasjonsansvaret etter salget — ekstra trygghet for kjøperen, og lettere salg for deg.</p>
+        <div class="who"><span class="k">Ansvar</span><span class="v">hos oss</span></div>
+      </article>
+      <article class="ccard">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 11l3-3 4 2 3-4 4 3"/><path d="M4 20c2-3 5-3 8-3s6 0 8 3"/></svg></div>
+        <span class="tag">Du selger, vi hjelper</span>
+        <h2>Formidlingssalg</h2>
+        <p>Vi er mellommann og gjør hele jobben, men salget skjer <b>i ditt navn</b> og for din regning. Da står du selv ansvarlig for reklamasjoner etter salget.</p>
+        <div class="who"><span class="k">Ansvar</span><span class="v">hos deg</span></div>
+      </article>
+    </div>
+
+    <p class="pull">Kort fortalt: ved kommisjon selger vi <b>i vårt navn</b> og tar ansvaret. Ved formidling selger du <b>i ditt navn</b> og har ansvaret selv.</p>
+  </section>
+
+  <section class="journey"><div class="wrap">
+    <div class="head"><h3>Reisen, steg for steg</h3><p>Scroll nedover — vi går veien sammen.</p></div>
+    <div class="timeline" id="timeline">
+      <div class="spine"><span class="grow" id="grow"></span></div>
+      <div class="milestone"><span class="node">01</span><div class="card"><h4>Vi blir enige om en avtale</h4><p>Vi går gjennom bilen sammen og velger kommisjon eller formidling.</p></div></div>
+      <div class="milestone"><span class="node">02</span><div class="card"><h4>Vi klargjør og fotograferer</h4><p>Bilen gjøres klar, og vi tar gode bilder som viser den fra sin beste side.</p></div></div>
+      <div class="milestone"><span class="node">03</span><div class="card"><h4>Vi lager annonsen</h4><p>En ærlig og tydelig annonse, lagt ut der kjøperne faktisk er.</p></div></div>
+      <div class="milestone"><span class="node">04</span><div class="card"><h4>Vi tar oss av kontakten</h4><p>Vi svarer på spørsmål, holder visninger og blir med på prøvekjøring.</p></div></div>
+      <div class="milestone"><span class="node">05</span><div class="card"><h4>Vi ordner papirene</h4><p>Kontrakt, betaling og eierskifte — alt går riktig for seg.</p></div></div>
+      <div class="milestone"><span class="node">06</span><div class="card"><h4>Du får oppgjør</h4><p>Når bilen er solgt, får du oppgjøret ditt. Enkelt og trygt.</p></div></div>
+    </div>
+  </div></section>
+
+  <section class="wrap" style="padding-bottom:clamp(4rem,8vw,7rem)">
+    <div class="cta"><div><h3>Klar for å selge?</h3><p>Ta kontakt, så finner vi avtalen som passer deg og bilen din.</p></div><a class="btn" href="#">Ta kontakt &rarr;</a></div>
+  </section>
+
+<script>
+(function(){
+  const milestones=[...document.querySelectorAll('.milestone')];
+  const grow=document.getElementById('grow');
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('lit')})},{threshold:.4,rootMargin:"0px 0px -12% 0px"});
+  milestones.forEach(m=>io.observe(m));
+  const tl=document.getElementById('timeline');
+  function onScroll(){
+    const r=tl.getBoundingClientRect();const vh=window.innerHeight;
+    const total=r.height; const seen=Math.min(Math.max(vh*0.55 - r.top,0),total);
+    grow.style.setProperty('--grow',(seen/total*100)+'%');
+    grow.style.height=(seen/total*100)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

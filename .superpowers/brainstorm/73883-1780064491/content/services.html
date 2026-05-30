@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MK Auto — Tjenester</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,400;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --canvas:oklch(0.165 0.012 64);--surface-1:oklch(0.205 0.013 64);--surface-2:oklch(0.245 0.015 62);
+    --ink:oklch(0.962 0.008 85);--ink-soft:oklch(0.795 0.010 84);--ink-mute:oklch(0.615 0.012 80);
+    --hairline:oklch(0.99 0 0/0.12);--hairline-2:oklch(0.99 0 0/0.20);
+    --accent:oklch(0.805 0.128 73);--accent-strong:oklch(0.720 0.140 58);--accent-ink:oklch(0.205 0.05 62);
+    --cream:oklch(0.958 0.013 84);--ink-dark:oklch(0.225 0.013 62);
+    --fd:"Bricolage Grotesque",sans-serif;--fb:"Schibsted Grotesk",sans-serif;--fm:"JetBrains Mono",monospace;
+    --ease:cubic-bezier(0.23,1,0.32,1);
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--canvas);color:var(--ink);font-family:var(--fb);-webkit-font-smoothing:antialiased}
+  .pagebar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    gap:1rem;padding:.8rem 1.4rem;background:oklch(0.13 0.01 64/.85);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--hairline);font-size:.82rem;color:var(--ink-soft)}
+  .pagebar b{color:var(--accent);font-family:var(--fm);letter-spacing:.1em;text-transform:uppercase;font-size:.72rem}
+  .block{padding:clamp(3rem,6vw,5.5rem) clamp(1.4rem,4vw,3rem);border-bottom:1px solid var(--hairline);position:relative}
+  .wrap{max-width:1280px;margin:0 auto}
+  .tag{display:inline-flex;gap:.6rem;align-items:center;margin-bottom:2rem;
+    font-family:var(--fm);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute)}
+  .tag .pick{cursor:pointer;border:1px solid var(--hairline-2);border-radius:999px;padding:.35rem .8rem;
+    color:var(--ink);transition:.25s var(--ease);background:transparent}
+  .tag .pick:hover,.tag .pick.selected{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .eyebrow{font-family:var(--fm);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+  .h2{font-family:var(--fd);font-weight:600;font-size:clamp(1.9rem,3.4vw,3rem);line-height:1.04;letter-spacing:-.02em;margin:.8rem 0 .4rem}
+  .arrow{transition:transform .25s var(--ease)}
+
+  /* ===== 1 — INTERACTIVE ACCORDION ===== */
+  .acc{display:flex;gap:10px;height:460px;margin-top:2rem}
+  .panel{position:relative;flex:1;overflow:hidden;border-radius:12px;cursor:pointer;
+    transition:flex .55s var(--ease);background:var(--surface-1);border:1px solid var(--hairline)}
+  .panel .img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.5;
+    transition:opacity .55s var(--ease),transform .55s var(--ease)}
+  .panel .shade{position:absolute;inset:0;background:linear-gradient(0deg,oklch(0.12 0.01 64/.92),oklch(0.12 0.01 64/.25))}
+  .panel .num{position:absolute;top:1.2rem;left:1.3rem;font-family:var(--fm);font-size:.8rem;color:var(--accent);z-index:2}
+  .panel .vtitle{position:absolute;bottom:1.4rem;left:1.5rem;z-index:2;font-family:var(--fd);font-weight:700;
+    font-size:1.5rem;writing-mode:vertical-rl;transform:rotate(180deg);transition:opacity .3s}
+  .panel .detail{position:absolute;left:0;right:0;bottom:0;padding:1.8rem;z-index:2;opacity:0;transform:translateY(12px);
+    transition:opacity .4s var(--ease) .1s,transform .4s var(--ease) .1s;max-width:30rem}
+  .panel .detail h3{font-family:var(--fd);font-weight:700;font-size:1.9rem;letter-spacing:-.01em}
+  .panel .detail p{color:var(--ink-soft);margin-top:.5rem;font-size:.98rem}
+  .panel .detail .go{display:inline-flex;gap:.5rem;align-items:center;margin-top:1rem;color:var(--accent);font-weight:600;font-size:.9rem}
+  .acc:hover .panel{flex:.7}
+  .panel:hover{flex:4}
+  .panel:hover .img{opacity:.7;transform:scale(1.05)}
+  .panel:hover .vtitle{opacity:0}
+  .panel:hover .detail{opacity:1;transform:none}
+
+  /* ===== 2 — EDITORIAL NUMBERED ROWS ===== */
+  .rows{margin-top:1rem;border-top:1px solid var(--hairline)}
+  .row{display:grid;grid-template-columns:5rem 1fr auto;gap:clamp(1rem,3vw,3rem);align-items:center;
+    padding:clamp(1.4rem,2.4vw,2.2rem) .5rem;border-bottom:1px solid var(--hairline);position:relative;
+    transition:padding-left .35s var(--ease)}
+  .row .num{font-family:var(--fm);font-size:1rem;color:var(--ink-mute);transition:color .3s}
+  .row .mid{display:flex;flex-direction:column;gap:.35rem}
+  .row .mid h3{font-family:var(--fd);font-weight:600;font-size:clamp(1.6rem,3vw,2.6rem);letter-spacing:-.02em;line-height:1;
+    transition:transform .35s var(--ease)}
+  .row .mid p{color:var(--ink-soft);max-width:54ch;font-size:.98rem;opacity:.0;max-height:0;overflow:hidden;
+    transition:opacity .35s var(--ease),max-height .35s var(--ease)}
+  .row .cta{font-family:var(--fm);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute);
+    display:inline-flex;gap:.5rem;align-items:center;transition:color .3s}
+  .row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:transform .35s var(--ease)}
+  .row:hover{padding-left:1.4rem}
+  .row:hover::before{transform:scaleY(1)}
+  .row:hover .num,.row:hover .cta{color:var(--accent)}
+  .row:hover .mid p{opacity:1;max-height:4rem}
+  .row:hover .cta .arrow{transform:translateX(4px)}
+
+  /* ===== 3 — BENTO GRID ===== */
+  .bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:185px;gap:14px;margin-top:2rem}
+  .tile{position:relative;overflow:hidden;border-radius:14px;background:var(--surface-1);border:1px solid var(--hairline);
+    padding:1.6rem;display:flex;flex-direction:column;justify-content:space-between;transition:.3s var(--ease)}
+  .tile:hover{border-color:var(--accent-strong);transform:translateY(-4px)}
+  .tile .img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.22;transition:.4s var(--ease)}
+  .tile:hover .img{opacity:.38;transform:scale(1.05)}
+  .tile .top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:2}
+  .tile .num{font-family:var(--fm);font-size:.78rem;color:var(--accent)}
+  .tile .ic{width:30px;height:30px;color:var(--accent)}
+  .tile .bot{position:relative;z-index:2}
+  .tile h3{font-family:var(--fd);font-weight:700;font-size:1.5rem;letter-spacing:-.01em}
+  .tile p{color:var(--ink-soft);font-size:.9rem;margin-top:.3rem;max-width:38ch}
+  .tile.big{grid-column:span 2;grid-row:span 2}
+  .tile.big h3{font-size:2.4rem}
+  .tile.wide{grid-column:span 2}
+  .t-sell{grid-column:span 2}
+  .t-fin{grid-column:span 4}
+  .t-fin{flex-direction:row;align-items:center;justify-content:space-between}
+
+  @media(max-width:860px){
+    .acc{flex-direction:column;height:auto}.panel{height:90px}.panel:hover{flex:1;height:230px}
+    .panel .vtitle{writing-mode:horizontal-tb;transform:none;bottom:auto;top:1.1rem;left:3rem}
+    .bento{grid-template-columns:repeat(2,1fr)}.tile.big,.tile.wide,.t-sell,.t-fin{grid-column:span 2;grid-row:auto}
+    .t-fin{flex-direction:column;align-items:flex-start;gap:1rem}
+  }
+</style>
+</head>
+<body>
+  <div class="pagebar">
+    <span><b>MK Auto</b> &nbsp;·&nbsp; Tjenester — 3 retninger</span>
+    <span>Hover/klikk for å føle interaksjonen · velg under hver</span>
+  </div>
+
+  <!-- 1 ACCORDION -->
+  <section class="block">
+    <div class="wrap">
+      <div class="tag"><span>1 — Interaktiv Accordion · utvidende paneler</span>
+        <button class="pick" data-choice="svc-accordion">Velg denne</button></div>
+      <span class="eyebrow">Slik kan vi hjelpe</span>
+      <h2 class="h2">Fem måter å gjøre bilbytte enkelt på.</h2>
+      <div class="acc">
+        <div class="panel"><div class="img" style="background-image:url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80')"></div><div class="shade"></div>
+          <span class="num">01</span><span class="vtitle">Kjøp</span>
+          <div class="detail"><h3>Kjøp</h3><p>Håndplukkede biler, alle kontrollert og klare til levering.</p><span class="go">Se utvalget →</span></div></div>
+        <div class="panel"><div class="img" style="background-image:url('https://images.unsplash.com/photo-1549921296-3a6b65aa2cd1?auto=format&fit=crop&w=900&q=80')"></div><div class="shade"></div>
+          <span class="num">02</span><span class="vtitle">Selg</span>
+          <div class="detail"><h3>Selg</h3><p>Vi kjøper bilen din raskt og til rettferdig pris — oppgjør på dagen.</p><span class="go">Få et tilbud →</span></div></div>
+        <div class="panel"><div class="img" style="background-image:url('https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=900&q=80')"></div><div class="shade"></div>
+          <span class="num">03</span><span class="vtitle">Kommisjon</span>
+          <div class="detail"><h3>Kommisjon</h3><p>La oss selge bilen for deg. Vi tar bildene, praten og forhandlingene.</p><span class="go">Les mer →</span></div></div>
+        <div class="panel"><div class="img" style="background-image:url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=900&q=80')"></div><div class="shade"></div>
+          <span class="num">04</span><span class="vtitle">Innbytte</span>
+          <div class="detail"><h3>Innbytte</h3><p>Bytt inn den gamle når du kjøper ny. Verdivurdering mens du venter.</p><span class="go">Verdivurder →</span></div></div>
+        <div class="panel"><div class="img" style="background-image:url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=80')"></div><div class="shade"></div>
+          <span class="num">05</span><span class="vtitle">Finansiering</span>
+          <div class="detail"><h3>Finansiering</h3><p>En nedbetaling som passer budsjettet — uten skjulte gebyrer.</p><span class="go">Regn på det →</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 EDITORIAL ROWS -->
+  <section class="block">
+    <div class="wrap">
+      <div class="tag"><span>2 — Editorial Rows · store rader, hover-detalj</span>
+        <button class="pick" data-choice="svc-rows">Velg denne</button></div>
+      <span class="eyebrow">Slik kan vi hjelpe</span>
+      <h2 class="h2">Fem tjenester. Én adresse.</h2>
+      <div class="rows">
+        <div class="row"><span class="num">01</span><div class="mid"><h3>Kjøp</h3><p>Håndplukkede biler, alle kontrollert og klare til levering.</p></div><span class="cta">Se utvalget <span class="arrow">→</span></span></div>
+        <div class="row"><span class="num">02</span><div class="mid"><h3>Selg</h3><p>Vi kjøper bilen din raskt og til rettferdig pris, med oppgjør på dagen.</p></div><span class="cta">Få tilbud <span class="arrow">→</span></span></div>
+        <div class="row"><span class="num">03</span><div class="mid"><h3>Kommisjon</h3><p>La oss selge bilen for deg — bildene, praten og forhandlingene.</p></div><span class="cta">Les mer <span class="arrow">→</span></span></div>
+        <div class="row"><span class="num">04</span><div class="mid"><h3>Innbytte</h3><p>Bytt inn den gamle når du kjøper ny hos oss. Verdivurdering på stedet.</p></div><span class="cta">Verdivurder <span class="arrow">→</span></span></div>
+        <div class="row"><span class="num">05</span><div class="mid"><h3>Finansiering</h3><p>En nedbetaling som passer budsjettet, uten skjulte gebyrer.</p></div><span class="cta">Regn på det <span class="arrow">→</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 BENTO -->
+  <section class="block" style="border-bottom:0">
+    <div class="wrap">
+      <div class="tag"><span>3 — Bento Grid · asymmetriske fliser</span>
+        <button class="pick" data-choice="svc-bento">Velg denne</button></div>
+      <span class="eyebrow">Slik kan vi hjelpe</span>
+      <h2 class="h2">Alt du trenger, på ett brett.</h2>
+      <div class="bento">
+        <div class="tile big"><div class="img" style="background-image:url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1000&q=80')"></div>
+          <div class="top"><span class="num">01</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 13l2-5a3 3 0 013-2h8a3 3 0 013 2l2 5M5 17h14M6 13h12"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/></svg></div>
+          <div class="bot"><h3>Kjøp</h3><p>Håndplukkede, kontrollerte biler klare til levering — start her.</p></div></div>
+        <div class="tile t-sell"><div class="img" style="background-image:url('https://images.unsplash.com/photo-1549921296-3a6b65aa2cd1?auto=format&fit=crop&w=900&q=80')"></div>
+          <div class="top"><span class="num">02</span></div><div class="bot"><h3>Selg</h3><p>Oppgjør på dagen.</p></div></div>
+        <div class="tile"><div class="top"><span class="num">03</span></div><div class="bot"><h3>Kommisjon</h3><p>Vi selger for deg.</p></div></div>
+        <div class="tile"><div class="top"><span class="num">04</span></div><div class="bot"><h3>Innbytte</h3><p>Bytt inn på stedet.</p></div></div>
+        <div class="tile t-fin"><div class="bot"><h3>Finansiering</h3><p>En nedbetaling som passer budsjettet — uten skjulte gebyrer.</p></div><span class="cta" style="color:var(--accent);font-family:var(--fm);font-size:.8rem">Regn på det →</span></div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
