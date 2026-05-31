@@ -365,16 +365,17 @@ def detail(c):
 '''
     import json as _json
     fuel_map = {"Elektrisk": "Electric", "Bensin": "Gasoline", "Diesel": "Diesel", "Hybrid": "Hybrid"}
+    gear_map = {"Automat": "Automatic", "Manuell": "Manual"}
     vehicle = {
         "@context": "https://schema.org",
         "@type": "Car",
-        "name": f"{c['title']} {sub}",
+        "name": c["subtitle"] or c["title"],
         "brand": {"@type": "Brand", "name": c["brand"]},
         "model": c.get("model") or c["title"],
         "vehicleModelDate": c["year"],
         "mileageFromOdometer": {"@type": "QuantitativeValue", "value": c["km"], "unitCode": "KMT"} if c["km"] else None,
         "fuelType": fuel_map.get(fuel, fuel),
-        "vehicleTransmission": c["gear"],
+        "vehicleTransmission": gear_map.get(c["gear"], c["gear"]) if c["gear"] else None,
         "color": c["color"],
         "vehicleIdentificationNumber": c["vin"],
         "image": f"https://www.mkauto.no/images/{c['id']}/1.jpg",
@@ -388,8 +389,12 @@ def detail(c):
             "seller": {"@type": "AutoDealer", "name": "MK Auto AS", "areaServed": "Oslo"}
         } if c["price"] else None,
     }
-    vehicle = {k: v for k, v in vehicle.items() if v is not None}
-    schema_block = '  <script type="application/ld+json">\n  ' + _json.dumps(vehicle, ensure_ascii=False) + '\n  </script>\n'
+    # drop None AND empty-string values so they don't leak into structured data
+    vehicle = {k: v for k, v in vehicle.items() if v not in (None, "")}
+    # json.dumps escapes JSON, but escape '<' too so a future title containing
+    # "</script>" or "<" can't break out of the <script> element
+    schema_json = _json.dumps(vehicle, ensure_ascii=False).replace("<", "\\u003c")
+    schema_block = '  <script type="application/ld+json">\n  ' + schema_json + '\n  </script>\n'
     head = head.replace("</head>", schema_block + "</head>")
     return head + body + FOOT
 
