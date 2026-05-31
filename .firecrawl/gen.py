@@ -160,6 +160,15 @@ HEAD = '''<!DOCTYPE html>
   <meta name="theme-color" content="#ffffff" />
   <title>{title} {year} · MK Auto</title>
   <meta name="description" content="{metadesc}" />
+  <link rel="canonical" href="https://www.mkauto.no/{slug}.html" />
+  <meta property="og:type" content="product" />
+  <meta property="og:site_name" content="MK Auto" />
+  <meta property="og:locale" content="nb_NO" />
+  <meta property="og:title" content="{title} {year} · MK Auto" />
+  <meta property="og:description" content="{metadesc}" />
+  <meta property="og:url" content="https://www.mkauto.no/{slug}.html" />
+  <meta property="og:image" content="https://www.mkauto.no/{ogimage}" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23231f1b'/%3E%3Ctext x='16' y='22' font-family='Geist,Arial,sans-serif' font-size='14' font-weight='800' text-anchor='middle' fill='%23a8662e'%3EMK%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -175,6 +184,7 @@ HEAD = '''<!DOCTYPE html>
         <a class="brand" href="index.html#top" translate="no" aria-label="MK Auto – til forsiden"><span class="mk">MK</span><span class="auto">Auto</span><span class="dot">.</span></a>
         <ul class="nav-links">
           <li><a href="butikk.html">Biler</a></li>
+          <li><a href="guider.html">Guider</a></li>
           <li><a href="index.html#tjenester">Tjenester</a></li>
           <li><a href="index.html#finn">Finn din bil</a></li>
           <li><a class="btn btn--ghost" href="index.html#finn">Kontakt oss</a></li>
@@ -184,6 +194,7 @@ HEAD = '''<!DOCTYPE html>
     </div>
     <div class="mobile-menu" id="mobileMenu">
       <a href="butikk.html">Biler</a>
+      <a href="guider.html">Guider</a>
       <a href="index.html#tjenester">Tjenester</a>
       <a href="index.html#finn">Finn din bil</a>
       <a class="btn" href="index.html#finn">Kontakt oss</a>
@@ -205,7 +216,7 @@ FOOT = '''  <footer class="site-footer">
           <li>Økernveien 00, 0580 Oslo</li><li>Man–fre 09–17</li><li>Lør 10–14</li>
         </ul></div>
         <div class="footer-col"><h4>Kontakt</h4><ul>
-          <li><a href="tel:+4720000000">+47 20 00 00 00</a></li><li><a href="mailto:post@mkauto.no">post@mkauto.no</a></li><li><a href="index.html#finn">Finn din bil</a></li>
+          <li><a href="guider.html">Guider &amp; råd</a></li><li><a href="tel:+4720000000">+47 20 00 00 00</a></li><li><a href="mailto:post@mkauto.no">post@mkauto.no</a></li><li><a href="index.html#finn">Finn din bil</a></li>
         </ul></div>
       </div>
       <div class="footer-bottom">
@@ -281,7 +292,8 @@ def detail(c):
     soldban = '<div class="soldban">Denne bilen er solgt</div>\n          ' if sold else ''
     metadesc = f"{c['title']} {sub}, {c['year']}, {nb(c['km'])} km, {esc(fuel)}. Til salgs hos MK Auto i Oslo."
     metadesc = re.sub(r' ', ' ', metadesc)
-    head = HEAD.format(title=esc(c["title"]), year=c["year"] or "", metadesc=esc(metadesc))
+    head = HEAD.format(title=esc(c["title"]), year=c["year"] or "", metadesc=esc(metadesc),
+                       slug=f"bil-{c['id']}", ogimage=f"images/{c['id']}/1.jpg")
 
     keyspecs = f'''            <div class="keyspecs">
               <div class="ks"><div class="v">{c['year'] or '—'}</div><div class="k">Modellår</div></div>
@@ -351,6 +363,34 @@ def detail(c):
   </main>
 
 '''
+    import json as _json
+    fuel_map = {"Elektrisk": "Electric", "Bensin": "Gasoline", "Diesel": "Diesel", "Hybrid": "Hybrid"}
+    vehicle = {
+        "@context": "https://schema.org",
+        "@type": "Car",
+        "name": f"{c['title']} {sub}",
+        "brand": {"@type": "Brand", "name": c["brand"]},
+        "model": c.get("model") or c["title"],
+        "vehicleModelDate": c["year"],
+        "mileageFromOdometer": {"@type": "QuantitativeValue", "value": c["km"], "unitCode": "KMT"} if c["km"] else None,
+        "fuelType": fuel_map.get(fuel, fuel),
+        "vehicleTransmission": c["gear"],
+        "color": c["color"],
+        "vehicleIdentificationNumber": c["vin"],
+        "image": f"https://www.mkauto.no/images/{c['id']}/1.jpg",
+        "url": f"https://www.mkauto.no/bil-{c['id']}.html",
+        "offers": {
+            "@type": "Offer",
+            "price": c["price"],
+            "priceCurrency": "NOK",
+            "availability": "https://schema.org/SoldOut" if sold else "https://schema.org/InStock",
+            "itemCondition": "https://schema.org/UsedCondition",
+            "seller": {"@type": "AutoDealer", "name": "MK Auto AS", "areaServed": "Oslo"}
+        } if c["price"] else None,
+    }
+    vehicle = {k: v for k, v in vehicle.items() if v is not None}
+    schema_block = '  <script type="application/ld+json">\n  ' + _json.dumps(vehicle, ensure_ascii=False) + '\n  </script>\n'
+    head = head.replace("</head>", schema_block + "</head>")
     return head + body + FOOT
 
 for c in cars:
