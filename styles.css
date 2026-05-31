@@ -1,6 +1,6 @@
 /* ============================================================
    MK AUTO — Design system
-   Light "paper" canvas · single copper accent · Geist + Geist Mono
+   Light "paper" canvas · single dark-red accent · Geist + Geist Mono
    Anchored to BMW editorial restraint. Shared across landing,
    shop (butikk) and car-detail pages.
    ============================================================ */
@@ -17,11 +17,11 @@
   --ink-2:      #5d564c;
   --ink-3:      #8c8478;
 
-  /* Accent — copper (sat < 80%) */
-  --copper:     #a8662e;
-  --copper-2:   #8f5526;
-  --copper-ink: #5e3818;
-  --copper-wash:#f6ece2;
+  /* Accent — dark red / oxblood (WCAG AA on white; harmonizes with red MK logo) */
+  --copper:     #a01b22;
+  --copper-2:   #8a1a1f;
+  --copper-ink: #5a1418;
+  --copper-wash:#f8e9ea;
 
   /* Lines + signal */
   --line:       rgba(26, 22, 18, 0.12);
@@ -158,6 +158,8 @@ input, select, textarea { font: inherit; color: inherit; }
 .brand .mk { color: var(--ink); }
 .brand .auto { color: var(--copper); }
 .brand .dot { color: var(--copper); }
+.brand-logo { display: block; height: 44px; width: auto; }
+.brand-logo--footer { height: 60px; }
 
 .nav-links { list-style: none; display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2.2rem); padding: 0; }
 .nav-links a { font-weight: 500; font-size: .97rem; color: var(--ink-2); transition: color .2s var(--ease); position: relative; }
@@ -579,7 +581,7 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border: 3px s
 .node.active .av::before { animation: avPulse 2.2s var(--ease) infinite; }
 @keyframes avPulse { 0% { transform: scale(.95); opacity: .6; } 70% { transform: scale(1.25); opacity: 0; } 100% { opacity: 0; } }
 .ansvar-chip { position: absolute; bottom: 1rem; left: 25%; transform: translateX(-50%); background: var(--ink); color: var(--paper); font-family: var(--mono); font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; padding: .55rem 1rem; border-radius: 999px; transition: left .55s var(--spring); white-space: nowrap; display: flex; align-items: center; gap: .5rem; box-shadow: 0 10px 22px -10px rgba(20,16,12,.5); z-index: 3; }
-.ansvar-chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #e8b988; box-shadow: 0 0 8px 1px #e8b988; }
+.ansvar-chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #d97c82; box-shadow: 0 0 8px 1px #d97c82; }
 .diagram.form .ansvar-chip { left: 75%; }
 .state { margin-top: 2rem; }
 .state[hidden] { display: none; }
