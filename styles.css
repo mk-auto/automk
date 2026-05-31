@@ -652,7 +652,7 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border: 3px s
 .article-head { margin-bottom: clamp(2.2rem, 4vw, 3.2rem); }
 .article-head h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.04; letter-spacing: -0.02em; font-weight: 800; margin: 0 0 1.1rem; }
 .article-lede { font-size: clamp(1.12rem, 2vw, 1.32rem); line-height: 1.5; color: var(--ink-2); margin: 0 0 1.3rem; }
-.article-meta { font: 500 0.82rem/1 "Geist Mono", monospace; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+.article-meta { font: 500 0.82rem/1 "Geist Mono", monospace; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-2); }
 
 .article-body { font-size: 1.08rem; line-height: 1.72; color: var(--ink); }
 .article-body h2 { font-size: clamp(1.45rem, 3vw, 1.95rem); line-height: 1.12; letter-spacing: -0.01em; font-weight: 800; margin: 2.8rem 0 1rem; }
@@ -680,7 +680,7 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border: 3px s
 .faq-item p { margin: 0; color: var(--ink-2); }
 
 .related { max-width: 68ch; margin: 3.2rem auto 0; }
-.related h2 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: .04em; font-family: "Geist Mono", monospace; color: var(--ink-3); margin: 0 0 1rem; }
+.related h2 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: .04em; font-family: "Geist Mono", monospace; color: var(--ink-2); margin: 0 0 1rem; }
 .related-links { display: grid; gap: .7rem; }
 .related-links a { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 1.2rem; border: 1px solid var(--line); border-radius: 12px; text-decoration: none; color: var(--ink); font-weight: 600; transition: border-color .15s ease, transform .15s ease; }
 .related-links a:hover { border-color: var(--copper); transform: translateY(-2px); }
