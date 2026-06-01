@@ -978,8 +978,6 @@ a.info-link:hover { background: var(--copper-wash); }
 .om-story-body strong { font-weight: 680; }
 @media (max-width: 760px) { .om-story { grid-template-columns: 1fr; gap: 1rem; } }
 
-.om-values { padding-top: clamp(1rem, 2vw, 2rem); }
-
 /* vision — dark full-bleed band */
 .om-visjon { background: var(--ink); color: #f6f3ee; padding-block: clamp(4rem, 9vw, 8rem); }
 .om-visjon .om-plate { background: rgba(255,255,255,.06); border-color: rgba(246,243,238,.7); }
