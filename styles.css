@@ -198,27 +198,35 @@ input, select, textarea { font: inherit; color: inherit; }
 .hero { position: relative; min-height: 94vh; display: flex; align-items: center; overflow: hidden; padding-block: clamp(5rem, 12vh, 9rem); }
 .hero-bg {
   position: absolute; inset: 0;
-  background-image: url("images/447397423/2.jpg");
-  background-size: cover; background-position: center 58%;
-  background-color: var(--paper-2);
+  background-image: url("images/hero.jpg");
+  background-size: cover; background-position: center 62%;
+  background-color: #141110;
 }
-/* Flat near-paper wash so the backdrop reads as soft texture, not a competing photo */
-.hero-scrim { position: absolute; inset: 0; background: rgba(255, 255, 255, 0.82); }
+/* Darkening scrim so the showroom photo reads as a full-bleed hero while
+   keeping the left-aligned headline + copy legible */
+.hero-scrim {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(12, 9, 8, 0.18) 0%, rgba(12, 9, 8, 0.62) 100%),
+    linear-gradient(95deg, rgba(12, 9, 8, 0.82) 0%, rgba(12, 9, 8, 0.42) 55%, rgba(12, 9, 8, 0.24) 100%);
+}
 .hero-inner { position: relative; }
 .hero h1.masked {
   font-size: clamp(2.4rem, 8.8vw, 8.4rem); font-weight: 800; line-height: .86;
-  letter-spacing: -0.045em; margin-bottom: 2rem; text-wrap: balance;
-  /* dark tint over the photo keeps letterforms legible against the soft backdrop */
-  background-image: linear-gradient(rgba(20, 16, 12, 0.52), rgba(20, 16, 12, 0.52)), url("images/447397423/2.jpg");
-  background-size: cover; background-position: center 55%;
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent; color: transparent;
+  letter-spacing: -0.05em; margin-bottom: 2rem; text-wrap: balance;
+  /* Solid, confident headline over the showroom; red is reserved for the period accent + CTA */
+  color: #f6f3ee; -webkit-text-fill-color: #f6f3ee;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.4);
 }
-@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
-  .hero h1.masked { -webkit-text-fill-color: var(--ink); color: var(--ink); }
-}
+.hero h1.masked .pt { color: var(--copper); -webkit-text-fill-color: var(--copper); }
 .hero-row { display: flex; flex-wrap: wrap; gap: 2rem 3rem; align-items: end; justify-content: space-between; }
 .hero-actions { display: flex; gap: .8rem; flex-wrap: wrap; }
+/* Hero sits on the dark showroom photo — light copy + accent CTA */
+.hero .lede { color: rgba(246, 243, 238, 0.82); max-width: 46ch; }
+.hero .btn:not(.btn--ghost) { background: var(--copper); border-color: var(--copper); color: #fff; }
+.hero .btn:not(.btn--ghost):hover { background: color-mix(in srgb, var(--copper) 86%, #fff); border-color: color-mix(in srgb, var(--copper) 86%, #fff); }
+.hero .btn--ghost { border-color: rgba(255, 255, 255, 0.45); color: #fff; }
+.hero .btn--ghost:hover { background: #fff; border-color: #fff; color: var(--ink); }
 
 /* ---------- Reveal animation ---------- */
 .anim { opacity: 0; transform: translateY(22px); animation: rise .9s var(--ease) forwards; }
