@@ -231,8 +231,16 @@
     <!-- ======================= FINN DIN BIL ======================= -->
     <section class="finder section" id="finn" aria-labelledby="finn-title">
       <div class="fbg" aria-hidden="true"></div><div class="fscrim" aria-hidden="true"></div>
-      <div class="container wrap">
-        <h2 class="runin runin--invert reveal" id="finn-title"><b>Fant du ikke bilen på lageret?</b> Fortell oss hva du ser etter, så skal vi se om vi kan få tak i det for deg.</h2>
+      <div class="container wrap finn-grid">
+
+        <div class="finn-pitch">
+          <h2 class="runin runin--invert reveal" id="finn-title"><b>Fant du ikke bilen på lageret?</b> Fortell oss hva du ser etter, så skal vi se om vi kan få tak i det for deg.</h2>
+          <ol class="finn-steps reveal" data-delay="1">
+            <li><span class="fs-num">1</span><span class="fs-t"><b>Du forteller oss</b><span>Hva du ser etter &ndash; så lite eller mye du vil.</span></span></li>
+            <li><span class="fs-num">2</span><span class="fs-t"><b>Vi leter i nettverket vårt</b><span>Vi sporer opp eller bestiller inn riktig bil.</span></span></li>
+            <li><span class="fs-num">3</span><span class="fs-t"><b>Du får treff på e-post</b><span>Uforpliktende forslag, til riktig pris.</span></span></li>
+          </ol>
+        </div>
 
         <!-- Netlify-ready; ellers koble til Formspree e.l. -->
         <form class="panel-glass reveal" data-delay="1" name="bilforesporsel" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="#">
@@ -240,6 +248,7 @@
           <p class="hp"><label>Ikke fyll ut: <input name="bot-field" /></label></p>
 
           <div class="pbody">
+            <p class="fhelper">Alt er valgfritt &ndash; jo mer du forteller, jo bedre treffer vi.</p>
             <div class="gridc">
               <div class="grp col2">
                 <span class="glabel" id="lbl-brand">Merke <span class="opt">· flervalg, eller skriv ditt eget</span></span>
@@ -274,38 +283,43 @@
                 </div>
               </div>
 
-              <div class="grp">
-                <span class="glabel" id="lbl-fuel">Drivstoff <span class="opt">· flervalg</span></span>
-                <div class="chips" role="group" aria-labelledby="lbl-fuel" data-group="fuel">
-                  <button type="button" class="chip" aria-pressed="false">Elektrisk</button>
-                  <button type="button" class="chip" aria-pressed="false">Hybrid</button>
-                  <button type="button" class="chip" aria-pressed="false">Bensin</button>
-                  <button type="button" class="chip" aria-pressed="false">Diesel</button>
-                </div>
-              </div>
-
-              <div class="grp">
-                <span class="glabel" id="lbl-gear">Girkasse</span>
-                <div class="chips" role="group" aria-labelledby="lbl-gear" data-group="gear">
-                  <button type="button" class="chip" aria-pressed="false">Automat</button>
-                  <button type="button" class="chip" aria-pressed="false">Manuell</button>
-                </div>
-              </div>
-
-              <div class="grp">
-                <span class="glabel">Årsmodell</span>
-                <div class="two">
-                  <div class="selwrap"><select name="aar_fra" aria-label="Fra år"><option value="">Fra år</option><option>2012</option><option>2014</option><option>2016</option><option>2018</option><option>2020</option><option>2022</option></select></div>
-                  <div class="selwrap"><select name="aar_til" aria-label="Til år"><option value="">Til år</option><option>2026</option><option>2024</option><option>2022</option><option>2020</option><option>2018</option></select></div>
-                </div>
-              </div>
-
-              <div class="grp">
+              <div class="grp col2">
                 <label class="glabel" for="budsjett">Maks pris</label>
                 <div class="slider-head"><span>inntil</span><span><b id="budgetLabel">350 000 kr</b></span></div>
                 <input type="range" id="budsjett" name="maks_pris" min="50000" max="900000" step="10000" value="350000">
               </div>
             </div>
+
+            <details class="more-wishes">
+              <summary>Flere ønsker</summary>
+              <div class="gridc">
+                <div class="grp">
+                  <span class="glabel" id="lbl-fuel">Drivstoff <span class="opt">· flervalg</span></span>
+                  <div class="chips" role="group" aria-labelledby="lbl-fuel" data-group="fuel">
+                    <button type="button" class="chip" aria-pressed="false">Elektrisk</button>
+                    <button type="button" class="chip" aria-pressed="false">Hybrid</button>
+                    <button type="button" class="chip" aria-pressed="false">Bensin</button>
+                    <button type="button" class="chip" aria-pressed="false">Diesel</button>
+                  </div>
+                </div>
+
+                <div class="grp">
+                  <span class="glabel" id="lbl-gear">Girkasse</span>
+                  <div class="chips" role="group" aria-labelledby="lbl-gear" data-group="gear">
+                    <button type="button" class="chip" aria-pressed="false">Automat</button>
+                    <button type="button" class="chip" aria-pressed="false">Manuell</button>
+                  </div>
+                </div>
+
+                <div class="grp col2">
+                  <span class="glabel">Årsmodell</span>
+                  <div class="two">
+                    <div class="selwrap"><select name="aar_fra" aria-label="Fra år"><option value="">Fra år</option><option>2012</option><option>2014</option><option>2016</option><option>2018</option><option>2020</option><option>2022</option></select></div>
+                    <div class="selwrap"><select name="aar_til" aria-label="Til år"><option value="">Til år</option><option>2026</option><option>2024</option><option>2022</option><option>2020</option><option>2018</option></select></div>
+                  </div>
+                </div>
+              </div>
+            </details>
           </div>
 
           <div class="pfoot">
@@ -315,6 +329,7 @@
               <div class="grp"><label class="glabel" for="kontakt">E-post eller telefon</label><input class="txt" id="kontakt" name="kontakt" autocomplete="email" placeholder="ola@epost.no / 912 34 567" required></div>
               <button class="btn" type="submit">Send forespørsel <span class="arrow">→</span></button>
             </div>
+            <p class="fassure">Gratis og uforpliktende &middot; Vi svarer vanligvis innen én arbeidsdag.</p>
           </div>
         </form>
       </div>
