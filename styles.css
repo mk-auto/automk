@@ -299,6 +299,24 @@ input, select, textarea { font: inherit; color: inherit; }
 }
 
 /* ============================================================
+   PUNCHLINE — full-bleed red statement band (landing rhythm)
+   ============================================================ */
+.statement {
+  position: relative; overflow: hidden;
+  background: linear-gradient(120deg, var(--copper) 0%, var(--copper-2) 100%);
+  color: #fff; padding-block: clamp(3rem, 7vw, 6rem);
+}
+.statement::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(120% 150% at 10% 0%, rgba(255,255,255,0.14), rgba(255,255,255,0) 55%);
+}
+.statement-line {
+  position: relative; z-index: 1;
+  font-size: clamp(2rem, 6vw, 4.6rem); font-weight: 800;
+  letter-spacing: -0.04em; line-height: 1.02; max-width: 18ch; text-wrap: balance;
+}
+
+/* ============================================================
    SERVICES accordion (landing)
    ============================================================ */
 .accordion { display: flex; gap: .7rem; height: 460px; }
