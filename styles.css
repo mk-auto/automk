@@ -211,14 +211,35 @@ input, select, textarea { font: inherit; color: inherit; }
     linear-gradient(95deg, rgba(12, 9, 8, 0.82) 0%, rgba(12, 9, 8, 0.42) 55%, rgba(12, 9, 8, 0.24) 100%);
 }
 .hero-inner { position: relative; }
-.hero h1.masked {
-  font-size: clamp(2.4rem, 8.8vw, 8.4rem); font-weight: 800; line-height: .86;
-  letter-spacing: -0.05em; margin-bottom: 2rem; text-wrap: balance;
-  /* Solid, confident headline over the showroom; red is reserved for the period accent + CTA */
-  color: #f6f3ee; -webkit-text-fill-color: #f6f3ee;
+/* Brand plate badge — Norwegian license-plate lockup; carries the red accent */
+.hero-plate {
+  display: inline-flex; align-items: stretch; margin-bottom: 1.6rem;
+  border: 2px solid rgba(246, 243, 238, 0.9); border-radius: 8px; overflow: hidden;
+  background: rgba(12, 9, 8, 0.25);
+}
+.hero-plate .hp-eu {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .1rem; padding: .45rem .5rem; background: var(--copper); color: #fff;
+}
+.hero-plate .hp-star { font-size: .55rem; line-height: 1; }
+.hero-plate .hp-cc { font: 700 .78rem/1 var(--mono); }
+.hero-plate .hp-reg {
+  display: flex; align-items: center; padding: .4rem 1.05rem;
+  font: 700 clamp(1.05rem, 2.6vw, 1.6rem)/1 var(--mono); letter-spacing: .22em; color: #f6f3ee;
+}
+/* Outline / solid headline — hierarchy from fill technique, single ink colour */
+.hero h1.hero-title {
+  font-size: clamp(2.3rem, 8vw, 7rem); font-weight: 800; line-height: .94;
+  letter-spacing: -0.045em; margin-bottom: 2rem; max-width: 15ch;
+}
+.hero h1.hero-title .t-solid {
+  display: block; color: #f6f3ee; -webkit-text-fill-color: #f6f3ee;
   text-shadow: 0 2px 30px rgba(0, 0, 0, 0.4);
 }
-.hero h1.masked .pt { color: var(--copper); -webkit-text-fill-color: var(--copper); }
+.hero h1.hero-title .t-hollow {
+  display: block; color: transparent; -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.4px rgba(246, 243, 238, 0.85); text-stroke: 1.4px rgba(246, 243, 238, 0.85);
+}
 .hero-row { display: flex; flex-wrap: wrap; gap: 2rem 3rem; align-items: end; justify-content: space-between; }
 .hero-actions { display: flex; gap: .8rem; flex-wrap: wrap; }
 /* Hero sits on the dark showroom photo — light copy + accent CTA */
@@ -231,6 +252,7 @@ input, select, textarea { font: inherit; color: inherit; }
 /* ---------- Reveal animation ---------- */
 .anim { opacity: 0; transform: translateY(22px); animation: rise .9s var(--ease) forwards; }
 .anim.d2 { animation-delay: .18s; }
+.anim.d3 { animation-delay: .32s; }
 @keyframes rise { to { opacity: 1; transform: none; } }
 .reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
 .reveal.in-view { opacity: 1; transform: none; }
