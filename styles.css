@@ -266,6 +266,38 @@ input, select, textarea { font: inherit; color: inherit; }
 .head .eyebrow { margin-bottom: .8rem; }
 
 /* ============================================================
+   HVORFOR / VERDIER — ghost-number value bands (landing)
+   Big value title sitting over a large outlined index number;
+   hierarchy from scale, single ink colour, no card boxes.
+   ============================================================ */
+.values .vhead { max-width: 30ch; margin-bottom: clamp(2.4rem, 5vw, 3.8rem); }
+.values-title {
+  font-size: clamp(2rem, 5.2vw, 3.6rem); font-weight: 760; line-height: 1.0;
+  letter-spacing: -0.035em; text-wrap: balance;
+}
+.vband {
+  position: relative; display: grid; grid-template-columns: 1fr minmax(0, 42ch);
+  gap: 1.5rem 3rem; align-items: center; padding: clamp(1.8rem, 3.4vw, 2.8rem) 0;
+  border-bottom: 1px solid var(--line);
+}
+.vband:first-child { border-top: 1px solid var(--line); }
+.vghost {
+  position: absolute; left: -0.04em; top: 50%; transform: translateY(-50%);
+  font-weight: 800; font-size: clamp(5rem, 13vw, 11rem); line-height: 1; letter-spacing: -0.04em;
+  color: transparent; -webkit-text-stroke: 1.5px var(--line); pointer-events: none; z-index: 0;
+}
+.vname {
+  position: relative; z-index: 1; font-size: clamp(2rem, 4.4vw, 3.3rem); font-weight: 800;
+  letter-spacing: -0.035em; line-height: 1; padding-left: clamp(3.5rem, 9vw, 7rem);
+}
+.vdesc { position: relative; z-index: 1; color: var(--ink-2); font-size: 1.08rem; line-height: 1.55; font-weight: 330; }
+@media (max-width: 760px) {
+  .vband { grid-template-columns: 1fr; gap: .8rem; }
+  .vghost { font-size: clamp(4rem, 18vw, 6rem); opacity: .7; }
+  .vname { padding-left: 2.6rem; }
+}
+
+/* ============================================================
    SERVICES accordion (landing)
    ============================================================ */
 .accordion { display: flex; gap: .7rem; height: 460px; }
