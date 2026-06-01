@@ -757,3 +757,146 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border: 3px s
 .guide-card h2 { font-size: 1.3rem; line-height: 1.15; font-weight: 800; margin: 0 0 .6rem; }
 .guide-card p { font-size: .98rem; line-height: 1.5; color: var(--ink-2); margin: 0 0 1.2rem; }
 .guide-card .gc-go { margin-top: auto; font-weight: 600; color: var(--copper); }
+
+/* ============================================================
+   KONTAKT page
+   Asymmetric "contact desk": editorial info index + light form,
+   with a framed Google map below. Light paper canvas, single
+   dark-red accent. Anchored to the site's BMW editorial restraint.
+   ============================================================ */
+.kontakt { padding-block: clamp(1.6rem, 3vw, 2.6rem) clamp(4rem, 8vw, 7rem); }
+.kontakt-hero { margin: clamp(1.4rem, 3vw, 2.4rem) 0 clamp(2.6rem, 5vw, 4rem); }
+.kontakt-title {
+  font-size: clamp(2.4rem, 6.2vw, 4.6rem); font-weight: 780; line-height: 1.0;
+  letter-spacing: -0.04em; margin-top: 1rem; text-wrap: balance; max-width: 18ch;
+}
+.kontakt-lede {
+  margin-top: 1.3rem; font-size: clamp(1.05rem, 1.8vw, 1.25rem); color: var(--ink-2);
+  max-width: 54ch; line-height: 1.6; font-weight: 330;
+}
+
+.kontakt-grid {
+  display: grid; grid-template-columns: 0.82fr 1.18fr; gap: clamp(2.4rem, 5vw, 5rem);
+  align-items: start;
+}
+@media (max-width: 880px) { .kontakt-grid { grid-template-columns: 1fr; gap: 2.6rem; } }
+
+/* ---- info index ---- */
+.kontakt-info { border-top: 1px solid var(--line); }
+.info-item {
+  display: block; padding: clamp(1.2rem, 2.4vw, 1.7rem) 0; border-bottom: 1px solid var(--line);
+  color: var(--ink); text-decoration: none;
+}
+a.info-item { transition: padding-left .35s var(--ease); }
+a.info-item:hover { padding-left: .6rem; }
+.info-label {
+  display: block; font-family: var(--mono); font-size: .72rem; font-weight: 500;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: .55rem;
+}
+.info-value { display: block; font-size: clamp(1.55rem, 3.2vw, 2.2rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1.04; }
+a.info-item:hover .info-value { color: var(--copper); }
+.info-value--mail { font-size: clamp(1.25rem, 2.6vw, 1.7rem); letter-spacing: -0.02em; word-break: break-word; }
+.info-value--addr { font-size: clamp(1.3rem, 2.6vw, 1.8rem); font-weight: 760; line-height: 1.18; letter-spacing: -0.02em; }
+.info-meta { display: inline-block; margin-top: .55rem; font-size: .98rem; color: var(--ink-2); font-weight: 330; }
+a.info-link { color: var(--copper-2); font-weight: 600; border-bottom: 1.5px solid var(--copper); padding-bottom: 1px; }
+a.info-link:hover { background: var(--copper-wash); }
+
+/* ---- opening hours ---- */
+.hours { padding-top: clamp(1.4rem, 2.6vw, 1.9rem); }
+.hours-head { display: flex; align-items: center; gap: .8rem; margin-bottom: 1rem; }
+.status {
+  font-family: var(--mono); font-size: .68rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; padding: .28rem .65rem; border-radius: 999px; line-height: 1;
+}
+.status--open { color: #fff; background: var(--good); }
+.status--closed { color: var(--ink-2); background: var(--paper-3); }
+.hours-list { list-style: none; padding: 0; display: flex; flex-direction: column; max-width: 24rem; }
+.hours-list li {
+  display: flex; justify-content: space-between; gap: 1.5rem; align-items: baseline;
+  font-size: 1.02rem; color: var(--ink-2); padding: .55rem 0; border-bottom: 1px solid var(--line-2);
+}
+.hours-list .t { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+.hours-list li.is-today { color: var(--ink); font-weight: 640; }
+.hours-list li.is-today .d::after { content: " · i dag"; color: var(--copper-2); font-weight: 600; }
+
+/* ---- form (light variant) ---- */
+.kf-head { margin-bottom: 1.4rem; }
+.kf-title { font-size: clamp(1.4rem, 2.8vw, 2rem); font-weight: 760; letter-spacing: -0.025em; }
+.kf-note { margin-top: .45rem; color: var(--ink-2); font-size: .99rem; }
+.kontakt-form {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+  padding: clamp(1.4rem, 3vw, 2.2rem); box-shadow: var(--sh-md);
+}
+.kf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem 1.2rem; }
+.kf-grid .col2 { grid-column: span 2; }
+@media (max-width: 520px) { .kf-grid { grid-template-columns: 1fr; } .kf-grid .col2 { grid-column: span 1; } }
+.kf-field { display: flex; flex-direction: column; gap: .5rem; }
+.kf-field label { font-size: .82rem; font-weight: 640; color: var(--ink); letter-spacing: .01em; }
+.kf-field .req { color: var(--copper-2); }
+.kf-input, .kf-select, .kf-textarea {
+  width: 100%; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-sm);
+  padding: .82rem .95rem; font: inherit; font-size: 1rem; color: var(--ink);
+  transition: border-color .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease);
+}
+.kf-textarea { min-height: 8.5rem; resize: vertical; line-height: 1.55; }
+.kf-input::placeholder, .kf-textarea::placeholder { color: var(--ink-3); }
+.kf-input:focus, .kf-select:focus, .kf-textarea:focus {
+  outline: none; border-color: var(--copper); background: #fff; box-shadow: 0 0 0 3px var(--copper-wash);
+}
+.kf-selwrap { position: relative; }
+.kf-selwrap::after {
+  content: "⌄"; position: absolute; right: 1rem; top: 42%; transform: translateY(-50%);
+  pointer-events: none; color: var(--ink-2); font-size: 1.1rem;
+}
+.kf-select { appearance: none; padding-right: 2.4rem; cursor: pointer; }
+.kf-actions { display: flex; align-items: center; gap: 1.2rem; margin-top: 1.4rem; flex-wrap: wrap; }
+.kf-submit { --bg: var(--copper); --fg: #fff; border-color: var(--copper); }
+.kf-submit:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
+.kf-submit:hover .arrow { transform: translateX(4px); }
+.kf-fineprint { font-size: .9rem; color: var(--ink-3); }
+.kf-fineprint a { color: var(--copper-2); font-weight: 600; border-bottom: 1px solid var(--copper); }
+
+/* ---- map ---- */
+.kontakt-map { margin-top: clamp(3rem, 6vw, 5rem); }
+.map-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem 1.6rem; flex-wrap: wrap;
+  background: var(--ink); color: #fff; padding: clamp(1rem, 2vw, 1.4rem) clamp(1.2rem, 2.6vw, 1.9rem);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+.map-bar .mb-left { display: flex; align-items: center; gap: 1.1rem; }
+.map-bar .hero-plate { margin-bottom: 0; flex: none; }
+.mb-text { display: flex; flex-direction: column; gap: .15rem; }
+.mb-addr { font-weight: 600; letter-spacing: -0.01em; }
+.mb-sub { font-family: var(--mono); font-size: .82rem; letter-spacing: .03em; color: rgba(255,255,255,.6); }
+.map-link {
+  color: #fff; border: 1px solid rgba(255,255,255,.45); border-radius: 999px;
+  padding: .55rem 1.15rem; text-decoration: none; font-weight: 600; font-size: .92rem; white-space: nowrap;
+  transition: background .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease);
+}
+.map-link:hover { background: #fff; color: var(--ink); border-color: #fff; }
+.map-frame {
+  position: relative; border: 1px solid var(--line); border-top: 0;
+  border-radius: 0 0 var(--r-lg) var(--r-lg); overflow: hidden; box-shadow: var(--sh-lg);
+  background: var(--paper-2);
+}
+/* Fallback sits behind the map; a loaded Google map is opaque and covers it,
+   so this only shows if the embed is blocked or fails. */
+.map-fallback {
+  position: absolute; inset: 0; z-index: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 1rem; text-align: center; padding: 1.5rem;
+  background:
+    radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0) 0 0 / 22px 22px,
+    var(--paper-2);
+}
+.map-fallback-addr { font-weight: 600; color: var(--ink); font-size: 1.05rem; }
+.map-fallback .map-link { color: var(--ink); border-color: var(--line); background: var(--paper); }
+.map-fallback .map-link:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+.map-fallback-pin {
+  width: 16px; height: 16px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+  background: var(--copper); box-shadow: 0 0 0 5px var(--copper-wash);
+}
+.map-frame iframe {
+  position: relative; z-index: 1; display: block; width: 100%; height: clamp(340px, 52vh, 520px);
+  border: 0; filter: grayscale(0.18) contrast(1.03);
+}
+@media (max-width: 520px) { .map-bar { flex-direction: column; align-items: flex-start; } .map-link { width: 100%; text-align: center; } }
