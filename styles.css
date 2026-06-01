@@ -777,7 +777,7 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border: 3px s
 
 .kontakt-grid {
   display: grid; grid-template-columns: 0.85fr 1.15fr 1.05fr; gap: clamp(1.6rem, 3vw, 3rem);
-  align-items: start;
+  align-items: stretch;
 }
 @media (max-width: 1000px) { .kontakt-grid { grid-template-columns: 1fr; gap: 2.6rem; } }
 
@@ -793,11 +793,16 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border: 3px s
 .k3-map .map-bar .mb-addr { font-size: .8rem; }
 .k3-map .map-bar .mb-sub { font-size: .68rem; }
 .k3-map .map-frame { border: 1px solid var(--line); border-top: 0;
-  border-radius: 0 0 var(--r-lg) var(--r-lg); }
-.k3-map .map-frame iframe, .k3-map .map-frame .map-fallback { height: clamp(220px, 28vh, 320px); min-height: 0; }
-/* form sits comfortably in the narrower column */
-.k3-form .kf-grid { grid-template-columns: 1fr; }
+  border-radius: 0 0 var(--r-lg) var(--r-lg); flex: 1; }
+.k3-map .map-frame iframe, .k3-map .map-frame .map-fallback { height: 100%; min-height: 220px; }
+/* form fills the column so it ends level with the info column (opening hours) */
+.k3-form { display: flex; flex-direction: column; }
+.k3-form .kontakt-form { display: flex; flex-direction: column; flex: 1; padding: clamp(1.2rem, 2vw, 1.6rem); }
+.k3-form .kf-grid { display: flex; flex-direction: column; gap: .85rem; flex: 1; }
+.k3-form .kf-actions { margin-top: 1rem; }
 .k3-form .kf-grid .col2 { grid-column: auto; }
+.k3-form .kf-grid > .kf-field:last-child { flex: 1; }
+.k3-form .kf-grid > .kf-field:last-child .kf-textarea { flex: 1; height: 100%; min-height: 3rem; }
 
 /* ---- info index ---- */
 .kontakt-info { border-top: 1px solid var(--line); }
