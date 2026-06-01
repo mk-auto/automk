@@ -270,9 +270,9 @@ input, select, textarea { font: inherit; color: inherit; }
    Big value title sitting over a large outlined index number;
    hierarchy from scale, single ink colour, no card boxes.
    ============================================================ */
-.values .vhead { max-width: 30ch; margin-bottom: clamp(1.8rem, 3.5vw, 2.8rem); }
+.values .vhead { max-width: none; margin-bottom: clamp(1.8rem, 3.5vw, 2.8rem); }
 .values-title {
-  font-size: clamp(2rem, 5.2vw, 3.6rem); font-weight: 760; line-height: 1.0;
+  font-size: clamp(1.9rem, 4.4vw, 3.3rem); font-weight: 760; line-height: 1.05;
   letter-spacing: -0.035em; text-wrap: balance;
 }
 /* 2x2 grid — compact, hairline-celled (was 4 stacked full-width bands) */
