@@ -187,6 +187,7 @@ HEAD = '''<!DOCTYPE html>
           <li><a href="guider.html">Guider</a></li>
           <li><a href="index.html#tjenester">Tjenester</a></li>
           <li><a href="index.html#finn">Finn din bil</a></li>
+          <li><a href="om-oss.html">Om oss</a></li>
           <li><a class="btn btn--ghost" href="kontakt.html">Kontakt oss</a></li>
         </ul>
         <button class="nav-toggle" id="navToggle" aria-label="Åpne meny" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
@@ -197,6 +198,7 @@ HEAD = '''<!DOCTYPE html>
       <a href="guider.html">Guider</a>
       <a href="index.html#tjenester">Tjenester</a>
       <a href="index.html#finn">Finn din bil</a>
+      <a href="om-oss.html">Om oss</a>
       <a class="btn" href="kontakt.html">Kontakt oss</a>
     </div>
   </header>
