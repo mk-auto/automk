@@ -83,7 +83,7 @@
               <div class="ks"><div class="v">—</div><div class="k">Girkasse</div></div>
             </div>
               <div class="dcta">
-                <a class="btn" href="index.html#finn">Kontakt om bilen</a>
+                <button class="btn" type="button" data-open-msg>Send oss en melding</button>
                 <a class="btn btn--ghost" href="tel:+4794170703">Ring oss &middot; 941 70 703</a>
               </div>
               <a class="finn-link" href="https://www.finn.no/mobility/item/451797265" target="_blank" rel="noopener">Se annonsen på Finn &rarr;</a>
@@ -199,10 +199,55 @@
           <h3>Vil du se den i virkeligheten?</h3>
           <p>Kom innom Økern for en titt og en prøvekjøring, eller ta kontakt så finner vi et tidspunkt.</p>
         </div>
-        <a class="btn" href="index.html#finn">Avtal visning</a>
+        <button class="btn" type="button" data-open-msg>Avtal visning</button>
       </div>
     </div>
   </main>
+
+  <dialog class="msg-dialog" id="msgDialog" aria-labelledby="msgTitle">
+    <form class="kontakt-form msg-form" name="bilmelding" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="#">
+      <input type="hidden" name="form-name" value="bilmelding" />
+      <p class="hp"><label>Ikke fyll ut: <input name="bot-field" /></label></p>
+      <input type="hidden" name="bil" value="BMW X5 2000" />
+      <input type="hidden" name="bil_id" value="451797265" />
+      <input type="hidden" name="bil_url" value="https://www.mkauto.no/bil-451797265.html" />
+
+      <button type="button" class="msg-close" id="msgClose" aria-label="Lukk skjema">&times;</button>
+      <h2 class="msg-title" id="msgTitle">Send oss en melding</h2>
+      <p class="msg-note">Fyll ut, så svarer vi vanligvis innen én arbeidsdag.</p>
+
+      <div class="msg-car">
+        <span class="msg-car-lock"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Valgt bil</span>
+        <div class="msg-car-row">
+          <img class="msg-car-img" src="images/451797265/1.jpg" alt="" width="84" height="63" loading="lazy" />
+          <div class="msg-car-info">
+            <span class="msg-car-name">BMW X5</span>
+            <span class="msg-car-sub">2000 &middot; 271 000 km &middot; Bensin</span>
+            <span class="msg-car-price">31 942 kr</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="kf-grid">
+        <div class="kf-field col2">
+          <label for="msg-navn">Navn <span class="req" aria-hidden="true">*</span></label>
+          <input class="kf-input" id="msg-navn" name="navn" autocomplete="name" placeholder="Ola Nordmann" required>
+        </div>
+        <div class="kf-field col2">
+          <label for="msg-epost">E-post <span class="req" aria-hidden="true">*</span></label>
+          <input class="kf-input" id="msg-epost" name="epost" type="email" autocomplete="email" placeholder="ola@epost.no" required>
+        </div>
+        <div class="kf-field col2">
+          <label for="msg-melding">Din melding <span class="req" aria-hidden="true">*</span></label>
+          <textarea class="kf-textarea" id="msg-melding" name="melding" placeholder="Er bilen fortsatt tilgjengelig? Kan jeg avtale en visning eller prøvekjøring?" required></textarea>
+        </div>
+      </div>
+
+      <div class="kf-actions">
+        <button class="btn kf-submit" type="submit">Send melding <span class="arrow">&rarr;</span></button>
+      </div>
+    </form>
+  </dialog>
 
   <footer class="site-footer">
     <div class="container">

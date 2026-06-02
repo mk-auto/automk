@@ -36,4 +36,21 @@
     };
     thumbs.forEach((btn) => btn.addEventListener("click", () => select(btn)));
   }
+
+  /* ---- Message dialog (locked to this car) ---- */
+  const dlg = document.getElementById("msgDialog");
+  if (dlg) {
+    const openers = document.querySelectorAll("[data-open-msg]");
+    const closeBtn = document.getElementById("msgClose");
+    const open = () => {
+      if (typeof dlg.showModal === "function") dlg.showModal();
+      else dlg.setAttribute("open", "");
+      const first = dlg.querySelector("#msg-navn");
+      if (first) first.focus();
+    };
+    openers.forEach((b) => b.addEventListener("click", open));
+    if (closeBtn) closeBtn.addEventListener("click", () => dlg.close());
+    // Click on the backdrop (outside the form) closes the dialog
+    dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+  }
 })();
