@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Innbytte · MK Auto</title>
+  <meta name="description" content="La den gamle bilen betale for den neste. Finn bilen hos oss, vi tar den gamle i innbytte. Én avtale, ett oppgjør, ingen privat annonse å stå i." />
+  <link rel="canonical" href="https://www.mkauto.no/innbytte.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="MK Auto" />
+  <meta property="og:locale" content="nb_NO" />
+  <meta property="og:title" content="Innbytte · MK Auto" />
+  <meta property="og:description" content="La den gamle bilen betale for den neste. Én avtale, ett oppgjør, ingen privat annonse å stå i." />
+  <meta property="og:url" content="https://www.mkauto.no/innbytte.html" />
+  <meta property="og:image" content="https://www.mkauto.no/images/og-default.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Innbytte · MK Auto" />
+  <meta name="twitter:description" content="La den gamle bilen betale for den neste. Én avtale, ett oppgjør." />
+  <meta name="twitter:image" content="https://www.mkauto.no/images/og-default.jpg" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23a01b22'/%3E%3Ctext x='16' y='22' font-family='Geist,Arial,sans-serif' font-size='14' font-weight='800' text-anchor='middle' fill='%23ffffff'%3EMK%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+  /* ============================================================
+     INNBYTTE — cinematic photo hero, light editorial body
+     Full-bleed photo hero (white type over the photo) flows into the
+     site's light paper canvas, matching the rest of MK Auto.
+     Scoped under .ib; shared header/footer untouched.
+     ============================================================ */
+  .ib {
+    --ink-0:   #f4f4f6;
+    --ink-1:   #ffffff;
+    --ink-2:   #ffffff;
+    --ink-3:   #ececed;
+    --line:    rgba(26, 22, 18, 0.12);
+    --line-2:  rgba(26, 22, 18, 0.07);
+    --w-1:     #1a1612;
+    --w-2:     #5d564c;
+    --w-3:     #8c8478;
+    --red:     #a01b22;
+    --red-lit: #8a1a1f;
+    --ease:    cubic-bezier(0.16, 1, 0.3, 1);
+
+    background: var(--ink-1);
+    color: var(--w-1);
+    color-scheme: light;
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+  .ib ::selection { background: var(--red); color: #fff; }
+  .ib a { color: inherit; }
+  .ib-wrap { width: 100%; max-width: 1180px; margin-inline: auto; padding-inline: clamp(1.1rem, 4vw, 2.5rem); }
+
+  /* ---------- Cinematic hero ---------- */
+  .ib-hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    align-items: end;
+    padding-block: clamp(7rem, 16vh, 11rem) clamp(2.5rem, 7vh, 5rem);
+    isolation: isolate;
+  }
+  .ib-hero__media {
+    position: absolute; inset: 0; z-index: -2;
+    background-image: url("images/mercedes-red.jpg");
+    background-position: center 42%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transform: scale(1.04);
+  }
+  /* dark vignette for white-text legibility; hero meets the light
+     paper body below at a clean seam (Tesla pattern) */
+  .ib-hero__scrim {
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(21,18,15,0.58) 0%, rgba(21,18,15,0.16) 26%, rgba(21,18,15,0.32) 58%, rgba(21,18,15,0.80) 100%),
+      linear-gradient(95deg, rgba(21,18,15,0.76) 0%, rgba(21,18,15,0.32) 44%, rgba(21,18,15,0) 74%);
+  }
+  .ib-hero__inner { position: relative; max-width: 62rem; }
+  .ib-rule {
+    width: 56px; height: 2px; background: var(--red);
+    margin-bottom: 1.6rem; transform-origin: left;
+  }
+  .ib-h1 {
+    font-size: clamp(2.5rem, 6.8vw, 5.8rem);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.035em;
+    color: #f6f3ee;   /* pinned light: sits over the dark photo */
+    text-wrap: balance;
+    margin-bottom: 1.5rem;
+    max-width: 18ch;
+  }
+  .ib-h1 b { font-weight: 600; }
+  .ib-lede {
+    font-size: clamp(1.05rem, 1.7vw, 1.32rem);
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.84);   /* pinned light over photo */
+    max-width: 56ch;
+    font-weight: 360;
+  }
+  .ib-hero__actions {
+    margin-top: clamp(1.8rem, 4vh, 2.6rem);
+    display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem;
+  }
+  .ib-hero__actions .btn { --bg: var(--red); --fg: #fff; border-color: var(--red); }
+  .ib-hero__actions .btn:hover { background: var(--red-lit); border-color: var(--red-lit); color: #fff; }
+  a.ib-hero__skip { font-size: 0.92rem; color: rgba(255, 255, 255, 0.78); font-weight: 400; border-bottom: 1px solid rgba(255, 255, 255, 0.4); padding-bottom: 2px; transition: color .2s var(--ease), border-color .2s var(--ease); }
+  a.ib-hero__skip:hover { color: #fff; border-color: rgba(255, 255, 255, 0.85); }
+
+  .ib-hero .reveal { transition: opacity .9s var(--ease), transform .9s var(--ease); }
+
+  /* ---------- Section scaffolding ---------- */
+  .ib-section { padding-block: clamp(4rem, 9vw, 8rem); position: relative; }
+  .ib-section + .ib-section { border-top: 1px solid var(--line-2); }
+  .ib-h2 {
+    font-size: clamp(1.9rem, 4vw, 3.1rem);
+    font-weight: 320; line-height: 1.05; letter-spacing: -0.03em;
+    color: var(--w-1); max-width: 22ch; text-wrap: balance;
+  }
+  .ib-h2 b { font-weight: 620; }
+  .ib-intro { max-width: 60ch; }
+
+  /* ---------- Process: editorial numbered rows ---------- */
+  .ib-steps { margin-top: clamp(2.5rem, 5vw, 4rem); display: grid; gap: 0; }
+  .ib-step {
+    display: grid;
+    grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+    gap: clamp(1.2rem, 4vw, 4rem);
+    padding-block: clamp(1.8rem, 4vw, 2.8rem);
+    border-top: 1px solid var(--line-2);
+    align-items: start;
+  }
+  .ib-step:last-child { border-bottom: 1px solid var(--line-2); }
+  .ib-step__num {
+    font-family: var(--mono);
+    font-size: clamp(2.2rem, 6vw, 4.4rem);
+    font-weight: 200; line-height: 0.8;
+    color: var(--w-3);
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+  .ib-step:first-child .ib-step__num { color: var(--w-2); }
+  .ib-step h3 { font-size: clamp(1.25rem, 2.2vw, 1.7rem); font-weight: 560; letter-spacing: -0.02em; color: var(--w-1); }
+  .ib-step p { margin-top: 0.55rem; color: var(--w-2); max-width: 52ch; font-weight: 360; }
+  .ib-step p a { color: var(--red-lit); font-weight: 540; border-bottom: 1px solid var(--red); padding-bottom: 1px; transition: color .2s var(--ease); }
+  .ib-step p a:hover { color: #5a1418; }
+
+  /* ---------- Reassurance: asymmetric split with big statement, NOT 3 cards ---------- */
+  .ib-reassure {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+  .ib-reassure__lead .ib-h2 { max-width: 18ch; }
+  .ib-reassure__lead p { color: var(--w-2); margin-top: 1.2rem; max-width: 46ch; font-weight: 360; }
+  .ib-reassure__panel {
+    background: var(--ink-2);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: clamp(1.4rem, 3.5vw, 2.2rem);
+    box-shadow: 0 18px 40px -28px rgba(60,44,28,0.26);
+  }
+  .ib-compare { display: grid; gap: 0; }
+  .ib-compare li {
+    list-style: none;
+    display: grid; grid-template-columns: auto 1fr; gap: 0.85rem;
+    padding-block: 0.95rem;
+    border-top: 1px solid var(--line-2);
+    align-items: start;
+  }
+  .ib-compare li:first-child { border-top: none; padding-top: 0; }
+  .ib-compare li:last-child { padding-bottom: 0; }
+  .ib-compare__mark {
+    flex: 0 0 auto; margin-top: 2px;
+    width: 20px; height: 20px; color: var(--red-lit);
+  }
+  .ib-compare__t { font-weight: 560; color: var(--w-1); font-size: 1.02rem; }
+  .ib-compare__d { color: var(--w-2); font-size: 0.92rem; margin-top: 0.15rem; font-weight: 360; }
+
+  /* ---------- Form: elevated dark card ---------- */
+  .ib-form-section { padding-bottom: clamp(5rem, 10vw, 9rem); }
+  .ib-formhead { max-width: 60ch; margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .ib-formhead .ib-h2 { max-width: 24ch; }
+  .ib-formhead p { color: var(--w-2); margin-top: 1rem; font-weight: 360; }
+
+  .ib-card {
+    background: var(--ink-2);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: clamp(1.4rem, 4vw, 3rem);
+    box-shadow: 0 30px 60px -28px rgba(60,44,28,0.30);
+  }
+  .ib-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2.4vw, 1.5rem);
+  }
+  .ib-field { display: flex; flex-direction: column; gap: 0.45rem; }
+  .ib-field--full { grid-column: 1 / -1; }
+  .ib-label { font-size: 0.86rem; font-weight: 520; color: var(--w-1); letter-spacing: -0.005em; }
+  .ib-label .ib-req { color: var(--red-lit); font-weight: 600; }
+  .ib-help { font-size: 0.78rem; color: var(--w-3); font-weight: 360; }
+  .ib-input, .ib-select, .ib-textarea {
+    width: 100%;
+    background: var(--ink-0);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 0.82rem 0.95rem;
+    color: var(--w-1);
+    font-size: 0.98rem;
+    transition: border-color .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .ib-input::placeholder, .ib-textarea::placeholder { color: var(--w-3); }
+  .ib-input:hover, .ib-select:hover, .ib-textarea:hover { border-color: rgba(26,22,18,0.28); }
+  .ib-input:focus, .ib-select:focus, .ib-textarea:focus {
+    outline: none;
+    border-color: var(--red);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(160,27,34,0.14);
+  }
+  .ib-textarea { resize: vertical; min-height: 120px; line-height: 1.5; }
+  .ib-select {
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%231a1612' stroke-opacity='0.55' stroke-width='2.2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 0.95rem center;
+    padding-right: 2.4rem; cursor: pointer;
+  }
+  .ib-select option { background: var(--ink-2); color: var(--w-1); }
+
+  /* ---------- Dropzone + thumbnail preview ---------- */
+  .ib-drop {
+    grid-column: 1 / -1;
+    position: relative;
+    border: 1.5px dashed rgba(26,22,18,0.26);
+    border-radius: 14px;
+    background: var(--ink-0);
+    padding: clamp(1.4rem, 4vw, 2.2rem);
+    text-align: center;
+    transition: border-color .2s var(--ease), background .2s var(--ease);
+  }
+  .ib-drop:hover, .ib-drop.is-hover { border-color: var(--red); background: #f8e9ea; }
+  .ib-drop input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+  .ib-drop__icon { width: 34px; height: 34px; margin: 0 auto 0.7rem; color: var(--w-3); }
+  .ib-drop__t { font-weight: 540; color: var(--w-1); font-size: 0.98rem; }
+  .ib-drop__s { font-size: 0.8rem; color: var(--w-3); margin-top: 0.25rem; }
+  .ib-thumbs {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+    gap: 0.7rem;
+  }
+  .ib-thumbs:empty { display: none; }
+  .ib-thumb {
+    position: relative; aspect-ratio: 4 / 3; border-radius: 10px; overflow: hidden;
+    border: 1px solid var(--line); background: var(--ink-3);
+    animation: ib-pop .35s var(--ease) both;
+  }
+  @keyframes ib-pop { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: scale(1); } }
+  .ib-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .ib-thumb__rm {
+    position: absolute; top: 5px; right: 5px;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(10,8,6,0.78); border: 1px solid rgba(255,255,255,0.18);
+    color: #fff; font-size: 0.95rem; line-height: 1;
+    display: grid; place-items: center;
+    transition: transform .18s var(--ease), background .18s var(--ease);
+  }
+  .ib-thumb__rm:hover { background: var(--red); transform: scale(1.1); }
+
+  .ib-submit-row {
+    grid-column: 1 / -1;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 1.1rem 1.5rem;
+    margin-top: 0.4rem;
+  }
+  .ib-card .btn { --bg: var(--red); --fg: #fff; border-color: var(--red); }
+  .ib-card .btn:hover { background: var(--red-lit); border-color: var(--red-lit); color: #fff; }
+  .ib-assure { font-size: 0.84rem; color: var(--w-3); max-width: 40ch; font-weight: 360; }
+
+  .ib-hp { position: absolute; left: -5000px; }
+
+  /* ---------- Confirmation ---------- */
+  .ib-done { display: none; text-align: left; padding: clamp(1rem, 3vw, 2rem) 0; }
+  .ib-done.is-on { display: block; animation: ib-pop .45s var(--ease) both; }
+  .ib-done__mark {
+    width: 46px; height: 46px; border-radius: 50%;
+    border: 1.5px solid var(--red); color: var(--red-lit);
+    display: grid; place-items: center; margin-bottom: 1.2rem;
+  }
+  .ib-done h3 { font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 420; letter-spacing: -0.02em; }
+  .ib-done h3 b { font-weight: 640; }
+  .ib-done p { color: var(--w-2); margin-top: 0.8rem; max-width: 46ch; font-weight: 360; }
+
+  .ib .back-link { color: var(--w-3); }
+  .ib .back-link:hover { color: var(--w-1); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 768px) {
+    .ib-step { grid-template-columns: 1fr; gap: 0.4rem; }
+    .ib-step__num { font-size: 2.4rem; }
+    .ib-reassure { grid-template-columns: 1fr; }
+    .ib-grid { grid-template-columns: 1fr; }
+    .ib-hero__media { background-position: center 36%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ib-hero__media { transform: none; }
+    .ib-thumb, .ib-done.is-on { animation: none; }
+  }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#innhold">Hopp til innhold</a>
+
+  <header class="site-header is-scrolled" id="header">
+    <div class="container">
+      <nav class="nav" aria-label="Hovedmeny">
+        <a class="brand" href="index.html#top" translate="no" aria-label="MK Auto – til forsiden"><img class="brand-logo" src="images/mk-logo.png" alt="" width="48" height="48" /></a>
+        <ul class="nav-links">
+          <li><a href="butikk.html">Våre biler</a></li>
+          <li><a href="guider.html">Guider</a></li>
+          <li><a href="om-oss.html">Om oss</a></li>
+          <li><a class="btn btn--accent" href="kontakt.html">Kontakt oss</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Åpne meny" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+      </nav>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="butikk.html">Våre biler</a>
+      <a href="guider.html">Guider</a>
+      <a href="om-oss.html">Om oss</a>
+      <a class="btn btn--accent" href="kontakt.html">Kontakt oss</a>
+    </div>
+  </header>
+
+  <main class="ib" id="innhold">
+
+    <!-- ======================= CINEMATIC HERO ======================= -->
+    <section class="ib-hero" aria-labelledby="ib-title">
+      <div class="ib-hero__media" aria-hidden="true"></div>
+      <div class="ib-hero__scrim" aria-hidden="true"></div>
+      <div class="ib-wrap">
+        <div class="ib-hero__inner">
+          <div class="ib-rule reveal" aria-hidden="true"></div>
+          <h1 class="ib-h1 reveal" data-delay="1" id="ib-title">La den gamle bilen <b>betale for den neste</b>.</h1>
+          <p class="ib-lede reveal" data-delay="2">Du finner en bil hos oss, vi tar den gamle i innbytte. Én avtale, ett oppgjør, ingen privat annonse å stå i.</p>
+          <div class="ib-hero__actions reveal" data-delay="2">
+            <a class="btn" href="butikk.html">Se bilene våre <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="ib-hero__skip" href="#skjema">Eller fortell oss om bilen du har</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ib-wrap">
+      <a class="back-link" href="index.html#tjenester">&larr; Tjenester</a>
+    </div>
+
+    <!-- ======================= PROCESS ======================= -->
+    <section class="ib-section" aria-labelledby="ib-proc">
+      <div class="ib-wrap">
+        <div class="ib-intro reveal">
+          <h2 class="ib-h2" id="ib-proc"><b>Tre steg</b> til ny bil.</h2>
+        </div>
+
+        <div class="ib-steps">
+          <div class="ib-step reveal">
+            <div class="ib-step__num" aria-hidden="true">01</div>
+            <div>
+              <h3>Finn bilen din hos oss</h3>
+              <p>Se <a href="butikk.html">utvalget</a> og noter hvilken du vurderer.</p>
+            </div>
+          </div>
+          <div class="ib-step reveal" data-delay="1">
+            <div class="ib-step__num" aria-hidden="true">02</div>
+            <div>
+              <h3>Fortell om bilen du har</h3>
+              <p>Bilder og info, så gir vi deg en innbyttepris.</p>
+            </div>
+          </div>
+          <div class="ib-step reveal" data-delay="2">
+            <div class="ib-step__num" aria-hidden="true">03</div>
+            <div>
+              <h3>Vi gjør opp mellomlegget</h3>
+              <p>Du betaler bare differansen. Vi ordner papirene og eierskiftet.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= REASSURANCE ======================= -->
+    <section class="ib-section" aria-labelledby="ib-reassure-t">
+      <div class="ib-wrap">
+        <div class="ib-reassure">
+          <div class="ib-reassure__lead reveal">
+            <h2 class="ib-h2" id="ib-reassure-t">Innbytte hos forhandler er <b>tryggere</b>.</h2>
+            <p>Ingen fremmede på visning, ingen prutende kjøpere, ingen reklamasjon som henger over deg etterpå. Du bytter inn og kjører hjem i den nye, samme dag.</p>
+          </div>
+          <ul class="ib-reassure__panel ib-compare reveal" data-delay="1">
+            <li>
+              <svg class="ib-compare__mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+              <div><div class="ib-compare__t">Én avtale, ett oppgjør</div><div class="ib-compare__d">Gammel bil ut og ny bil inn i samme kontrakt.</div></div>
+            </li>
+            <li>
+              <svg class="ib-compare__mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+              <div><div class="ib-compare__t">Ingen annonse å passe på</div><div class="ib-compare__d">Du slipper telefoner, visninger og prøvekjøring med fremmede.</div></div>
+            </li>
+            <li>
+              <svg class="ib-compare__mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+              <div><div class="ib-compare__t">Vi tar ansvaret etterpå</div><div class="ib-compare__d">Reklamasjonen blir vår sak, ikke din.</div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= FORM ======================= -->
+    <section class="ib-section ib-form-section" id="skjema" aria-labelledby="ib-form-t">
+      <div class="ib-wrap">
+        <div class="ib-formhead reveal">
+          <h2 class="ib-h2" id="ib-form-t">Fortell oss om <b>bilen du har</b>.</h2>
+          <p>Jo mer du gir oss, jo bedre treffer innbytteprisen. Bildene hjelper mest. Vi tar kontakt vanligvis innen én arbeidsdag.</p>
+        </div>
+
+        <div class="ib-card reveal" data-delay="1">
+          <!-- Netlify-ready; ekte innsending kobles til Formspree/Netlify senere. -->
+          <form id="ibForm" class="ib-grid" name="innbytte" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="#" novalidate>
+            <input type="hidden" name="form-name" value="innbytte" />
+            <p class="ib-hp" aria-hidden="true"><label>Ikke fyll ut dette feltet: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+
+            <div class="ib-field ib-field--full">
+              <label class="ib-label" for="ib-onsket">Hvilken bil hos oss vurderer du?</label>
+              <span class="ib-help">Skriv merke og modell, eller lim inn lenken fra butikken vår.</span>
+              <input class="ib-input" id="ib-onsket" name="onsket_bil" autocomplete="off" placeholder="f.eks. BMW 320d, eller en lenke fra butikk.html" />
+            </div>
+
+            <div class="ib-field">
+              <label class="ib-label" for="ib-regnr">Registreringsnummer</label>
+              <input class="ib-input" id="ib-regnr" name="regnr" autocomplete="off" placeholder="EK 12345" />
+            </div>
+            <div class="ib-field">
+              <label class="ib-label" for="ib-merke">Merke</label>
+              <input class="ib-input" id="ib-merke" name="merke" autocomplete="off" placeholder="f.eks. Volvo" />
+            </div>
+
+            <div class="ib-field">
+              <label class="ib-label" for="ib-modell">Modell</label>
+              <input class="ib-input" id="ib-modell" name="modell" autocomplete="off" placeholder="f.eks. XC60" />
+            </div>
+            <div class="ib-field">
+              <label class="ib-label" for="ib-aar">Årsmodell</label>
+              <input class="ib-input" id="ib-aar" name="aarsmodell" inputmode="numeric" autocomplete="off" placeholder="f.eks. 2019" />
+            </div>
+
+            <div class="ib-field">
+              <label class="ib-label" for="ib-km">Kilometerstand</label>
+              <input class="ib-input" id="ib-km" name="km" inputmode="numeric" autocomplete="off" placeholder="f.eks. 84 000" />
+            </div>
+            <div class="ib-field">
+              <label class="ib-label" for="ib-drivstoff">Drivstoff</label>
+              <select class="ib-select" id="ib-drivstoff" name="drivstoff">
+                <option value="">Velg drivstoff</option>
+                <option>Bensin</option>
+                <option>Diesel</option>
+                <option>Elektrisk</option>
+                <option>Hybrid</option>
+              </select>
+            </div>
+
+            <div class="ib-field">
+              <label class="ib-label" for="ib-girkasse">Girkasse</label>
+              <select class="ib-select" id="ib-girkasse" name="girkasse">
+                <option value="">Velg girkasse</option>
+                <option>Automat</option>
+                <option>Manuell</option>
+              </select>
+            </div>
+            <div class="ib-field" aria-hidden="true"><!-- spacer keeps the 2-col rhythm on desktop --></div>
+
+            <div class="ib-field ib-field--full">
+              <label class="ib-label" for="ib-tilstand">Tilstand / kjente feil</label>
+              <textarea class="ib-textarea" id="ib-tilstand" name="tilstand" placeholder="Fortell oss om bilen: kjente feil, skader, det som er bra. Vær ærlig, det hjelper oss begge."></textarea>
+            </div>
+
+            <div class="ib-field ib-field--full">
+              <label class="ib-label" for="ib-bilder">Bilder av bilen</label>
+              <span class="ib-help">Front, bak, sider og interiør. Jo bedre lys, jo bedre svar.</span>
+            </div>
+            <div class="ib-drop" id="ib-drop">
+              <svg class="ib-drop__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <path d="M12 3v13" /><path d="M7.5 7.5 12 3l4.5 4.5" />
+              </svg>
+              <div class="ib-drop__t">Slipp bilder her, eller trykk for å velge</div>
+              <div class="ib-drop__s">JPG eller PNG. Du kan legge til flere.</div>
+              <input type="file" id="ib-bilder" name="bilder" accept="image/*" multiple aria-label="Last opp bilder av bilen" />
+            </div>
+            <div class="ib-thumbs" id="ib-thumbs" aria-live="polite"></div>
+
+            <div class="ib-field">
+              <label class="ib-label" for="ib-navn">Navn <span class="ib-req" aria-hidden="true">*</span></label>
+              <input class="ib-input" id="ib-navn" name="navn" autocomplete="name" placeholder="Ditt navn" required />
+            </div>
+            <div class="ib-field">
+              <label class="ib-label" for="ib-kontakt">E-post eller telefon <span class="ib-req" aria-hidden="true">*</span></label>
+              <input class="ib-input" id="ib-kontakt" name="kontakt" autocomplete="email" placeholder="navn@epost.no / 912 34 567" required />
+            </div>
+
+            <div class="ib-submit-row">
+              <button class="btn" type="submit">Send forespørsel <span class="arrow" aria-hidden="true">→</span></button>
+              <p class="ib-assure">Uforpliktende. En innbyttepris fra oss binder deg ikke til noe.</p>
+            </div>
+          </form>
+
+          <div class="ib-done" id="ibDone" role="status" aria-live="polite">
+            <div class="ib-done__mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5" /></svg>
+            </div>
+            <h3><b>Takk!</b> Vi har fått forespørselen din.</h3>
+            <p>Vi tar kontakt, vanligvis innen én arbeidsdag, med en innbyttepris på bilen din.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="brand" href="index.html#top" translate="no" aria-label="MK Auto AS"><img class="brand-logo brand-logo--footer" src="images/mk-logo.png" alt="" width="64" height="64" /></a>
+          <p>Bruktbiler gjort ordentlig, fra folk som kjører dem selv. Besøk oss på Økern i Oslo.</p>
+        </div>
+        <div class="footer-col"><h4>Tjenester</h4><ul>
+          <li><a href="butikk.html">Kjøp</a></li><li><a href="selg.html">Selg</a></li><li><a href="kommisjon-formidling.html">Kommisjon &amp; formidling</a></li><li><a href="innbytte.html">Innbytte</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Besøk oss</h4><ul>
+          <li>Olaves Hvervens vei 13, 1266 Oslo</li><li>Man–fre 09–17</li><li>Lør 10–14</li>
+        </ul></div>
+        <div class="footer-col"><h4>Kontakt</h4><ul>
+          <li><a href="guider.html">Guider &amp; råd</a></li><li><a href="tel:+4794170703">941 70 703</a></li><li><a href="mailto:post@mkauto.no">post@mkauto.no</a></li><li><a href="index.html#finn">Finn din bil</a></li>
+        </ul></div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> MK Auto AS · Org.nr 936 666 442</span>
+        <span class="legal"><a href="#">Personvern</a><a href="#">Vilkår</a><a href="#">Salgsbetingelser</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+  /* Direction B — image preview grid + submit confirmation (vanilla, no backend) */
+  (function () {
+    "use strict";
+    const input  = document.getElementById("ib-bilder");
+    const drop   = document.getElementById("ib-drop");
+    const thumbs = document.getElementById("ib-thumbs");
+    const form   = document.getElementById("ibForm");
+    const done   = document.getElementById("ibDone");
+
+    // Our own ordered list; <input.files> is read-only, so re-sync a
+    // DataTransfer to support per-thumbnail removal.
+    let store = [];
+
+    const render = () => {
+      thumbs.replaceChildren();
+      store.forEach((file, i) => {
+        const url = URL.createObjectURL(file);
+        const fig = document.createElement("div");
+        fig.className = "ib-thumb";
+        const img = document.createElement("img");
+        img.src = url; img.alt = file.name || "Valgt bilde";
+        img.onload = () => URL.revokeObjectURL(url);
+        const rm = document.createElement("button");
+        rm.type = "button";
+        rm.className = "ib-thumb__rm";
+        rm.setAttribute("aria-label", "Fjern bilde " + (i + 1));
+        rm.textContent = "×";
+        rm.addEventListener("click", () => { store.splice(i, 1); sync(); });
+        fig.append(img, rm);
+        thumbs.appendChild(fig);
+      });
+    };
+
+    const sync = () => {
+      const dt = new DataTransfer();
+      store.forEach((f) => dt.items.add(f));
+      input.files = dt.files;
+      render();
+    };
+
+    input.addEventListener("change", () => {
+      [...input.files].forEach((f) => { if (f.type.startsWith("image/")) store.push(f); });
+      sync();
+    });
+
+    ["dragenter", "dragover"].forEach((ev) =>
+      drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add("is-hover"); }));
+    ["dragleave", "drop"].forEach((ev) =>
+      drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove("is-hover"); }));
+
+    // Submit: prevent default, swap to confirmation. Real submit wires to Formspree/Netlify later.
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      form.style.display = "none";
+      done.classList.add("is-on");
+      done.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  })();
+  </script>
+</body>
+</html>

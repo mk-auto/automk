@@ -138,6 +138,9 @@ input, select, textarea { font: inherit; color: inherit; }
   border-color: var(--line);
 }
 .btn--ghost:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+/* Solid oxblood button — stays legible on any background (e.g. nav over a photo hero) */
+.btn--accent { --bg: var(--copper); --fg: #fff; border-color: var(--copper); }
+.btn--accent:hover { background: var(--copper-2); border-color: var(--copper-2); color: #fff; }
 .btn--block { width: 100%; justify-content: center; }
 .btn--lg { padding: 1rem 1.8rem; font-size: 1.02rem; }
 

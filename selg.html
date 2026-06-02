@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Selg bilen din · MK Auto</title>
+  <meta name="description" content="Vil du selge bilen din? Send oss noen bilder, så får du et ærlig og uforpliktende tilbud fra MK Auto på Økern. Raskt svar og en trygg handel." />
+  <link rel="canonical" href="https://www.mkauto.no/selg.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="MK Auto" />
+  <meta property="og:locale" content="nb_NO" />
+  <meta property="og:title" content="Selg bilen din · MK Auto" />
+  <meta property="og:description" content="Vil du selge bilen din? Send oss noen bilder, så får du et ærlig og uforpliktende tilbud fra MK Auto." />
+  <meta property="og:url" content="https://www.mkauto.no/selg.html" />
+  <meta property="og:image" content="https://www.mkauto.no/images/og-default.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Selg bilen din · MK Auto" />
+  <meta name="twitter:description" content="Send oss noen bilder av bilen, så får du et raskt og uforpliktende tilbud." />
+  <meta name="twitter:image" content="https://www.mkauto.no/images/og-default.jpg" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23a01b22'/%3E%3Ctext x='16' y='22' font-family='Geist,Arial,sans-serif' font-size='14' font-weight='800' text-anchor='middle' fill='%23ffffff'%3EMK%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+  /* ============================================================
+     SELG — cinematic photo hero, light editorial body
+     Full-bleed photo hero (white type over the photo) flows into
+     the site's light paper canvas, so the page matches the rest of
+     MK Auto. Scoped under .sb; shared header/footer untouched.
+     ============================================================ */
+  .sb {
+    --ink-0:   #f4f4f6;   /* input / inset surface */
+    --ink-1:   #ffffff;   /* paper body */
+    --ink-2:   #ffffff;   /* elevated card */
+    --ink-3:   #ececed;   /* placeholder surface */
+    --line:    rgba(26, 22, 18, 0.12);
+    --line-2:  rgba(26, 22, 18, 0.07);
+    --w-1:     #1a1612;   /* ink display */
+    --w-2:     #5d564c;   /* muted body */
+    --w-3:     #8c8478;   /* faint / labels */
+    --red:     #a01b22;
+    --red-lit: #8a1a1f;   /* darker oxblood for hover on light */
+    --ease:    cubic-bezier(0.16, 1, 0.3, 1);
+
+    background: var(--ink-1);
+    color: var(--w-1);
+    color-scheme: light;
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+  .sb ::selection { background: var(--red); color: #fff; }
+  .sb a { color: inherit; }
+  .sb-wrap { width: 100%; max-width: 1180px; margin-inline: auto; padding-inline: clamp(1.1rem, 4vw, 2.5rem); }
+
+  /* ---------- Cinematic hero ---------- */
+  .sb-hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    align-items: end;
+    padding-block: clamp(7rem, 16vh, 11rem) clamp(2.5rem, 7vh, 5rem);
+    isolation: isolate;
+  }
+  .sb-hero__media {
+    position: absolute; inset: 0; z-index: -2;
+    background-image: url("images/porsche-rear.jpg");
+    background-position: center 38%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transform: scale(1.04);
+  }
+  /* dual scrim: vignette for white-text legibility; hero ends dark and
+     meets the light paper body below at a clean seam (Tesla pattern) */
+  .sb-hero__scrim {
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(21,18,15,0.58) 0%, rgba(21,18,15,0.16) 26%, rgba(21,18,15,0.32) 58%, rgba(21,18,15,0.80) 100%),
+      linear-gradient(95deg, rgba(21,18,15,0.74) 0%, rgba(21,18,15,0.30) 42%, rgba(21,18,15,0) 72%);
+  }
+  .sb-hero__inner { position: relative; max-width: 62rem; }
+  .sb-rule {
+    width: 56px; height: 2px; background: var(--red);
+    margin-bottom: 1.6rem; transform-origin: left;
+  }
+  .sb-h1 {
+    font-size: clamp(2.6rem, 7.4vw, 6.1rem);
+    font-weight: 300;
+    line-height: 0.99;
+    letter-spacing: -0.035em;
+    color: #f6f3ee;   /* pinned light: sits over the dark photo */
+    text-wrap: balance;
+    margin-bottom: 1.5rem;
+  }
+  .sb-h1 b { font-weight: 600; }
+  .sb-lede {
+    font-size: clamp(1.05rem, 1.7vw, 1.32rem);
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.84);   /* pinned light over photo */
+    max-width: 56ch;
+    font-weight: 360;
+  }
+  .sb-hero__cue {
+    margin-top: clamp(2rem, 5vh, 3.4rem);
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.62);
+  }
+  .sb-hero__cue span { width: 26px; height: 1px; background: rgba(255, 255, 255, 0.35); display: inline-block; }
+
+  /* reveal primitive already in styles.css (.reveal -> .in-view). Add hero-local stagger. */
+  .sb-hero .reveal { transition: opacity .9s var(--ease), transform .9s var(--ease); }
+
+  /* ---------- Section scaffolding ---------- */
+  .sb-section { padding-block: clamp(4rem, 9vw, 8rem); position: relative; }
+  .sb-section + .sb-section { border-top: 1px solid var(--line-2); }
+  .sb-h2 {
+    font-size: clamp(1.9rem, 4vw, 3.1rem);
+    font-weight: 320; line-height: 1.05; letter-spacing: -0.03em;
+    color: var(--w-1); max-width: 22ch; text-wrap: balance;
+  }
+  .sb-h2 b { font-weight: 620; }
+  .sb-intro { max-width: 60ch; }
+  .sb-intro p { color: var(--w-2); font-size: clamp(1rem, 1.4vw, 1.12rem); margin-top: 1rem; max-width: 60ch; }
+
+  /* ---------- Process: editorial numbered rows, NOT identical cards ---------- */
+  .sb-steps { margin-top: clamp(2.5rem, 5vw, 4rem); display: grid; gap: 0; }
+  .sb-step {
+    display: grid;
+    grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+    gap: clamp(1.2rem, 4vw, 4rem);
+    padding-block: clamp(1.8rem, 4vw, 2.8rem);
+    border-top: 1px solid var(--line-2);
+    align-items: start;
+  }
+  .sb-step:last-child { border-bottom: 1px solid var(--line-2); }
+  .sb-step__num {
+    font-family: var(--mono);
+    font-size: clamp(2.2rem, 6vw, 4.4rem);
+    font-weight: 200; line-height: 0.8;
+    color: var(--w-3);
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+  .sb-step:first-child .sb-step__num { color: var(--w-2); }
+  .sb-step h3 { font-size: clamp(1.25rem, 2.2vw, 1.7rem); font-weight: 560; letter-spacing: -0.02em; color: var(--w-1); }
+  .sb-step p { margin-top: 0.55rem; color: var(--w-2); max-width: 52ch; font-weight: 360; }
+
+  /* ---------- Honesty: varied layout (lead block + offset list), NOT 3 equal cards ---------- */
+  .sb-honest {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+  .sb-honest__lead .sb-h2 { max-width: 16ch; }
+  .sb-honest__lead p { color: var(--w-2); margin-top: 1.2rem; max-width: 42ch; font-weight: 360; }
+  .sb-honest__list { display: grid; gap: 0; }
+  .sb-point {
+    padding-block: clamp(1.3rem, 3vw, 1.9rem);
+    border-top: 1px solid var(--line-2);
+  }
+  .sb-point:first-child { border-top: none; padding-top: 0; }
+  .sb-point h4 {
+    font-size: 1.18rem; font-weight: 580; letter-spacing: -0.015em; color: var(--w-1);
+    display: flex; align-items: baseline; gap: 0.7rem;
+  }
+  .sb-point h4::before {
+    content: ""; flex: 0 0 auto;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--red); transform: translateY(-1px);
+  }
+  .sb-point:nth-child(2) h4::before,
+  .sb-point:nth-child(3) h4::before { background: var(--w-3); }
+  .sb-point p { color: var(--w-2); margin-top: 0.5rem; max-width: 50ch; font-weight: 360; padding-left: 1.4rem; }
+
+  /* ---------- Form: elevated dark card ---------- */
+  .sb-form-section { padding-bottom: clamp(5rem, 10vw, 9rem); }
+  .sb-formhead { max-width: 60ch; margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .sb-formhead .sb-h2 { max-width: 24ch; }
+  .sb-formhead p { color: var(--w-2); margin-top: 1rem; font-weight: 360; }
+
+  .sb-card {
+    background: var(--ink-2);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: clamp(1.4rem, 4vw, 3rem);
+    box-shadow: 0 30px 60px -28px rgba(60,44,28,0.30);
+  }
+  .sb-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2.4vw, 1.5rem);
+  }
+  .sb-field { display: flex; flex-direction: column; gap: 0.45rem; }
+  .sb-field--full { grid-column: 1 / -1; }
+  .sb-label {
+    font-size: 0.86rem; font-weight: 520; color: var(--w-1);
+    letter-spacing: -0.005em;
+  }
+  .sb-label .sb-req { color: var(--red-lit); font-weight: 600; }
+  .sb-help { font-size: 0.78rem; color: var(--w-3); font-weight: 360; }
+  .sb-input, .sb-select, .sb-textarea {
+    width: 100%;
+    background: var(--ink-0);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 0.82rem 0.95rem;
+    color: var(--w-1);
+    font-size: 0.98rem;
+    transition: border-color .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .sb-input::placeholder, .sb-textarea::placeholder { color: var(--w-3); }
+  .sb-input:hover, .sb-select:hover, .sb-textarea:hover { border-color: rgba(26,22,18,0.28); }
+  .sb-input:focus, .sb-select:focus, .sb-textarea:focus {
+    outline: none;
+    border-color: var(--red);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(160,27,34,0.14);
+  }
+  .sb-textarea { resize: vertical; min-height: 120px; line-height: 1.5; }
+  .sb-select {
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%231a1612' stroke-opacity='0.55' stroke-width='2.2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 0.95rem center;
+    padding-right: 2.4rem; cursor: pointer;
+  }
+  .sb-select option { background: var(--ink-2); color: var(--w-1); }
+
+  /* ---------- Dropzone + thumbnail preview ---------- */
+  .sb-drop {
+    grid-column: 1 / -1;
+    position: relative;
+    border: 1.5px dashed rgba(26,22,18,0.26);
+    border-radius: 14px;
+    background: var(--ink-0);
+    padding: clamp(1.4rem, 4vw, 2.2rem);
+    text-align: center;
+    transition: border-color .2s var(--ease), background .2s var(--ease);
+  }
+  .sb-drop:hover, .sb-drop.is-hover { border-color: var(--red); background: #f8e9ea; }
+  .sb-drop input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+  .sb-drop__icon {
+    width: 34px; height: 34px; margin: 0 auto 0.7rem;
+    color: var(--w-3);
+  }
+  .sb-drop__t { font-weight: 540; color: var(--w-1); font-size: 0.98rem; }
+  .sb-drop__s { font-size: 0.8rem; color: var(--w-3); margin-top: 0.25rem; }
+  .sb-thumbs {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+    gap: 0.7rem;
+  }
+  .sb-thumbs:empty { display: none; }
+  .sb-thumb {
+    position: relative; aspect-ratio: 4 / 3; border-radius: 10px; overflow: hidden;
+    border: 1px solid var(--line); background: var(--ink-3);
+    animation: sb-pop .35s var(--ease) both;
+  }
+  @keyframes sb-pop { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: scale(1); } }
+  .sb-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .sb-thumb__rm {
+    position: absolute; top: 5px; right: 5px;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(10,8,6,0.78); border: 1px solid rgba(255,255,255,0.18);
+    color: #fff; font-size: 0.95rem; line-height: 1;
+    display: grid; place-items: center;
+    transition: transform .18s var(--ease), background .18s var(--ease);
+  }
+  .sb-thumb__rm:hover { background: var(--red); transform: scale(1.1); }
+
+  .sb-submit-row {
+    grid-column: 1 / -1;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 1.1rem 1.5rem;
+    margin-top: 0.4rem;
+  }
+  .sb-card .btn {
+    --bg: var(--red); --fg: #fff;
+    border-color: var(--red);
+  }
+  .sb-card .btn:hover { background: var(--red-lit); border-color: var(--red-lit); color: #fff; }
+  .sb-assure { font-size: 0.84rem; color: var(--w-3); max-width: 40ch; font-weight: 360; }
+
+  .sb-hp { position: absolute; left: -5000px; }
+
+  /* ---------- Confirmation ---------- */
+  .sb-done { display: none; text-align: left; padding: clamp(1rem, 3vw, 2rem) 0; }
+  .sb-done.is-on { display: block; animation: sb-pop .45s var(--ease) both; }
+  .sb-done__mark {
+    width: 46px; height: 46px; border-radius: 50%;
+    border: 1.5px solid var(--red); color: var(--red-lit);
+    display: grid; place-items: center; margin-bottom: 1.2rem;
+  }
+  .sb-done h3 { font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 420; letter-spacing: -0.02em; }
+  .sb-done h3 b { font-weight: 640; }
+  .sb-done p { color: var(--w-2); margin-top: 0.8rem; max-width: 46ch; font-weight: 360; }
+
+  /* ---------- back link tuned for dark ---------- */
+  .sb .back-link { color: var(--w-3); }
+  .sb .back-link:hover { color: var(--w-1); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 768px) {
+    .sb-step { grid-template-columns: 1fr; gap: 0.4rem; }
+    .sb-step__num { font-size: 2.4rem; }
+    .sb-honest { grid-template-columns: 1fr; }
+    .sb-grid { grid-template-columns: 1fr; }
+    .sb-hero__media { background-position: center 32%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sb-hero__media { transform: none; }
+    .sb-thumb, .sb-done.is-on { animation: none; }
+  }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#innhold">Hopp til innhold</a>
+
+  <header class="site-header is-scrolled" id="header">
+    <div class="container">
+      <nav class="nav" aria-label="Hovedmeny">
+        <a class="brand" href="index.html#top" translate="no" aria-label="MK Auto – til forsiden"><img class="brand-logo" src="images/mk-logo.png" alt="" width="48" height="48" /></a>
+        <ul class="nav-links">
+          <li><a href="butikk.html">Våre biler</a></li>
+          <li><a href="guider.html">Guider</a></li>
+          <li><a href="om-oss.html">Om oss</a></li>
+          <li><a class="btn btn--accent" href="kontakt.html">Kontakt oss</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Åpne meny" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+      </nav>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="butikk.html">Våre biler</a>
+      <a href="guider.html">Guider</a>
+      <a href="om-oss.html">Om oss</a>
+      <a class="btn btn--accent" href="kontakt.html">Kontakt oss</a>
+    </div>
+  </header>
+
+  <main class="sb" id="innhold">
+
+    <!-- ======================= CINEMATIC HERO ======================= -->
+    <section class="sb-hero" aria-labelledby="sb-title">
+      <div class="sb-hero__media" aria-hidden="true"></div>
+      <div class="sb-hero__scrim" aria-hidden="true"></div>
+      <div class="sb-wrap">
+        <div class="sb-hero__inner">
+          <div class="sb-rule reveal" aria-hidden="true"></div>
+          <h1 class="sb-h1 reveal" data-delay="1" id="sb-title">Vi vil gjerne <b>kjøpe bilen din</b>.</h1>
+          <p class="sb-lede reveal" data-delay="2">Send oss noen bilder, så får du et ærlig og uforpliktende tilbud. Du hører raskt fra oss, og blir vi enige, ordner vi en trygg og enkel handel.</p>
+          <div class="sb-hero__cue reveal" data-delay="2"><span aria-hidden="true"></span>Slik foregår det</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="sb-wrap">
+      <a class="back-link" href="index.html#tjenester">&larr; Tjenester</a>
+    </div>
+
+    <!-- ======================= PROCESS ======================= -->
+    <section class="sb-section" aria-labelledby="sb-proc">
+      <div class="sb-wrap">
+        <div class="sb-intro reveal">
+          <h2 class="sb-h2" id="sb-proc"><b>Tre steg</b>, ingen forpliktelser.</h2>
+        </div>
+
+        <div class="sb-steps">
+          <div class="sb-step reveal">
+            <div class="sb-step__num" aria-hidden="true">01</div>
+            <div>
+              <h3>Du sender oss bilen</h3>
+              <p>Noen bilder og litt info. Det tar fem minutter.</p>
+            </div>
+          </div>
+          <div class="sb-step reveal" data-delay="1">
+            <div class="sb-step__num" aria-hidden="true">02</div>
+            <div>
+              <h3>Vi vurderer</h3>
+              <p>Vi ser på stand, historikk og marked, og gir deg et tilbud vi mener er riktig.</p>
+            </div>
+          </div>
+          <div class="sb-step reveal" data-delay="2">
+            <div class="sb-step__num" aria-hidden="true">03</div>
+            <div>
+              <h3>Vi møtes</h3>
+              <p>Vi ser på bilen sammen, og stemmer alt, gjør vi opp med en gang.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= HONESTY ======================= -->
+    <section class="sb-section" aria-labelledby="sb-honest-t">
+      <div class="sb-wrap">
+        <div class="sb-honest">
+          <div class="sb-honest__lead reveal">
+            <h2 class="sb-h2" id="sb-honest-t">Trygt og ærlig, <b>hele veien</b>.</h2>
+            <p>Vi vil at du skal sitte igjen med en god følelse, enten vi ender opp med å kjøpe bilen eller ikke. Derfor er vi tydelige fra første melding.</p>
+          </div>
+          <div class="sb-honest__list reveal" data-delay="1">
+            <div class="sb-point">
+              <h4>Full historikk lønner seg</h4>
+              <p>Servicehefte og kjent historikk gir deg ofte et bedre tilbud.</p>
+            </div>
+            <div class="sb-point">
+              <h4>Alltid et tydelig svar</h4>
+              <p>Passer ikke bilen oss akkurat nå, sier vi fra med en gang, så du slipper å vente.</p>
+            </div>
+            <div class="sb-point">
+              <h4>Tilbud uten forpliktelser</h4>
+              <p>Et tilbud fra oss binder deg ikke til noe. Du bestemmer.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= FORM ======================= -->
+    <section class="sb-section sb-form-section" aria-labelledby="sb-form-t">
+      <div class="sb-wrap">
+        <div class="sb-formhead reveal">
+          <h2 class="sb-h2" id="sb-form-t">Fortell oss om <b>bilen din</b>.</h2>
+          <p>Jo mer du gir oss, jo raskere kan vi svare. Bildene hjelper mest. Vi tar kontakt vanligvis innen én arbeidsdag.</p>
+        </div>
+
+        <div class="sb-card reveal" data-delay="1">
+          <!-- Netlify-ready; ekte innsending kobles til Formspree/Netlify senere. -->
+          <form id="sbForm" class="sb-grid" name="selg-bil" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="#" novalidate>
+            <input type="hidden" name="form-name" value="selg-bil" />
+            <p class="sb-hp" aria-hidden="true"><label>Ikke fyll ut dette feltet: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+
+            <div class="sb-field">
+              <label class="sb-label" for="sb-regnr">Registreringsnummer</label>
+              <input class="sb-input" id="sb-regnr" name="regnr" autocomplete="off" placeholder="EK 12345" />
+            </div>
+            <div class="sb-field">
+              <label class="sb-label" for="sb-merke">Merke</label>
+              <input class="sb-input" id="sb-merke" name="merke" autocomplete="off" placeholder="f.eks. Volvo" />
+            </div>
+
+            <div class="sb-field">
+              <label class="sb-label" for="sb-modell">Modell</label>
+              <input class="sb-input" id="sb-modell" name="modell" autocomplete="off" placeholder="f.eks. XC60" />
+            </div>
+            <div class="sb-field">
+              <label class="sb-label" for="sb-aar">Årsmodell</label>
+              <input class="sb-input" id="sb-aar" name="aarsmodell" inputmode="numeric" autocomplete="off" placeholder="f.eks. 2019" />
+            </div>
+
+            <div class="sb-field">
+              <label class="sb-label" for="sb-km">Kilometerstand</label>
+              <input class="sb-input" id="sb-km" name="km" inputmode="numeric" autocomplete="off" placeholder="f.eks. 84 000" />
+            </div>
+            <div class="sb-field">
+              <label class="sb-label" for="sb-drivstoff">Drivstoff</label>
+              <select class="sb-select" id="sb-drivstoff" name="drivstoff">
+                <option value="">Velg drivstoff</option>
+                <option>Bensin</option>
+                <option>Diesel</option>
+                <option>Elektrisk</option>
+                <option>Hybrid</option>
+              </select>
+            </div>
+
+            <div class="sb-field">
+              <label class="sb-label" for="sb-girkasse">Girkasse</label>
+              <select class="sb-select" id="sb-girkasse" name="girkasse">
+                <option value="">Velg girkasse</option>
+                <option>Automat</option>
+                <option>Manuell</option>
+              </select>
+            </div>
+            <div class="sb-field" aria-hidden="true"><!-- spacer keeps the 2-col rhythm on desktop --></div>
+
+            <div class="sb-field sb-field--full">
+              <label class="sb-label" for="sb-tilstand">Tilstand / kjente feil</label>
+              <textarea class="sb-textarea" id="sb-tilstand" name="tilstand" placeholder="Fortell oss om bilen: kjente feil, skader, det som er bra. Vær ærlig, det hjelper oss begge."></textarea>
+            </div>
+
+            <div class="sb-field sb-field--full">
+              <label class="sb-label" for="sb-bilder">Bilder av bilen</label>
+              <span class="sb-help">Front, bak, sider og interiør. Jo bedre lys, jo bedre svar.</span>
+            </div>
+            <div class="sb-drop" id="sb-drop">
+              <svg class="sb-drop__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <path d="M12 3v13" /><path d="M7.5 7.5 12 3l4.5 4.5" />
+              </svg>
+              <div class="sb-drop__t">Slipp bilder her, eller trykk for å velge</div>
+              <div class="sb-drop__s">JPG eller PNG. Du kan legge til flere.</div>
+              <input type="file" id="sb-bilder" name="bilder" accept="image/*" multiple aria-label="Last opp bilder av bilen" />
+            </div>
+            <div class="sb-thumbs" id="sb-thumbs" aria-live="polite"></div>
+
+            <div class="sb-field">
+              <label class="sb-label" for="sb-navn">Navn <span class="sb-req" aria-hidden="true">*</span></label>
+              <input class="sb-input" id="sb-navn" name="navn" autocomplete="name" placeholder="Ditt navn" required />
+            </div>
+            <div class="sb-field">
+              <label class="sb-label" for="sb-kontakt">E-post eller telefon <span class="sb-req" aria-hidden="true">*</span></label>
+              <input class="sb-input" id="sb-kontakt" name="kontakt" autocomplete="email" placeholder="navn@epost.no / 912 34 567" required />
+            </div>
+
+            <div class="sb-submit-row">
+              <button class="btn" type="submit">Send forespørsel <span class="arrow" aria-hidden="true">→</span></button>
+              <p class="sb-assure">Uforpliktende. Et tilbud fra oss binder deg ikke til noe.</p>
+            </div>
+          </form>
+
+          <div class="sb-done" id="sbDone" role="status" aria-live="polite">
+            <div class="sb-done__mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5" /></svg>
+            </div>
+            <h3><b>Takk!</b> Vi har fått forespørselen din.</h3>
+            <p>Vi tar kontakt, vanligvis innen én arbeidsdag, og gir deg et ærlig og uforpliktende svar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="brand" href="index.html#top" translate="no" aria-label="MK Auto AS"><img class="brand-logo brand-logo--footer" src="images/mk-logo.png" alt="" width="64" height="64" /></a>
+          <p>Bruktbiler gjort ordentlig, fra folk som kjører dem selv. Besøk oss på Økern i Oslo.</p>
+        </div>
+        <div class="footer-col"><h4>Tjenester</h4><ul>
+          <li><a href="butikk.html">Kjøp</a></li><li><a href="selg.html">Selg</a></li><li><a href="kommisjon-formidling.html">Kommisjon &amp; formidling</a></li><li><a href="innbytte.html">Innbytte</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Besøk oss</h4><ul>
+          <li>Olaves Hvervens vei 13, 1266 Oslo</li><li>Man–fre 09–17</li><li>Lør 10–14</li>
+        </ul></div>
+        <div class="footer-col"><h4>Kontakt</h4><ul>
+          <li><a href="guider.html">Guider &amp; råd</a></li><li><a href="tel:+4794170703">941 70 703</a></li><li><a href="mailto:post@mkauto.no">post@mkauto.no</a></li><li><a href="index.html#finn">Finn din bil</a></li>
+        </ul></div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> MK Auto AS · Org.nr 936 666 442</span>
+        <span class="legal"><a href="#">Personvern</a><a href="#">Vilkår</a><a href="#">Salgsbetingelser</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+  /* Direction B — image preview grid + submit confirmation (vanilla, no backend) */
+  (function () {
+    "use strict";
+    const input  = document.getElementById("sb-bilder");
+    const drop   = document.getElementById("sb-drop");
+    const thumbs = document.getElementById("sb-thumbs");
+    const form   = document.getElementById("sbForm");
+    const done   = document.getElementById("sbDone");
+
+    // Keep our own ordered list of files; <input.files> is read-only so we
+    // re-sync a DataTransfer to allow per-thumbnail removal.
+    let store = [];
+
+    const render = () => {
+      thumbs.replaceChildren();
+      store.forEach((file, i) => {
+        const url = URL.createObjectURL(file);
+        const fig = document.createElement("div");
+        fig.className = "sb-thumb";
+        const img = document.createElement("img");
+        img.src = url; img.alt = file.name || "Valgt bilde";
+        img.onload = () => URL.revokeObjectURL(url);
+        const rm = document.createElement("button");
+        rm.type = "button";
+        rm.className = "sb-thumb__rm";
+        rm.setAttribute("aria-label", "Fjern bilde " + (i + 1));
+        rm.textContent = "×";
+        rm.addEventListener("click", () => { store.splice(i, 1); sync(); });
+        fig.append(img, rm);
+        thumbs.appendChild(fig);
+      });
+    };
+
+    const sync = () => {
+      const dt = new DataTransfer();
+      store.forEach((f) => dt.items.add(f));
+      input.files = dt.files;
+      render();
+    };
+
+    input.addEventListener("change", () => {
+      [...input.files].forEach((f) => { if (f.type.startsWith("image/")) store.push(f); });
+      sync();
+    });
+
+    // Drag affordance on the dropzone
+    ["dragenter", "dragover"].forEach((ev) =>
+      drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add("is-hover"); }));
+    ["dragleave", "drop"].forEach((ev) =>
+      drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove("is-hover"); }));
+
+    // Submit: prevent default, swap to confirmation. Real submit wires to Formspree/Netlify later.
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      form.style.display = "none";
+      done.classList.add("is-on");
+      done.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  })();
+  </script>
+</body>
+</html>
