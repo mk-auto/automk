@@ -184,7 +184,7 @@ HEAD = '''<!DOCTYPE html>
         <a class="brand" href="index.html#top" translate="no" aria-label="MK Auto – til forsiden"><img class="brand-logo" src="images/mk-logo.png" alt="" width="48" height="48" /></a>
         <ul class="nav-links">
           <li><a href="butikk.html">Våre biler</a></li>
-          <li><a href="guider.html">Guider</a></li>
+          <li><a href="guider.html">Artikler</a></li>
           <li><a href="om-oss.html">Om oss</a></li>
           <li><a class="btn btn--accent" href="kontakt.html">Kontakt oss</a></li>
         </ul>
@@ -193,7 +193,7 @@ HEAD = '''<!DOCTYPE html>
     </div>
     <div class="mobile-menu" id="mobileMenu">
       <a href="butikk.html">Våre biler</a>
-      <a href="guider.html">Guider</a>
+      <a href="guider.html">Artikler</a>
       <a href="om-oss.html">Om oss</a>
       <a class="btn btn--accent" href="kontakt.html">Kontakt oss</a>
     </div>
