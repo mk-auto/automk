@@ -268,6 +268,10 @@ input, select, textarea { font: inherit; color: inherit; }
   display: block; color: transparent; -webkit-text-fill-color: transparent;
   -webkit-text-stroke: 1.4px rgba(246, 243, 238, 0.85); text-stroke: 1.4px rgba(246, 243, 238, 0.85);
 }
+/* Longer single words (e.g. "Bruktbilforhandleren") must not crowd the gutter on phones */
+@media (max-width: 600px) {
+  .hero h1.hero-title { font-size: clamp(1.8rem, 8.6vw, 3.4rem); letter-spacing: -0.05em; }
+}
 .hero-row { display: flex; flex-wrap: wrap; gap: 2rem 3rem; align-items: end; justify-content: space-between; }
 .hero-actions { display: flex; gap: .8rem; flex-wrap: wrap; }
 /* Hero sits on the dark showroom photo — light copy + accent CTA */
