@@ -3,6 +3,10 @@ import re, json, os, glob
 
 D = "/Users/daodilyas/Desktop/automk/.firecrawl/cars"
 IDS = open("/Users/daodilyas/Desktop/automk/.firecrawl/ids.txt").read().split()
+# Cars currently listed on the dealer's Finn page. Anything published but not in
+# this set is treated as sold/removed (kept on site, badged "Solgt", sorted last).
+_active_path = "/Users/daodilyas/Desktop/automk/.firecrawl/active_ids.txt"
+ACTIVE = set(open(_active_path).read().split()) if os.path.exists(_active_path) else set(IDS)
 
 SPEC_LABELS = [
     "Omregistrering","Pris eksl. omreg.","Merke","Modellår","Modell","Karosseri",
@@ -92,7 +96,7 @@ for cid in IDS:
         if u not in seen:
             seen.add(u); imgs.append(u)
 
-    sold = bool(re.search(r"\bSOLGT\b", md))
+    sold = bool(re.search(r"\bSOLGT\b", md)) or (cid not in ACTIVE)
 
     cars.append({
         "id": cid,
@@ -128,7 +132,7 @@ BODY_MAP = {"SUV/Offroad": "SUV", "Sedan": "Sedan", "Kombi 5-dørs": "Kombi",
 BODY_INFER = {
     "449826093": "Kombi", "458704660": "SUV", "461762549": "Varebil",
     "461762728": "Kombi", "461774393": "Kombi", "464122276": "Kombi",
-    "464876372": "SUV",
+    "464876372": "SUV", "465707747": "SUV", "465716299": "SUV",
 }
 for c in cars:
     c["fuel"] = FUEL_MAP.get(c["fuel"], c["fuel"])
