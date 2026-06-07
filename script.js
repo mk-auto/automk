@@ -50,19 +50,18 @@
   if (track) {
     const cards = track.querySelectorAll(".ecar");
     const fill = document.getElementById("carFill");
-    const cur = document.getElementById("carCur");
     const prev = document.getElementById("carPrev");
     const next = document.getElementById("carNext");
-    document.getElementById("carTot").textContent = String(cards.length).padStart(2, "0");
     const step = () => cards[0].getBoundingClientRect().width + 24;
     next.addEventListener("click", () => track.scrollBy({ left: step(), behavior: reduce ? "auto" : "smooth" }));
     prev.addEventListener("click", () => track.scrollBy({ left: -step(), behavior: reduce ? "auto" : "smooth" }));
+    // continuous scroll-progress thumb (no numbers): width = visible fraction, x = scroll position
     const update = () => {
       const max = track.scrollWidth - track.clientWidth;
-      const idx = Math.round(track.scrollLeft / step());
-      fill.style.width = (100 / cards.length) + "%";
-      fill.style.transform = "translateX(" + (idx * 100) + "%)";
-      cur.textContent = String(Math.min(cards.length, idx + 1)).padStart(2, "0");
+      const frac = max > 0 ? track.scrollLeft / max : 0;
+      const thumb = max > 0 ? Math.max(14, (track.clientWidth / track.scrollWidth) * 100) : 100;
+      fill.style.width = thumb + "%";
+      fill.style.transform = "translateX(" + (frac * (100 - thumb) / thumb * 100) + "%)";
       prev.toggleAttribute("disabled", track.scrollLeft <= 4);
       next.toggleAttribute("disabled", track.scrollLeft >= max - 4);
     };
