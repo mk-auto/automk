@@ -1079,7 +1079,7 @@ a.info-link:hover { background: var(--copper-wash); }
 .om-hero .om-plate { background: var(--ink); border-color: var(--ink); }
 .om-title {
   font-size: clamp(2.4rem, 6.4vw, 5rem); font-weight: 800; line-height: 1.0;
-  letter-spacing: -0.04em; margin-top: 1.3rem; text-wrap: balance; max-width: 18ch;
+  letter-spacing: -0.04em; margin-top: 0; text-wrap: balance; max-width: 18ch;
 }
 .om-title em { font-style: normal; color: var(--copper); }
 .om-lede {
@@ -1127,7 +1127,7 @@ a.info-link:hover { background: var(--copper-wash); }
 .om-visjon .om-plate { background: rgba(255,255,255,.06); border-color: rgba(246,243,238,.7); }
 .om-visjon-title {
   font-size: clamp(2.2rem, 5.6vw, 4.2rem); font-weight: 780; line-height: 1.02;
-  letter-spacing: -0.038em; margin-top: 1.4rem; max-width: 16ch; text-wrap: balance;
+  letter-spacing: -0.038em; margin-top: 0; max-width: 16ch; text-wrap: balance;
 }
 .om-visjon-title em { font-style: normal; color: #e08c90; }
 .om-visjon-lede {
