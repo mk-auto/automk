@@ -140,7 +140,8 @@
     cars.forEach((car) => car.classList.add("is-hidden"));
     visible.slice(0, shown).forEach((car) => car.classList.remove("is-hidden"));
 
-    count.textContent = visible.length;
+    // "biler til salgs" counts only cars actually for sale (sold ones are shown, badged, at the end)
+    count.textContent = visible.filter((car) => car.dataset.sold !== "1").length;
     empty.style.display = visible.length ? "none" : "";
     loadMore.parentElement.style.display = visible.length > shown ? "" : "none";
     renderPills();
