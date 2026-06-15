@@ -77,7 +77,7 @@ def chips(values, fkey):
 maxprice = max(c["price"] for c in cars if c["price"])
 price_cap = ((maxprice // 50000) + 1) * 50000  # round up to 50k
 
-shop_count = len(cars)
+shop_count = sum(1 for c in cars if not c["sold"])  # "biler til salgs" = for-sale only
 
 # ---------- read existing butikk.html, replace dynamic regions ----------
 butikk = open(os.path.join(ROOT, "butikk.html"), encoding="utf-8").read()
