@@ -6,18 +6,18 @@
   <meta name="theme-color" content="#ffffff" />
   <title>Selg bilen din · MK Auto</title>
   <meta name="description" content="Vil du selge bilen din? Send oss noen bilder, så får du et ærlig og uforpliktende tilbud fra MK Auto. Raskt svar og en trygg handel." />
-  <link rel="canonical" href="https://www.mkauto.no/selg.html" />
+  <link rel="canonical" href="https://www.mk-auto.no/selg.html" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="MK Auto" />
   <meta property="og:locale" content="nb_NO" />
   <meta property="og:title" content="Selg bilen din · MK Auto" />
   <meta property="og:description" content="Vil du selge bilen din? Send oss noen bilder, så får du et ærlig og uforpliktende tilbud fra MK Auto." />
-  <meta property="og:url" content="https://www.mkauto.no/selg.html" />
-  <meta property="og:image" content="https://www.mkauto.no/images/og-default.jpg" />
+  <meta property="og:url" content="https://www.mk-auto.no/selg.html" />
+  <meta property="og:image" content="https://www.mk-auto.no/images/og-default.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Selg bilen din · MK Auto" />
   <meta name="twitter:description" content="Send oss noen bilder av bilen, så får du et raskt og uforpliktende tilbud." />
-  <meta name="twitter:image" content="https://www.mkauto.no/images/og-default.jpg" />
+  <meta name="twitter:image" content="https://www.mk-auto.no/images/og-default.jpg" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23a01b22'/%3E%3Ctext x='16' y='22' font-family='Geist,Arial,sans-serif' font-size='14' font-weight='800' text-anchor='middle' fill='%23ffffff'%3EMK%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -431,10 +431,12 @@
         </div>
 
         <div class="sb-card reveal" data-delay="1">
-          <!-- Netlify-ready; ekte innsending kobles til Formspree/Netlify senere. -->
-          <form id="sbForm" class="sb-grid" name="selg-bil" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="#" novalidate>
-            <input type="hidden" name="form-name" value="selg-bil" />
-            <p class="sb-hp" aria-hidden="true"><label>Ikke fyll ut dette feltet: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+          <form id="sbForm" class="sb-grid" method="POST" action="https://formsubmit.co/m_k_auto@hotmail.com" enctype="multipart/form-data">
+            <input type="hidden" name="_subject" value="Ny salgsforespørsel – Selg bilen (MK Auto)" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_next" value="https://www.mk-auto.no/takk.html" />
+            <p class="sb-hp" aria-hidden="true"><label>Ikke fyll ut dette feltet: <input type="text" name="_honey" tabindex="-1" autocomplete="off" /></label></p>
 
             <div class="sb-field">
               <label class="sb-label" for="sb-regnr">Registreringsnummer</label>
@@ -540,7 +542,7 @@
           <li>Olaves Hvervens vei 13, 1266 Oslo</li><li>Man–fre 10–17</li><li>Lør 12–16</li>
         </ul></div>
         <div class="footer-col"><h4>Kontakt</h4><ul>
-          <li><a href="guider.html">Artikler</a></li><li><a href="tel:+4795093215">950 93 215</a></li><li><a href="tel:+4794170703">941 70 703</a></li><li><a href="tel:+4745730046">457 30 046</a></li><li><a href="mailto:post@mkauto.no">post@mkauto.no</a></li><li><a href="index.html#finn">Finn din bil</a></li>
+          <li><a href="guider.html">Artikler</a></li><li><a href="tel:+4795093215">950 93 215</a></li><li><a href="tel:+4794170703">941 70 703</a></li><li><a href="tel:+4745730046">457 30 046</a></li><li><a href="mailto:m_k_auto@hotmail.com">m_k_auto@hotmail.com</a></li><li><a href="index.html#finn">Finn din bil</a></li>
         </ul></div>
       </div>
       <div class="footer-bottom">
@@ -603,14 +605,9 @@
     ["dragleave", "drop"].forEach((ev) =>
       drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove("is-hover"); }));
 
-    // Submit: prevent default, swap to confirmation. Real submit wires to Formspree/Netlify later.
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      if (!form.reportValidity()) return;
-      form.style.display = "none";
-      done.classList.add("is-on");
-      done.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
+    // Native submit goes straight to FormSubmit (multipart, so the photos are
+    // attached) and then redirects to takk.html via the form's hidden _next.
+    // No preventDefault here — that's what lets the files actually be sent.
   })();
   </script>
 </body>

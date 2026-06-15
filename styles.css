@@ -1195,3 +1195,19 @@ a.info-link:hover { background: var(--copper-wash); }
 .msg-car-name { font-weight: 680; letter-spacing: -0.01em; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .msg-car-sub { font-size: .82rem; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .msg-car-price { font-family: var(--mono); font-weight: 600; font-size: .92rem; }
+
+/* ---------- FormSubmit: inline success + error (shared across forms) ---------- */
+.fs-done { display: none; padding: clamp(1rem, 3vw, 2rem) 0; }
+.fs-done.is-on { display: block; animation: fs-pop .45s var(--ease) both; }
+.fs-done__mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--good); color: #fff;
+  font-size: 1.45rem; line-height: 1; margin-bottom: .9rem;
+}
+.fs-done h3 { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 480; letter-spacing: -.02em; }
+.fs-done h3 b { font-weight: 680; }
+.fs-done p { color: var(--ink-2); margin-top: .6rem; max-width: 48ch; }
+.fs-error { color: var(--copper); margin-top: .85rem; font-weight: 500; }
+@keyframes fs-pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .fs-done.is-on { animation: none; } }

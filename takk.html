@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Takk for henvendelsen · MK Auto</title>
+  <meta name="description" content="Takk for at du tok kontakt med MK Auto. Vi svarer vanligvis innen én arbeidsdag." />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://www.mk-auto.no/takk.html" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23a01b22'/%3E%3Ctext x='16' y='22' font-family='Geist,Arial,sans-serif' font-size='14' font-weight='800' text-anchor='middle' fill='%23ffffff'%3EMK%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .takk { min-height: 68vh; display: grid; place-items: center; padding: clamp(3rem, 10vw, 7rem) 0; }
+    .takk-card { max-width: 40rem; text-align: center; }
+    .takk-mark {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 76px; height: 76px; border-radius: 50%;
+      background: var(--good); color: #fff; margin-bottom: 1.6rem;
+      box-shadow: 0 16px 36px -16px rgba(63, 125, 82, .6);
+      animation: takk-pop .5s var(--spring) both;
+    }
+    .takk-card h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 460; letter-spacing: -.03em; line-height: 1.05; }
+    .takk-card h1 b { font-weight: 720; }
+    .takk-card p { color: var(--ink-2); margin-top: 1rem; font-size: clamp(1.02rem, 2vw, 1.18rem); max-width: 34ch; margin-inline: auto; }
+    .takk-actions { margin-top: 2.2rem; display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+    .takk-meta { margin-top: 1.6rem; font-size: .92rem; color: var(--ink-3); }
+    .takk-meta a { color: var(--copper); text-decoration: none; font-weight: 500; }
+    @keyframes takk-pop { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .takk-mark { animation: none; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#innhold">Hopp til innhold</a>
+
+  <header class="site-header is-scrolled" id="header">
+    <div class="container">
+      <nav class="nav" aria-label="Hovedmeny">
+        <a class="brand" href="index.html#top" translate="no" aria-label="MK Auto – til forsiden"><img class="brand-logo" src="images/mk-logo.png" alt="" width="48" height="48" /></a>
+        <ul class="nav-links">
+          <li><a href="butikk.html">Våre biler</a></li>
+          <li><a href="guider.html">Artikler</a></li>
+          <li><a href="om-oss.html">Om oss</a></li>
+          <li><a class="btn btn--accent" href="kontakt.html">Kontakt oss</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Åpne meny" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+      </nav>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="butikk.html">Våre biler</a>
+      <a href="guider.html">Artikler</a>
+      <a href="om-oss.html">Om oss</a>
+      <a class="btn btn--accent" href="kontakt.html">Kontakt oss</a>
+    </div>
+  </header>
+
+  <main class="takk" id="innhold">
+    <div class="container">
+      <div class="takk-card">
+        <div class="takk-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+        </div>
+        <h1><b>Takk!</b> Vi har fått henvendelsen din.</h1>
+        <p>Vi tar kontakt, vanligvis innen én arbeidsdag. Sendte du bilder, har vi fått dem også.</p>
+        <div class="takk-actions">
+          <a class="btn btn--accent" href="butikk.html">Se bilene våre</a>
+          <a class="btn" href="index.html#top">Til forsiden</a>
+        </div>
+        <p class="takk-meta">Haster det? Ring oss på <a href="tel:+4795093215">950&nbsp;93&nbsp;215</a> eller <a href="tel:+4794170703">941&nbsp;70&nbsp;703</a>.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="brand" href="index.html#top" translate="no" aria-label="MK Auto AS"><img class="brand-logo brand-logo--footer" src="images/mk-logo.png" alt="" width="64" height="64" /></a>
+          <p>Håndplukkede bruktbiler i Oslo. Vi kjøper, selger og tar i innbytte.</p>
+        </div>
+        <div class="footer-col"><h4>Tjenester</h4><ul>
+          <li><a href="butikk.html">Kjøp</a></li><li><a href="selg.html">Selg</a></li><li><a href="kommisjon-formidling.html">Kommisjon &amp; formidling</a></li><li><a href="innbytte.html">Innbytte</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Besøk oss</h4><ul>
+          <li>Olaves Hvervens vei 13, 1266 Oslo</li><li>Man–fre 10–17</li><li>Lør 12–16</li>
+        </ul></div>
+        <div class="footer-col"><h4>Kontakt</h4><ul>
+          <li><a href="guider.html">Artikler</a></li><li><a href="tel:+4795093215">950 93 215</a></li><li><a href="tel:+4794170703">941 70 703</a></li><li><a href="tel:+4745730046">457 30 046</a></li><li><a href="mailto:m_k_auto@hotmail.com">m_k_auto@hotmail.com</a></li><li><a href="index.html#finn">Finn din bil</a></li>
+        </ul></div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> MK Auto AS · Org.nr 936 666 442</span>
+        <span class="legal"><a href="#">Personvern</a><a href="#">Vilkår</a><a href="#">Salgsbetingelser</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

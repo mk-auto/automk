@@ -160,14 +160,14 @@ HEAD = '''<!DOCTYPE html>
   <meta name="theme-color" content="#ffffff" />
   <title>{title} {year} · MK Auto</title>
   <meta name="description" content="{metadesc}" />
-  <link rel="canonical" href="https://www.mkauto.no/{slug}.html" />
+  <link rel="canonical" href="https://www.mk-auto.no/{slug}.html" />
   <meta property="og:type" content="product" />
   <meta property="og:site_name" content="MK Auto" />
   <meta property="og:locale" content="nb_NO" />
   <meta property="og:title" content="{title} {year} · MK Auto" />
   <meta property="og:description" content="{metadesc}" />
-  <meta property="og:url" content="https://www.mkauto.no/{slug}.html" />
-  <meta property="og:image" content="https://www.mkauto.no/{ogimage}" />
+  <meta property="og:url" content="https://www.mk-auto.no/{slug}.html" />
+  <meta property="og:image" content="https://www.mk-auto.no/{ogimage}" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23a01b22'/%3E%3Ctext x='16' y='22' font-family='Geist,Arial,sans-serif' font-size='14' font-weight='800' text-anchor='middle' fill='%23ffffff'%3EMK%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -214,7 +214,7 @@ FOOT = '''  <footer class="site-footer">
           <li>Olaves Hvervens vei 13, 1266 Oslo</li><li>Man–fre 10–17</li><li>Lør 12–16</li>
         </ul></div>
         <div class="footer-col"><h4>Kontakt</h4><ul>
-          <li><a href="guider.html">Artikler</a></li><li><a href="tel:+4795093215">950 93 215</a></li><li><a href="tel:+4794170703">941 70 703</a></li><li><a href="tel:+4745730046">457 30 046</a></li><li><a href="mailto:post@mkauto.no">post@mkauto.no</a></li><li><a href="index.html#finn">Finn din bil</a></li>
+          <li><a href="guider.html">Artikler</a></li><li><a href="tel:+4795093215">950 93 215</a></li><li><a href="tel:+4794170703">941 70 703</a></li><li><a href="tel:+4745730046">457 30 046</a></li><li><a href="mailto:m_k_auto@hotmail.com">m_k_auto@hotmail.com</a></li><li><a href="index.html#finn">Finn din bil</a></li>
         </ul></div>
       </div>
       <div class="footer-bottom">
@@ -225,6 +225,7 @@ FOOT = '''  <footer class="site-footer">
   </footer>
 
   <script src="detail.js"></script>
+  <script src="forms.js"></script>
 </body>
 </html>
 '''
@@ -362,12 +363,15 @@ def detail(c):
   </main>
 
   <dialog class="msg-dialog" id="msgDialog" aria-labelledby="msgTitle">
-    <form class="kontakt-form msg-form" name="bilmelding" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="#">
-      <input type="hidden" name="form-name" value="bilmelding" />
-      <p class="hp"><label>Ikke fyll ut: <input name="bot-field" /></label></p>
+    <form class="kontakt-form msg-form js-fsajax" method="POST" action="https://formsubmit.co/m_k_auto@hotmail.com" data-done-msg="Vi svarer vanligvis innen én arbeidsdag.">
+      <input type="hidden" name="_subject" value="Spørsmål om bil: {esc(c['title'])} {c['year'] or ''} (MK Auto)" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_next" value="https://www.mk-auto.no/takk.html" />
+      <p class="hp" aria-hidden="true"><label>Ikke fyll ut: <input type="text" name="_honey" tabindex="-1" autocomplete="off" /></label></p>
       <input type="hidden" name="bil" value="{esc(c['title'])} {c['year'] or ''}" />
       <input type="hidden" name="bil_id" value="{c['id']}" />
-      <input type="hidden" name="bil_url" value="https://www.mkauto.no/bil-{c['id']}.html" />
+      <input type="hidden" name="bil_url" value="https://www.mk-auto.no/bil-{c['id']}.html" />
 
       <button type="button" class="msg-close" id="msgClose" aria-label="Lukk skjema">&times;</button>
       <h2 class="msg-title" id="msgTitle">Send oss en melding</h2>
@@ -422,8 +426,8 @@ def detail(c):
         "vehicleTransmission": gear_map.get(c["gear"], c["gear"]) if c["gear"] else None,
         "color": c["color"],
         "vehicleIdentificationNumber": c["vin"],
-        "image": f"https://www.mkauto.no/images/{c['id']}/1.jpg",
-        "url": f"https://www.mkauto.no/bil-{c['id']}.html",
+        "image": f"https://www.mk-auto.no/images/{c['id']}/1.jpg",
+        "url": f"https://www.mk-auto.no/bil-{c['id']}.html",
         "offers": {
             "@type": "Offer",
             "price": c["price"],
