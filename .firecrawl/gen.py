@@ -226,6 +226,7 @@ FOOT = '''  <footer class="site-footer">
 
   <script src="detail.js"></script>
   <script src="forms.js"></script>
+  <script src="cookies.js"></script>
 </body>
 </html>
 '''
