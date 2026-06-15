@@ -567,6 +567,7 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border: 3px s
    ============================================================ */
 .shop-hero { padding-top: clamp(2.6rem, 5vw, 4rem); padding-bottom: clamp(1.6rem, 3vw, 2.4rem); }
 .shop-hero .runin--lg { max-width: 30ch; }
+.shop-hero__sub { margin-top: .7rem; color: var(--ink-2); font-size: 1rem; }
 .shop-stats { display: flex; flex-wrap: wrap; gap: 2.2rem; margin-top: 1.8rem; padding-top: 1.6rem; border-top: 1px solid var(--line); }
 .shop-stats .stat .n { font-family: var(--mono); font-size: 1.65rem; font-weight: 600; letter-spacing: -0.02em; }
 .shop-stats .stat .l { font-size: .76rem; text-transform: uppercase; letter-spacing: .09em; color: var(--ink-3); margin-top: .15rem; }
@@ -575,13 +576,13 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border: 3px s
 .shop-layout { display: grid; grid-template-columns: 288px 1fr; gap: clamp(1.5rem, 3vw, 2.6rem); align-items: start; padding-bottom: clamp(4rem, 8vw, 7rem); }
 
 /* ---------- Filters sidebar ---------- */
-.filters { position: sticky; top: 88px; background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--sh-sm); overflow: hidden; }
+.filters { position: sticky; top: 88px; background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--sh-sm); overflow: hidden; max-height: calc(100vh - 104px); display: flex; flex-direction: column; }
 .fhead { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 1.3rem; border-bottom: 1px solid var(--line-2); }
 .fhead h2 { font-size: 1.05rem; font-weight: 680; letter-spacing: -0.02em; }
 .clear { font-size: .82rem; font-weight: 500; color: var(--copper-2); background: none; border: none; padding: .2rem; transition: opacity .2s var(--ease); }
 .clear:hover { text-decoration: underline; }
 .filter-toggle { display: none; }
-.fbody { padding: 1.3rem; display: flex; flex-direction: column; gap: 1.5rem; }
+.fbody { padding: 1.3rem; display: flex; flex-direction: column; gap: 1.5rem; flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
 .fgroup { display: flex; flex-direction: column; gap: .7rem; }
 .fgroup > .glabel, .fgroup > label.glabel { color: var(--ink); font-size: .82rem; font-weight: 640; letter-spacing: .01em; }
 
@@ -677,9 +678,9 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border: 3px s
 /* ---------- Mobile shop ---------- */
 @media (max-width: 880px) {
   .shop-layout { grid-template-columns: 1fr; }
-  .filters { position: relative; top: 0; }
+  .filters { position: relative; top: 0; max-height: none; display: block; }
   .filter-toggle { display: inline-flex; }
-  .fbody { display: none; }
+  .fbody { display: none; overflow: visible; min-height: 0; }
   .fbody.open { display: flex; }
   .fhead { border-bottom: none; }
   .shop-grid { grid-template-columns: repeat(2, 1fr); }
