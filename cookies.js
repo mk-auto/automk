@@ -53,7 +53,7 @@
     var p = document.createElement("p");
     p.className = "cookie-banner__text";
     p.textContent =
-      "Vi bruker informasjonskapsler til anonym statistikk (Google Analytics) " +
+      "Vi bruker informasjonskapsler til statistikk " +
       "for å gjøre nettsiden bedre. Du velger selv.";
 
     var actions = document.createElement("div");
