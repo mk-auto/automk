@@ -451,3 +451,27 @@ for c in cars:
     fn = os.path.join(ROOT, f"bil-{c['id']}.html")
     open(fn, "w", encoding="utf-8").write(detail(c))
 print("Wrote", len(cars), "detail pages")
+
+# ---------- sitemap.xml (regenerated from live inventory; no lastmod -> stays
+# deterministic/idempotent. takk.html is intentionally excluded: noindex.) ----------
+def write_sitemap():
+    base = "https://www.mk-auto.no/"
+    static = [
+        ("", "1.0"),
+        ("butikk.html", "0.8"), ("selg.html", "0.8"), ("innbytte.html", "0.8"),
+        ("guider.html", "0.8"), ("kontakt.html", "0.7"),
+        ("kommisjon-formidling.html", "0.6"), ("om-oss.html", "0.6"),
+        ("kjope-bruktbil-trygt.html", "0.6"), ("sjekkliste-kjop-av-bruktbil.html", "0.6"),
+        ("kommisjon-eller-selge-selv.html", "0.6"),
+        ("elbil-eller-bensin-diesel-bruktbil.html", "0.6"),
+    ]
+    rows = [f'  <url><loc>{base}{p}</loc><priority>{pri}</priority></url>' for p, pri in static]
+    for c in cars_sorted:  # for-sale first; sold pages still live but lower priority
+        rows.append(f'  <url><loc>{base}bil-{c["id"]}.html</loc><priority>{"0.4" if c["sold"] else "0.6"}</priority></url>')
+    xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+           + "\n".join(rows) + "\n</urlset>\n")
+    open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8").write(xml)
+    print("Wrote sitemap.xml:", len(static) + len(cars_sorted), "urls")
+
+write_sitemap()
