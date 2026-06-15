@@ -21,7 +21,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script type="application/ld+json">
-  {"@context": "https://schema.org", "@type": "Car", "name": "Automat// Godt Utstyrt // Fin farge kombinasjon ++++", "brand": {"@type": "Brand", "name": "Citroen"}, "model": "C4 Cactus", "vehicleModelDate": 2015, "mileageFromOdometer": {"@type": "QuantitativeValue", "value": 139000, "unitCode": "KMT"}, "fuelType": "Gasoline", "vehicleTransmission": "Automatic", "color": "Grønn", "vehicleIdentificationNumber": "VF70PHMZBEE501665", "image": "https://www.mkauto.no/images/464876372/1.jpg", "url": "https://www.mkauto.no/bil-464876372.html", "offers": {"@type": "Offer", "price": 68236, "priceCurrency": "NOK", "availability": "https://schema.org/InStock", "itemCondition": "https://schema.org/UsedCondition", "seller": {"@type": "AutoDealer", "name": "MK Auto AS", "areaServed": "Oslo"}}}
+  {"@context": "https://schema.org", "@type": "Car", "name": "Automat// Godt Utstyrt // Fin farge kombinasjon ++++", "brand": {"@type": "Brand", "name": "Citroen"}, "model": "C4 Cactus", "vehicleModelDate": 2015, "mileageFromOdometer": {"@type": "QuantitativeValue", "value": 139000, "unitCode": "KMT"}, "fuelType": "Gasoline", "vehicleTransmission": "Automatic", "color": "Grønn", "vehicleIdentificationNumber": "VF70PHMZBEE501665", "image": "https://www.mkauto.no/images/464876372/1.jpg", "url": "https://www.mkauto.no/bil-464876372.html", "offers": {"@type": "Offer", "price": 68236, "priceCurrency": "NOK", "availability": "https://schema.org/SoldOut", "itemCondition": "https://schema.org/UsedCondition", "seller": {"@type": "AutoDealer", "name": "MK Auto AS", "areaServed": "Oslo"}}}
   </script>
 </head>
 <body>
@@ -56,7 +56,7 @@
           <div class="gallery">
             <div class="gmain">
               <img id="gmain" src="images/464876372/1.jpg" alt="Citroen C4 Cactus Automat// Godt Utstyrt // Fin farge kombinasjon ++++" width="900" height="675">
-              <span class="tag ">Bensin</span>
+              <span class="tag sold">Solgt</span>
             </div>
             <div class="gthumbs">
           <button class="gthumb" type="button" data-src="images/464876372/1.jpg" aria-current="true" aria-label="Bilde 1"><img src="images/464876372/1.jpg" alt="" loading="lazy" width="200" height="150"></button>
@@ -70,7 +70,8 @@
 
         <aside>
           <div class="dsum">
-            <div class="dsum-body">
+            <div class="soldban">Denne bilen er solgt</div>
+          <div class="dsum-body">
               <div class="brandline">Citroen</div>
               <h1>Citroen C4 Cactus</h1>
               <div class="variant">Automat// Godt Utstyrt // Fin farge kombinasjon ++++</div>
@@ -219,9 +220,12 @@
   </main>
 
   <dialog class="msg-dialog" id="msgDialog" aria-labelledby="msgTitle">
-    <form class="kontakt-form msg-form" name="bilmelding" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="#">
-      <input type="hidden" name="form-name" value="bilmelding" />
-      <p class="hp"><label>Ikke fyll ut: <input name="bot-field" /></label></p>
+    <form class="kontakt-form msg-form js-fsajax" method="POST" action="https://formsubmit.co/m_k_auto@hotmail.com" data-done-msg="Vi svarer vanligvis innen én arbeidsdag.">
+      <input type="hidden" name="_subject" value="Spørsmål om bil: Citroen C4 Cactus 2015 (MK Auto)" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_next" value="https://www.mkauto.no/takk.html" />
+      <p class="hp" aria-hidden="true"><label>Ikke fyll ut: <input type="text" name="_honey" tabindex="-1" autocomplete="off" /></label></p>
       <input type="hidden" name="bil" value="Citroen C4 Cactus 2015" />
       <input type="hidden" name="bil_id" value="464876372" />
       <input type="hidden" name="bil_url" value="https://www.mkauto.no/bil-464876372.html" />
@@ -277,7 +281,7 @@
           <li>Olaves Hvervens vei 13, 1266 Oslo</li><li>Man–fre 10–17</li><li>Lør 12–16</li>
         </ul></div>
         <div class="footer-col"><h4>Kontakt</h4><ul>
-          <li><a href="guider.html">Artikler</a></li><li><a href="tel:+4795093215">950 93 215</a></li><li><a href="tel:+4794170703">941 70 703</a></li><li><a href="tel:+4745730046">457 30 046</a></li><li><a href="mailto:post@mkauto.no">post@mkauto.no</a></li><li><a href="index.html#finn">Finn din bil</a></li>
+          <li><a href="guider.html">Artikler</a></li><li><a href="tel:+4795093215">950 93 215</a></li><li><a href="tel:+4794170703">941 70 703</a></li><li><a href="tel:+4745730046">457 30 046</a></li><li><a href="mailto:m_k_auto@hotmail.com">m_k_auto@hotmail.com</a></li><li><a href="index.html#finn">Finn din bil</a></li>
         </ul></div>
       </div>
       <div class="footer-bottom">
@@ -288,5 +292,6 @@
   </footer>
 
   <script src="detail.js"></script>
+  <script src="forms.js"></script>
 </body>
 </html>

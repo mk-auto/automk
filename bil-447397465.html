@@ -230,9 +230,12 @@
   </main>
 
   <dialog class="msg-dialog" id="msgDialog" aria-labelledby="msgTitle">
-    <form class="kontakt-form msg-form" name="bilmelding" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="#">
-      <input type="hidden" name="form-name" value="bilmelding" />
-      <p class="hp"><label>Ikke fyll ut: <input name="bot-field" /></label></p>
+    <form class="kontakt-form msg-form js-fsajax" method="POST" action="https://formsubmit.co/m_k_auto@hotmail.com" data-done-msg="Vi svarer vanligvis innen én arbeidsdag.">
+      <input type="hidden" name="_subject" value="Spørsmål om bil: Lexus RX400h 2007 (MK Auto)" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_next" value="https://www.mkauto.no/takk.html" />
+      <p class="hp" aria-hidden="true"><label>Ikke fyll ut: <input type="text" name="_honey" tabindex="-1" autocomplete="off" /></label></p>
       <input type="hidden" name="bil" value="Lexus RX400h 2007" />
       <input type="hidden" name="bil_id" value="447397465" />
       <input type="hidden" name="bil_url" value="https://www.mkauto.no/bil-447397465.html" />
@@ -288,7 +291,7 @@
           <li>Olaves Hvervens vei 13, 1266 Oslo</li><li>Man–fre 10–17</li><li>Lør 12–16</li>
         </ul></div>
         <div class="footer-col"><h4>Kontakt</h4><ul>
-          <li><a href="guider.html">Artikler</a></li><li><a href="tel:+4795093215">950 93 215</a></li><li><a href="tel:+4794170703">941 70 703</a></li><li><a href="tel:+4745730046">457 30 046</a></li><li><a href="mailto:post@mkauto.no">post@mkauto.no</a></li><li><a href="index.html#finn">Finn din bil</a></li>
+          <li><a href="guider.html">Artikler</a></li><li><a href="tel:+4795093215">950 93 215</a></li><li><a href="tel:+4794170703">941 70 703</a></li><li><a href="tel:+4745730046">457 30 046</a></li><li><a href="mailto:m_k_auto@hotmail.com">m_k_auto@hotmail.com</a></li><li><a href="index.html#finn">Finn din bil</a></li>
         </ul></div>
       </div>
       <div class="footer-bottom">
@@ -299,5 +302,6 @@
   </footer>
 
   <script src="detail.js"></script>
+  <script src="forms.js"></script>
 </body>
 </html>
