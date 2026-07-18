@@ -628,14 +628,30 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border: 3px s
 }
 .scar:hover { transform: translateY(-4px); box-shadow: var(--sh-md); border-color: color-mix(in srgb, var(--copper) 35%, var(--line)); }
 .scar.is-hidden { display: none; }
-.scar.is-sold { opacity: .96; }
-/* "Solgt" marker shown directly on a sold car's photo */
-.scar.is-sold .ci::after { content: ""; position: absolute; inset: 0; background: rgba(26, 22, 18, 0.28); pointer-events: none; z-index: 1; }
+/* ---------- Sold car — unmistakably marked ---------- */
+.scar.is-sold { opacity: 1; }
+/* desaturate the photo: the universal "no longer available" cue */
+.scar.is-sold .ci img { filter: grayscale(1) brightness(.9) contrast(1.02); }
+/* darkening scrim so the stamp stays legible on any photo */
+.scar.is-sold .ci::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(26, 22, 18, 0.30), rgba(26, 22, 18, 0.48));
+}
+/* big centered "SOLGT" stamp — deliberately breaks the pill language */
 .sold-flag {
-  position: absolute; top: .8rem; left: .8rem; z-index: 2;
-  background: var(--ink); color: var(--paper);
-  font-size: .74rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
-  padding: .42rem .8rem; border-radius: 999px; box-shadow: var(--sh-sm);
+  position: absolute; z-index: 2; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(-4deg); pointer-events: none;
+  background: color-mix(in srgb, var(--ink) 90%, transparent); color: var(--paper);
+  font-family: var(--mono); font-weight: 700; text-transform: uppercase;
+  font-size: clamp(.86rem, 2.6vw, 1.04rem); letter-spacing: .24em;
+  padding: .5rem 1.1rem .5rem 1.34rem; border-radius: var(--r-sm);
+  border: 1.5px solid color-mix(in srgb, var(--paper) 55%, transparent);
+  box-shadow: 0 8px 20px -8px rgba(20, 16, 12, 0.55);
+}
+/* struck-through, muted price so it never reads as buyable */
+.scar.is-sold .cf .price {
+  color: var(--ink-3); text-decoration: line-through; text-decoration-thickness: 1.5px;
+  text-decoration-color: color-mix(in srgb, var(--ink-3) 65%, transparent);
 }
 
 .ci { position: relative; aspect-ratio: 4/3; overflow: hidden; background: var(--paper-2); }
@@ -664,7 +680,7 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border: 3px s
 .cf .price .cur { font-size: .78rem; color: var(--ink-2); margin-left: .2rem; }
 .cf .go { display: inline-flex; align-items: center; gap: .35rem; font-weight: 600; font-size: .9rem; color: var(--ink); border: 1px solid var(--line); padding: .5rem .9rem; border-radius: 999px; transition: background .25s var(--ease), border-color .25s var(--ease), color .25s var(--ease); }
 .cf .go:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.scar.is-sold .cf .go { opacity: .55; pointer-events: none; }
+.scar.is-sold .cf .go { pointer-events: none; color: var(--ink-3); border-color: var(--line-2); }
 
 /* empty + load more */
 .shop-empty { display: none; text-align: center; padding: 4rem 1rem; border: 1px dashed var(--line); border-radius: var(--r-lg); }
@@ -728,7 +744,10 @@ input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border: 3px s
 .dcta { display: flex; flex-direction: column; gap: .6rem; margin-top: .4rem; }
 .dsum .finn-link { display: inline-flex; align-items: center; gap: .4rem; justify-content: center; font-size: .85rem; color: var(--ink-2); margin-top: .2rem; }
 .dsum .finn-link:hover { color: var(--copper-2); }
-.soldban { background: var(--ink); color: var(--paper); text-align: center; padding: .7rem; font-weight: 600; letter-spacing: .02em; }
+.soldban { background: var(--ink); color: var(--paper); text-align: center; padding: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .92rem; }
+/* sold detail page: desaturate the gallery + strike the price for consistency */
+.gmain:has(.tag.sold) img { filter: grayscale(1) brightness(.92) contrast(1.02); }
+.dsum:has(.soldban) .dprice { color: var(--ink-3); text-decoration: line-through; text-decoration-thickness: 1.5px; text-decoration-color: color-mix(in srgb, var(--ink-3) 65%, transparent); }
 
 /* detail content blocks */
 .dblock { margin-top: clamp(2.4rem, 5vw, 3.6rem); }
